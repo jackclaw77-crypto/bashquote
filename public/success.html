@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking Confirmed — Bash Events</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #080808;
+    color: #F5F5F5;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .card {
+    max-width: 520px;
+    width: 100%;
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 20px;
+    padding: 48px 36px;
+    text-align: center;
+  }
+  .check {
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 214, 143, 0.1);
+    border: 3px solid #00D68F;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 36px;
+    color: #00D68F;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 12px;
+  }
+  .subtitle {
+    color: #777;
+    font-size: 1rem;
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+  .ref {
+    background: rgba(255, 107, 43, 0.08);
+    border: 1px solid rgba(255, 107, 43, 0.2);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+  .ref-label {
+    font-size: 0.7rem;
+    color: #777;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .ref-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #FF6B2B;
+    font-family: monospace;
+  }
+  .details {
+    text-align: left;
+    margin-bottom: 24px;
+  }
+  .details div {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #1a1a1a;
+    font-size: 0.9rem;
+  }
+  .details .label { color: #777; }
+  .details .value { font-weight: 600; }
+  .info {
+    background: #161616;
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 0.85rem;
+    color: #999;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+    background: #FF6B2B;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn:hover { background: #FF8A50; transform: translateY(-1px); }
+  .footer {
+    margin-top: 32px;
+    font-size: 0.75rem;
+    color: #555;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="check">&#10003;</div>
+  <h1>Booking Confirmed!</h1>
+  <p class="subtitle">Your deposit has been received. We'll send you a confirmation email with your function sheet shortly.</p>
+
+  <div class="ref">
+    <div class="ref-label">Booking Reference</div>
+    <div class="ref-value" id="bookingRef">—</div>
+  </div>
+
+  <div class="info">
+    <strong>What happens next?</strong><br>
+    1. You'll receive an email confirmation with your function sheet<br>
+    2. We'll confirm your event details within 24 hours<br>
+    3. Balance is due 7 days before your event<br>
+    4. Our team will be in touch closer to the date
+  </div>
+
+  <a href="/" class="btn">Back to Bash Events</a>
+
+  <div class="footer">
+    Bash Events &mdash; Premium Event &amp; Street Food Catering<br>
+    London &amp; Essex &middot; info@bashevents.co.uk
+  </div>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const ref = params.get('ref');
+  if (ref) {
+    document.getElementById('bookingRef').textContent = ref;
+  }
+</script>
+</body>
+</html>

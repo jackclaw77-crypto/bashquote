@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bash Events — Premium Event & Street Food Catering</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #080808;
+    --surface: #111;
+    --card: #161616;
+    --card-hover: #1C1C1C;
+    --border: #222;
+    --border-light: #333;
+    --accent: #FF6B2B;
+    --accent2: #FF8A50;
+    --accent-soft: rgba(255,107,43,0.08);
+    --accent-glow: rgba(255,107,43,0.15);
+    --gold: #D4A953;
+    --gold-soft: rgba(212,169,83,0.1);
+    --text: #F5F5F5;
+    --text2: #CCC;
+    --dim: #777;
+    --green: #00D68F;
+    --red: #FF4C4C;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Hero with animated gradient ── */
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: 80px 20px 60px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(255,107,43,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 50%, rgba(212,169,83,0.06) 0%, transparent 60%),
+      linear-gradient(180deg, #0F0A06 0%, var(--bg) 100%);
+    animation: heroShift 12s ease-in-out infinite alternate;
+  }
+  @keyframes heroShift {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+  }
+  .hero > * { position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-block;
+    padding: 6px 18px;
+    background: var(--accent-soft);
+    border: 1px solid rgba(255,107,43,0.2);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: var(--text);
+    margin-bottom: 12px;
+    line-height: 1.1;
+  }
+  .hero h1 span {
+    background: linear-gradient(135deg, #FF6B2B, #FFB347, #D4A953);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    color: var(--dim);
+    font-size: 1.1rem;
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  .hero-divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    margin: 24px auto;
+  }
+
+  /* ── Container ── */
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 10px 20px 60px;
+  }
+
+  /* ── Section headers ── */
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    margin-top: 40px;
+  }
+
+  /* ── Menu cards with real photos ── */
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 14px;
+  }
+  .menu-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    aspect-ratio: 4/3;
+  }
+  .menu-card:hover { transform: translateY(-3px); border-color: #333; }
+  .menu-card.selected { border-color: var(--accent); box-shadow: 0 0 30px rgba(255,107,43,0.2); }
+  .menu-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .menu-card:hover img { transform: scale(1.05); }
+  .menu-card .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 18px;
+  }
+  .menu-card .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+  .menu-card .price {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .menu-card .selected-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 28px;
+    height: 28px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 900;
+  }
+  .menu-card.selected .selected-badge { display: flex; }
+
+  /* ── Menu detail panel ── */
+  .menu-detail {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    margin-top: 14px;
+    display: none;
+    animation: slideDown 0.3s ease;
+  }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; } }
+  .menu-detail h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    margin-bottom: 14px;
+    color: var(--accent);
+  }
+  .menu-detail .pkg-grid { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+  .menu-detail .pkg-option {
+    flex: 1; min-width: 140px; padding: 14px; background: var(--surface); border: 2px solid var(--border);
+    border-radius: 10px; cursor: pointer; transition: all 0.2s; position: relative; text-align: center;
+  }
+  .menu-detail .pkg-option:hover { border-color: var(--border-light); }
+  .menu-detail .pkg-option.active { border-color: var(--accent); background: var(--accent-soft); }
+  .menu-detail .pkg-option .pkg-tag {
+    position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
+    background: var(--accent); color: #fff; font-size: 0.6rem; font-weight: 700;
+    padding: 2px 10px; border-radius: 10px; letter-spacing: 1px; white-space: nowrap;
+  }
+  .menu-detail .pkg-option .pkg-name { font-weight: 700; font-size: 0.95rem; color: var(--text); margin-bottom: 4px; }
+  .menu-detail .pkg-option .pkg-price { font-size: 1.2rem; font-weight: 800; color: var(--accent); margin-bottom: 4px; }
+  .menu-detail .pkg-option .pkg-desc { font-size: 0.75rem; color: var(--dim); line-height: 1.3; }
+
+  .menu-detail .section-title {
+    font-weight: 700; font-size: 0.8rem; color: var(--text2); letter-spacing: 1.5px;
+    text-transform: uppercase; margin: 16px 0 4px; padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .menu-detail .guide-text {
+    font-size: 0.78rem; color: var(--dim); margin-bottom: 10px; line-height: 1.4;
+  }
+  .menu-detail .protein-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 8px; }
+  .menu-detail .protein-item {
+    display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .menu-detail .protein-item:hover { border-color: var(--border-light); }
+  .menu-detail .protein-item.checked { border-color: var(--accent); background: var(--accent-soft); }
+  .menu-detail .protein-item .pcheck {
+    width: 18px; height: 18px; border: 2px solid var(--border-light); border-radius: 4px;
+    flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; color: var(--accent); transition: all 0.2s;
+  }
+  .menu-detail .protein-item.checked .pcheck { border-color: var(--accent); background: var(--accent); color: #fff; }
+  .menu-detail .protein-item .p-name { font-weight: 600; font-size: 0.85rem; color: var(--text); }
+  .menu-detail .protein-item .p-desc { font-size: 0.75rem; color: var(--dim); margin-top: 1px; }
+  .menu-detail .protein-item .p-upsell { font-size: 0.7rem; color: var(--accent2); font-weight: 600; margin-top: 2px; }
+
+  .menu-detail .upsell-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+    background: var(--gold-soft); border: 1px solid rgba(212,169,83,0.2); border-radius: 8px;
+    cursor: pointer; transition: all 0.2s; margin-top: 6px;
+  }
+  .menu-detail .upsell-item:hover { border-color: var(--gold); }
+  .menu-detail .upsell-item.checked { border-color: var(--gold); background: rgba(212,169,83,0.15); }
+  .menu-detail .upsell-item .pcheck { border-color: var(--gold); }
+  .menu-detail .upsell-item.checked .pcheck { background: var(--gold); border-color: var(--gold); color: #fff; }
+  .menu-detail .upsell-item .u-name { font-weight: 600; font-size: 0.85rem; color: var(--text); }
+  .menu-detail .upsell-item .u-price { font-size: 0.8rem; color: var(--gold); font-weight: 700; }
+  .menu-detail .upsell-item .u-desc { font-size: 0.75rem; color: var(--dim); }
+  .menu-detail .note { font-size: 0.78rem; color: var(--dim); font-style: italic; margin-top: 10px; }
+
+  /* ── Form sections ── */
+  .form-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-top: 20px;
+  }
+  .form-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    margin-bottom: 18px;
+  }
+
+  label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--dim);
+    margin-bottom: 6px;
+    margin-top: 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  label:first-of-type { margin-top: 0; }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 13px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--accent);
+    background: #0E0E0E;
+  }
+  select { cursor: pointer; -webkit-appearance: none; }
+  textarea { resize: vertical; min-height: 80px; }
+  .row { display: flex; gap: 14px; }
+  .row > div { flex: 1; }
+
+  /* ── Extras / Add-ons ── */
+  .addon {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: all 0.2s;
+  }
+  .addon:hover { border-color: var(--border-light); background: #141414; }
+  .addon.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .addon .tick {
+    width: 22px; height: 22px;
+    border: 2px solid var(--border-light);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .addon.selected .tick { background: var(--accent); border-color: var(--accent); }
+  .addon.selected .tick::after { content: "\2713"; color: #fff; font-size: 13px; font-weight: 800; }
+  .addon .addon-info { flex: 1; }
+  .addon .addon-title { font-weight: 600; font-size: 0.9rem; }
+  .addon .addon-sub { color: var(--dim); font-size: 0.8rem; margin-top: 2px; }
+
+  .addon-submenu {
+    margin: -4px 0 10px 34px;
+    animation: slideDown 0.3s ease;
+  }
+  .addon-submenu-label {
+    font-size: 0.8rem; font-weight: 600; color: var(--text2);
+    margin-bottom: 8px; letter-spacing: 0.3px;
+  }
+  .addon-check-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 4px;
+  }
+  .addon-check-grid label {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 12px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; font-size: 0.8rem; color: var(--text2);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .addon-check-grid label:hover { border-color: var(--border-light); }
+  .addon-check-grid label:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); color: var(--text); }
+  .addon-check-grid input[type="checkbox"],
+  .addon-check-grid input[type="radio"] {
+    accent-color: var(--accent); width: 16px; height: 16px; flex-shrink: 0;
+  }
+
+  .includes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .includes span {
+    background: rgba(0,214,143,0.06);
+    border: 1px solid rgba(0,214,143,0.15);
+    color: var(--green);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── Buttons ── */
+  .btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 20px;
+    letter-spacing: 0.5px;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #FF6B2B, #E85A1B);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(255,107,43,0.2);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 35px rgba(255,107,43,0.35); }
+  .btn-green {
+    background: linear-gradient(135deg, #00D68F, #00B87A);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(0,214,143,0.15);
+  }
+  .btn-green:hover { transform: translateY(-2px); box-shadow: 0 8px 35px rgba(0,214,143,0.3); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--dim);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { color: var(--text); border-color: var(--border-light); }
+
+  /* ── Quote result ── */
+  .quote-result {
+    background: linear-gradient(135deg, #1A1208, #140D06);
+    border: 1px solid rgba(255,107,43,0.3);
+    border-radius: 20px;
+    padding: 36px;
+    text-align: center;
+    display: none;
+    margin-top: 24px;
+    animation: fadeUp 0.5s ease;
+  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; } }
+  .quote-result .total {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #FF6B2B, #FFB347, #D4A953);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 12px 0 4px;
+  }
+  .quote-result .per-head { color: var(--dim); font-size: 1rem; }
+  .breakdown {
+    text-align: left;
+    margin: 24px 0;
+    padding: 18px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+  .breakdown .line {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .breakdown .line:last-child { border: none; font-weight: 700; color: var(--accent); padding-top: 12px; }
+  .min-warning {
+    background: rgba(255,76,76,0.08);
+    border: 1px solid rgba(255,76,76,0.2);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 14px 0;
+    font-size: 0.85rem;
+    color: var(--red);
+    display: none;
+  }
+
+  /* ── Confirmation ── */
+  .confirmation {
+    text-align: center;
+    display: none;
+    margin-top: 24px;
+    padding: 50px 30px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: #333;
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  /* ── Season Toggle ── */
+  .season-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 24px 20px 10px;
+  }
+  .season-btn {
+    padding: 12px 28px;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 40px;
+    color: var(--dim);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    letter-spacing: 0.3px;
+  }
+  .season-btn:hover {
+    border-color: var(--border-light);
+    color: var(--text2);
+  }
+  .season-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-soft);
+    box-shadow: 0 0 20px rgba(255,107,43,0.15);
+  }
+
+  @media (max-width: 600px) {
+    .menu-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .row { flex-direction: column; gap: 0; }
+    .hero { padding: 50px 16px 40px; }
+    .container { padding: 10px 14px 40px; }
+    .season-toggle { gap: 8px; padding: 18px 14px 6px; }
+    .season-btn { padding: 10px 16px; font-size: 0.78rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <img src="logo.png" alt="Bash Events Logo" style="width:340px;height:340px;object-fit:contain;margin:0 auto 24px;display:block;filter:brightness(1.3) contrast(1.1) saturate(1.2);">
+  <div class="hero-badge">London &amp; Essex</div>
+  <h1>Premium Event &amp; Street Food<br><span>Catering</span></h1>
+  <div class="hero-divider"></div>
+  <p>From intimate dinners to weddings and festivals. Real chefs, real flavour, zero stress. Get your instant quote below.</p>
+</div>
+
+<div class="season-toggle">
+  <button class="season-btn" id="btnSummer" onclick="setSeason('summer')">Summer Season (Apr–Oct)</button>
+  <button class="season-btn" id="btnWinter" onclick="setSeason('winter')">Winter Season (Nov–Mar)</button>
+</div>
+
+<div class="container">
+
+  <!-- STEP 1: Menu Selection -->
+  <div class="section-label">Step 1 &mdash; Choose Your Menu</div>
+  <div class="menu-grid" id="menuGrid">
+    <div class="menu-card" data-menu="caribbean" data-price="14" data-season="both" onclick="selectMenu(this)">
+      <img src="carib_new.jpg" alt="Jerk chicken on charcoal grill" loading="lazy">
+      <div class="overlay">
+        <div class="name">Caribbean</div>
+        <div class="price">From &pound;14pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card" data-menu="bbq" data-price="20" data-season="summer" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=600&q=80" alt="BBQ" loading="lazy">
+      <div class="overlay">
+        <div class="name">BBQ</div>
+        <div class="price">From &pound;25pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card" data-menu="mexican" data-price="12" data-season="both" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80" alt="Mexican tacos" loading="lazy">
+      <div class="overlay">
+        <div class="name">Mexican</div>
+        <div class="price">From &pound;12pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card" data-menu="burgers" data-price="14" data-season="both" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80" alt="Gourmet burger" loading="lazy">
+      <div class="overlay">
+        <div class="name">Gourmet Burgers</div>
+        <div class="price">From &pound;14pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card" data-menu="pizza" data-price="10" data-season="both" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&q=80" alt="Pizza" loading="lazy">
+      <div class="overlay">
+        <div class="name">Pizza</div>
+        <div class="price">From &pound;10pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card" data-menu="streetfood" data-price="20" data-season="summer" onclick="selectMenu(this)">
+      <img src="streetfood.jpg" alt="Bash Events food truck at night" loading="lazy">
+      <div class="overlay">
+        <div class="name">Street Food Experience</div>
+        <div class="price">From &pound;25pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card" data-menu="finedining" data-price="35" data-season="both" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=600&q=80" alt="Feasting tables" loading="lazy">
+      <div class="overlay">
+        <div class="name">Feasting Tables</div>
+        <div class="price">From &pound;35pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card" data-menu="hog" data-price="16" data-season="winter" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80" alt="Hog roast" loading="lazy">
+      <div class="overlay">
+        <div class="name">Hog Roast &amp; Carvery</div>
+        <div class="price">From &pound;18pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card" data-menu="mediterranean" data-price="20" data-season="summer" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=600&q=80" alt="Shawarma kebabs on the grill" loading="lazy">
+      <div class="overlay">
+        <div class="name">Mediterranean Grill</div>
+        <div class="price">From &pound;20pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card" data-menu="paella" data-price="16" data-season="both" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1534080564583-6be75777b70a?w=600&q=80" alt="Paella station" loading="lazy">
+      <div class="overlay">
+        <div class="name">Paella Station</div>
+        <div class="price">From &pound;16pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card" data-menu="grazing" data-price="16" data-season="both" onclick="selectMenu(this)">
+      <img src="grazing.jpg" alt="Grazing table with charcuterie and cheese" loading="lazy">
+      <div class="overlay">
+        <div class="name">Grazing Tables</div>
+        <div class="price">From &pound;16pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card" data-menu="christmas" data-price="24" data-season="winter" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1608039829572-4d3b75a43239?w=600&q=80" alt="Christmas dinner table" loading="lazy">
+      <div class="overlay">
+        <div class="name">Christmas Feast</div>
+        <div class="price">From &pound;22pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+  </div>
+
+  <!-- Menu detail panel -->
+  <div class="menu-detail" id="menuDetail"></div>
+
+  <!-- STEP 2: Event Details -->
+  <div class="section-label">Step 2 &mdash; Event Details</div>
+  <div class="form-section">
+    <div class="row">
+      <div>
+        <label>Number of Guests</label>
+        <input type="number" id="guests" min="10" max="500" placeholder="e.g. 80">
+      </div>
+      <div>
+        <label>Event Date</label>
+        <input type="date" id="eventDate">
+      </div>
+    </div>
+    <div class="row" style="margin-top:4px;">
+      <div>
+        <label>Event Type</label>
+        <select id="eventType">
+          <option value="">Select...</option>
+          <option value="wedding">Wedding</option>
+          <option value="birthday">Birthday Party</option>
+          <option value="corporate">Corporate Event</option>
+          <option value="festival">Festival / Market</option>
+          <option value="private">Private Party</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div>
+        <label>Location / Postcode</label>
+        <input type="text" id="location" placeholder="e.g. CM13 or London">
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Extras -->
+  <div class="section-label">Step 3 &mdash; Extras</div>
+  <div class="form-section">
+    <div class="addon" data-addon="dessert" data-price="6" onclick="toggleAddon(this)">
+      <div class="tick"></div>
+      <div class="addon-info">
+        <div class="addon-title">Dessert Station &mdash; &pound;6pp</div>
+        <div class="addon-sub">Churros, crepes &amp; waffles with chocolate &amp; dulce de leche</div>
+      </div>
+    </div>
+    <div class="addon" data-addon="canapes" data-price="8" onclick="toggleAddon(this)">
+      <div class="tick"></div>
+      <div class="addon-info">
+        <div class="addon-title">Canap&eacute;s on Arrival &mdash; &pound;8pp</div>
+        <div class="addon-sub">Choose 4 from our selection below</div>
+      </div>
+    </div>
+    <div id="canapesOptions" class="addon-submenu" style="display:none;">
+      <div class="addon-submenu-label">Choose your canap&eacute;s (pick 4):</div>
+      <div class="addon-check-grid" id="canapesGrid">
+        <label><input type="checkbox" name="canape" value="Chicken, Leek & Black Truffle Pie"> Chicken, Leek &amp; Black Truffle Pie</label>
+        <label><input type="checkbox" name="canape" value="Pork Croquette with Garlic Aioli"> Pork Croquette with Garlic Aioli</label>
+        <label><input type="checkbox" name="canape" value="Smoked Salmon & Chive Quiche"> Smoked Salmon &amp; Chive Quiche</label>
+        <label><input type="checkbox" name="canape" value="Garlic & Paprika Butter Prawn"> Garlic &amp; Paprika Butter Prawn</label>
+        <label><input type="checkbox" name="canape" value="Butternut Squash & Sage Arancini"> Butternut Squash &amp; Sage Arancini</label>
+        <label><input type="checkbox" name="canape" value="Wild Mushroom & Goats Cheese Bruschetta"> Wild Mushroom &amp; Goats Cheese Bruschetta</label>
+        <label><input type="checkbox" name="canape" value="Sweet Chilli Chicken Skewers"> Sweet Chilli Chicken Skewers</label>
+        <label><input type="checkbox" name="canape" value="British Beef Sliders"> 100% British Beef Sliders with Cheese</label>
+        <label><input type="checkbox" name="canape" value="Duck Croquette with Garlic Aioli"> Duck Croquette with Garlic Aioli</label>
+        <label><input type="checkbox" name="canape" value="Mini Butter Chicken Parcels"> Mini Butter Chicken Parcels</label>
+        <label><input type="checkbox" name="canape" value="Pani Puri"> Pani Puri with Spiced Potatoes &amp; Tamarind</label>
+        <label><input type="checkbox" name="canape" value="Mini Vegetable Samosas"> Mini Vegetable Samosas with Mango Chutney</label>
+        <label><input type="checkbox" name="canape" value="Scottish Smoked Salmon Crostini"> Scottish Smoked Salmon Crostini with Caviar</label>
+        <label><input type="checkbox" name="canape" value="Smoked Mackerel Pate"> Smoked Mackerel Pate with Crispy Capers</label>
+        <label><input type="checkbox" name="canape" value="Coronation Chicken"> Smoked Coronation Chicken &amp; Pistachio</label>
+        <label><input type="checkbox" name="canape" value="Roast Beef & Horseradish Crostini"> Roast Beef &amp; Horseradish Cream Crostini</label>
+        <label><input type="checkbox" name="canape" value="Serrano Ham Bruschetta"> Serrano Ham &amp; Tomate Frito Bruschetta</label>
+        <label><input type="checkbox" name="canape" value="Avocado & Feta Tart (V)"> Avocado, Cherry Tomato &amp; Feta Tart (V)</label>
+        <label><input type="checkbox" name="canape" value="Piri Piri Hummus & Pomegranate"> Minted Cucumber, Piri Piri Hummus &amp; Pomegranate</label>
+        <label><input type="checkbox" name="canape" value="Grilled Octopus Bruschetta"> Grilled Octopus with Salsa Verde</label>
+      </div>
+    </div>
+    <div class="addon" data-addon="premiumdessert" data-price="9" onclick="toggleAddon(this)">
+      <div class="tick"></div>
+      <div class="addon-info">
+        <div class="addon-title">Premium Desserts &mdash; &pound;9pp</div>
+        <div class="addon-sub">Choose your dessert from our selection</div>
+      </div>
+    </div>
+    <div id="dessertOptions" class="addon-submenu" style="display:none;">
+      <div class="addon-submenu-label">Choose your dessert:</div>
+      <div class="addon-check-grid" id="dessertGrid">
+        <label><input type="radio" name="dessert" value="Vanilla Crème Brûlée"> Vanilla Cr&egrave;me Br&ucirc;l&eacute;e with Fresh Berries</label>
+        <label><input type="radio" name="dessert" value="Pistachio & Rose Water Panna Cotta"> Pistachio &amp; Rose Water Panna Cotta</label>
+        <label><input type="radio" name="dessert" value="Salted Caramel & Hazelnut Tart"> Salted Caramel &amp; Hazelnut Tart</label>
+        <label><input type="radio" name="dessert" value="Raspberry & White Chocolate Mousse"> Raspberry &amp; White Chocolate Mousse</label>
+        <label><input type="radio" name="dessert" value="Tiramisu"> Tiramisu with Mascarpone &amp; Espresso</label>
+        <label><input type="radio" name="dessert" value="Sticky Toffee Pudding"> Sticky Toffee Pudding with Clotted Cream</label>
+        <label><input type="radio" name="dessert" value="Chocolate & Hazelnut Mille-Feuille"> Chocolate &amp; Hazelnut Mille-Feuille</label>
+        <label><input type="radio" name="dessert" value="Passion Fruit & Coconut Parfait"> Passion Fruit &amp; Coconut Parfait</label>
+        <label><input type="radio" name="dessert" value="Poached Pears in Red Wine"> Poached Pears in Red Wine</label>
+        <label><input type="radio" name="dessert" value="Lemon & Lavender Shortbread"> Lemon &amp; Lavender Shortbread with Lemon Curd</label>
+      </div>
+    </div>
+    <div class="addon" data-addon="staff" data-price="0" onclick="toggleAddon(this)">
+      <div class="tick"></div>
+      <div class="addon-info">
+        <div class="addon-title">Waiting Staff</div>
+        <div class="addon-sub">Professional serving staff &mdash; priced based on guest count</div>
+      </div>
+    </div>
+    <div id="staffOptions" class="addon-submenu" style="display:none;">
+      <select id="staffTier" style="width:100%;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:0.85rem;">
+        <option value="0">No staff needed</option>
+        <option value="150">1 server (up to 30 guests) &mdash; &pound;150</option>
+        <option value="280">2 servers (30-60 guests) &mdash; &pound;280</option>
+        <option value="400">3 servers (60-100 guests) &mdash; &pound;400</option>
+        <option value="550">4 servers (100-150 guests) &mdash; &pound;550</option>
+        <option value="custom">150+ guests &mdash; get a custom quote</option>
+      </select>
+    </div>
+
+    <div class="includes">
+      <span>&#10003; Professional Chefs</span>
+      <span>&#10003; Food Van</span>
+      <span>&#10003; Biodegradable Plates</span>
+      <span>&#10003; Cutlery</span>
+      <span>&#10003; Waste Removal</span>
+    </div>
+  </div>
+
+  <!-- STEP 4: Contact -->
+  <div class="section-label">Step 4 &mdash; Your Details</div>
+  <div class="form-section">
+    <div class="row">
+      <div>
+        <label>Your Name</label>
+        <input type="text" id="name" placeholder="Full name">
+      </div>
+      <div>
+        <label>Email</label>
+        <input type="email" id="email" placeholder="you@email.com">
+      </div>
+    </div>
+    <label>Phone (optional)</label>
+    <input type="tel" id="phone" placeholder="07...">
+    <label>Tell us about your event</label>
+    <textarea id="notes" placeholder="Dietary requirements, theme, special requests..."></textarea>
+  </div>
+
+  <button class="btn btn-primary" id="quoteBtn" onclick="calculateQuote()">Get My Instant Quote</button>
+
+  <!-- Quote Result -->
+  <div class="quote-result" id="quoteResult">
+    <div style="font-size:0.8rem;color:var(--dim);letter-spacing:2px;text-transform:uppercase;">Your Estimated Quote</div>
+    <div class="total" id="quoteTotal">&pound;0</div>
+    <div class="per-head" id="quotePerHead"></div>
+    <div class="min-warning" id="minWarning">
+      Minimum spend applies. Adjusted to &pound;<span id="minAmount">750</span> minimum.
+    </div>
+    <div class="breakdown" id="breakdown"></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;">
+      <button class="btn btn-green" onclick="showBookingForm()" style="flex:1;min-width:200px;">Book &amp; Pay 20% Deposit</button>
+      <button class="btn btn-primary" onclick="submitEnquiry()" style="flex:1;min-width:200px;">Just Send Enquiry</button>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+      <button class="btn btn-ghost" onclick="document.getElementById('menuDetail').scrollIntoView({behavior:'smooth',block:'start'})" style="flex:1;">Edit Selections</button>
+      <button class="btn btn-ghost" onclick="resetForm()" style="flex:1;">Start Over</button>
+    </div>
+    <div id="depositInfo" style="margin-top:12px;padding:12px;background:rgba(0,214,143,0.06);border:1px solid rgba(0,214,143,0.15);border-radius:10px;font-size:0.8rem;color:var(--green);">
+      <strong>Deposit:</strong> <span id="depositAmount">&pound;0</span> (20%) &mdash; Balance due 7 days before event
+    </div>
+    <p style="margin-top:12px;font-size:0.75rem;color:var(--dim);">
+      Estimate only. Final pricing confirmed after consultation. Quote valid 5 days.
+    </p>
+  </div>
+
+  <!-- Booking Form (shown after clicking Book & Pay) -->
+  <div class="quote-result" id="bookingForm" style="display:none;">
+    <div style="font-size:0.8rem;color:var(--dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Confirm Your Booking</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:16px;">Secure with 20% Deposit</div>
+    <div id="bookingSummary" style="text-align:left;margin-bottom:20px;padding:16px;background:#161616;border-radius:10px;font-size:0.85rem;line-height:1.8;"></div>
+
+    <div style="text-align:left;">
+      <label style="font-size:0.8rem;color:var(--dim);margin-bottom:4px;display:block;">Event Address / Venue</label>
+      <input type="text" id="bookingAddress" placeholder="Full event address" style="width:100%;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:0.9rem;margin-bottom:12px;">
+
+      <label style="font-size:0.8rem;color:var(--dim);margin-bottom:4px;display:block;">Any additional notes for the kitchen</label>
+      <textarea id="bookingNotes" placeholder="Allergies, dietary requirements, special requests..." style="width:100%;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:0.9rem;min-height:80px;resize:vertical;margin-bottom:16px;"></textarea>
+    </div>
+
+    <button class="btn btn-green" id="payBtn" onclick="processPayment()" style="width:100%;padding:16px;font-size:1rem;">
+      Pay Deposit &mdash; <span id="payAmount">&pound;0</span>
+    </button>
+    <button class="btn btn-ghost" onclick="hideBookingForm()" style="width:100%;margin-top:8px;">Back to Quote</button>
+    <p style="margin-top:12px;font-size:0.7rem;color:var(--dim);">
+      Secure payment via Stripe. Your card details are never stored on our servers.
+    </p>
+  </div>
+
+  <!-- Confirmation -->
+  <div class="confirmation" id="confirmation">
+    <div style="font-size:3rem;margin-bottom:12px;color:var(--green);">&#10003;</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:10px;">Enquiry Sent</div>
+    <p style="color:var(--dim);font-size:0.95rem;">We'll be in touch within 24 hours.<br>Check your email for a copy of your quote.</p>
+    <button class="btn btn-ghost" onclick="resetForm()" style="margin-top:24px;">Get Another Quote</button>
+  </div>
+
+</div>
+
+<div class="footer">
+  &copy; 2025 Bash Events &middot; Premium Event &amp; Street Food Catering<br>
+  London &amp; Essex &middot; info@bashevents.co.uk
+</div>
+
+<script>
+const MENU_DETAILS = {
+  caribbean: {
+    title: "Caribbean Menu",
+    packages: [
+      {name:"Essential", price:14, desc:"Choose 2 proteins + 2 sides", tag:"POPULAR", maxP:2, maxS:2},
+      {name:"Feast", price:18, desc:"Choose 3 proteins + 3 sides + slaw", maxP:3, maxS:3},
+      {name:"Ultimate", price:24, desc:"Choose 4 proteins + 4 sides + dessert", tag:"BEST VALUE", maxP:4, maxS:4},
+    ],
+    proteins: [
+      {name:"Smoky Jerk Chicken", desc:"Marinated 24hrs, slow-cooked on charcoals"},
+      {name:"Curried Goat", desc:"Rich stew with scotch bonnet & traditional spices"},
+      {name:"Brown Stew Chicken", desc:"Braised in aromatic savoury liquids"},
+      {name:"Jamaican Oxtail Stew", desc:"Tender oxtail with butter beans (+\u00A32pp)", upsell:2},
+      {name:"Escovitch Sea Bass", desc:"Fried in spicy pickle with pimento (+\u00A32pp)", upsell:2},
+      {name:"Ackee & Saltfish", desc:"Sauteed with spinach & peppers"},
+      {name:"Coconut Curried Lentils", desc:"Vegan \u2014 coconut milk & Jamaican curry"},
+      {name:"Jerk Wings (x5)", desc:"Charcoal-grilled with smoky jerk marinade"},
+      {name:"Sweet Chilli Wings (x5)", desc:"Roasted & glazed in sweet chilli"},
+    ],
+    sides: [
+      {name:"Rice & Peas", desc:"Traditional Jamaican coconut rice"},
+      {name:"Plantain", desc:"Fried sweet plantain slices"},
+      {name:"Mac & Cheese", desc:"Creamy baked mac & cheese (+£1pp)", upsell:1},
+      {name:"Truffle Mac & Cheese", desc:"Premium truffle-infused (+£2pp)", upsell:2},
+      {name:"Signature Slaw", desc:"Fresh house coleslaw"},
+      {name:"Festival Dumplings", desc:"Sweet fried dumplings (2pcs)"},
+      {name:"Coconut White Rice", desc:"Fragrant coconut rice"},
+      {name:"Seasoned Corn on the Cob", desc:"Charred & seasoned (2pcs)"},
+      {name:"Sweet Potato Fries", desc:"Crispy sweet potato fries"},
+      {name:"French Fries", desc:"Classic crispy fries"},
+    ],
+    upsells: [
+      {name:"Add Milkshake Bar", price:5, desc:"14 flavours \u2014 Oreo, Biscoff, Kinder Bueno & more"},
+      {name:"Add Drinks Package", price:2, desc:"Coke, Fanta, Ting, Bigga Fruit Punch, Water"},
+    ]
+  },
+  bbq: {
+    title: "BBQ Menu",
+    packages: [
+      {name:"Classic", price:20, desc:"Choose 3 mains + 2 sides", maxP:3, maxS:2},
+      {name:"Loaded", price:25, desc:"Choose 4 mains + 3 sides", tag:"POPULAR", maxP:4, maxS:3},
+      {name:"Ultimate BBQ", price:32, desc:"Choose 5 mains + 3 sides + dessert", maxP:5, maxS:3},
+    ],
+    proteins: [
+      {name:"BBQ Brisket", desc:"Slow-smoked beef brisket with signature glaze"},
+      {name:"BBQ Jerk Chicken", desc:"Traditional jerk with sweet & smokey BBQ sauce"},
+      {name:"BBQ Glazed Ribs", desc:"Ribs with BBQ, sesame, chilli & coriander (+\u00A33pp)", upsell:3},
+      {name:"Korean Pork Belly", desc:"Crispy pork belly with Korean BBQ glaze"},
+      {name:"Buffalo Chicken Wings", desc:"Crispy wings tossed in buffalo sauce"},
+      {name:"Bratwurst Hot Dogs", desc:"German sausage in toasted brioche, onions & sauces"},
+      {name:"Grilled Teriyaki Salmon", desc:"Premium salmon fillet (+\u00A34pp)", upsell:4},
+      {name:"Grilled King Prawns", desc:"Shell-on with sweet chilli (+\u00A34pp)", upsell:4},
+      {name:"Halloumi Kebab (V)", desc:"With peppers, flatbread & tzatziki"},
+      {name:"Chicken Shish Kebab", desc:"With peppers, flatbread & tzatziki"},
+    ],
+    sides: [
+      {name:"Cajun Fries", desc:"Seasoned with Cajun spice blend"},
+      {name:"Asian Slaw", desc:"Crunchy slaw with sesame dressing"},
+      {name:"Caribbean Rice & Peas", desc:"Coconut rice with kidney beans"},
+      {name:"Mac & Cheese", desc:"Creamy baked mac & cheese"},
+      {name:"Greek Salad", desc:"Feta, olives, cucumber & tomato"},
+      {name:"Potato Salad", desc:"Creamy herb potato salad"},
+      {name:"Corn on the Cob", desc:"Charred & buttered"},
+      {name:"Sweet Potato Fries", desc:"Crispy sweet potato fries"},
+      {name:"Mozzarella & Tomato Salad", desc:"Fresh mozzarella, heritage tomato & basil"},
+      {name:"King Prawns", desc:"Grilled shell-on prawns (+£4pp)", upsell:4},
+    ],
+    upsells: [
+      {name:"Add Dessert Station", price:6, desc:"Chocolate cake, cheesecake & seasonal fruit"},
+    ]
+  },
+  mexican: {
+    title: "Mexican Street Food",
+    packages: [
+      {name:"Taco Bar", price:12, desc:"Choose 2 proteins + 3 sides", maxP:2, maxS:3},
+      {name:"Fiesta", price:16, desc:"Choose 3 proteins + 5 sides + guac & salsa", tag:"POPULAR", maxP:3, maxS:5},
+      {name:"Full Mexican", price:22, desc:"Choose 4 proteins + all sides", maxP:4, maxS:9},
+    ],
+    proteins: [
+      {name:"Carnitas Michoacan", desc:"Slow-braised sweet pork with coriander & green salsa"},
+      {name:"Barbacoa de Costilla", desc:"Braised shredded beef with roasted red salsa"},
+      {name:"Taco de Pollo", desc:"Marinated chicken with roasted peppers & red salsa"},
+      {name:"Al Pastor", desc:"Marinated pork with pineapple & coriander"},
+      {name:"Baja Fish", desc:"Deep-fried battered fish goujons with chipotle (+\u00A32pp)", upsell:2},
+      {name:"Vegan Jackfruit", desc:"Pulled jackfruit with Mexican spices"},
+    ],
+    sides: [
+      {name:"Fresh Tortilla Wraps", desc:"Soft flour tortillas"},
+      {name:"Corn Tacos", desc:"Crispy corn taco shells"},
+      {name:"Guacamole", desc:"Fresh smashed avocado"},
+      {name:"Tomato Salsa", desc:"Chunky fresh tomato salsa"},
+      {name:"Coriander Salsa", desc:"Vibrant green coriander salsa"},
+      {name:"Tortilla Chips", desc:"Crispy salted tortilla chips"},
+      {name:"Mexican Street Corn", desc:"Grilled elote with mayo, chilli & lime"},
+      {name:"Quesadillas", desc:"Cheese-filled grilled tortillas (+£2pp)", upsell:2},
+      {name:"Refried Beans", desc:"Smoky Mexican-style beans"},
+    ],
+    note: "All served with mixed salad. Tortillas & wraps included in all packages.",
+    upsells: [
+      {name:"Add Churros Dessert", price:5, desc:"With chocolate & dulce de leche dipping sauces"},
+      {name:"Add Nachos Station", price:4, desc:"Loaded nachos with cheese, jalapenos, sour cream & salsa"},
+    ]
+  },
+  burgers: {
+    title: "Gourmet Burgers",
+    packages: [
+      {name:"Classic", price:14, desc:"Choose 2 burgers + 2 sides", maxP:2, maxS:2},
+      {name:"Stacked", price:18, desc:"Choose 3 burgers + 3 sides", tag:"POPULAR", maxP:3, maxS:3},
+      {name:"Ultimate", price:22, desc:"Choose 4 burgers + 3 sides + milkshakes", maxP:4, maxS:3},
+    ],
+    proteins: [
+      {name:"Double Smashed Cheeseburger", desc:"2x 4oz British beef, American cheese, pickles, signature sauce"},
+      {name:"Buttermilk Chicken Burger", desc:"2x fried chicken thighs, American cheese, spicy sauce"},
+      {name:"Double Smashed Lamb", desc:"2x 4oz British lamb, caramelised onions (+\u00A31pp)", upsell:1},
+      {name:"Pulled Pork Burger", desc:"Slow-cooked pork, BBQ sauce, Mexican slaw, maple bacon"},
+      {name:"Buffalo Chicken Burger", desc:"Buttermilk chicken, buffalo sauce, blue cheese"},
+      {name:"Surf & Turf Deluxe", desc:"Beef patties topped with king prawns (+\u00A33pp)", upsell:3},
+      {name:"Piri Piri Chicken Burger", desc:"Grilled chicken thighs in signature Piri Piri"},
+      {name:"Grilled Halloumi (V)", desc:"Caramelised halloumi with guacamole"},
+      {name:"Plant Based Burger (V)", desc:"Plant-based patty with standard toppings"},
+      {name:"Truffle-Infused Beef Burger", desc:"British beef with black truffle (+\u00A32pp)", upsell:2},
+      {name:"Kimchi Pork Burger", desc:"Slow-cooked pulled pork, house-made kimchi, gochujang mayo"},
+      {name:"Miso-Glazed Chicken Burger", desc:"Grilled chicken, miso glaze, pickled daikon"},
+    ],
+    sides: [
+      {name:"French Fries", desc:"Classic crispy fries"},
+      {name:"Sweet Potato Fries", desc:"Crispy sweet potato fries"},
+      {name:"Coleslaw", desc:"Creamy house slaw"},
+      {name:"Mac & Cheese", desc:"Baked mac & cheese (+£1pp)", upsell:1},
+      {name:"Mixed Leaf Salad", desc:"Fresh mixed greens"},
+      {name:"Onion Rings", desc:"Beer-battered onion rings"},
+    ],
+    upsells: [
+      {name:"Add Milkshake Bar", price:5, desc:"14 premium flavours per person"},
+    ]
+  },
+  pizza: {
+    title: "Pizza",
+    packages: [
+      {name:"Classic", price:10, desc:"Choose 3 pizza types + 1 side", maxP:3, maxS:1},
+      {name:"Feast", price:14, desc:"Choose 4 pizza types + 2 sides", tag:"POPULAR", maxP:4, maxS:2},
+      {name:"Ultimate", price:18, desc:"Choose 5 pizza types + 3 sides + dessert", maxP:5, maxS:3},
+    ],
+    proteins: [
+      {name:"Margherita", desc:"San Marzano tomato, mozzarella, fresh basil"},
+      {name:"Pepperoni", desc:"Loaded pepperoni, oregano, mozzarella"},
+      {name:"BBQ Chicken", desc:"Pulled chicken, BBQ sauce, red onion, mozzarella"},
+      {name:"Meat Feast", desc:"Pepperoni, sausage, ham, ground beef"},
+      {name:"Vegetable Supreme (V)", desc:"Roasted peppers, mushrooms, olives, artichoke"},
+      {name:"Vegan (VG)", desc:"Plant-based cheese, roasted vegetables"},
+      {name:"Custom Toppings", desc:"Create your own combination"},
+      {name:"Truffle Margherita", desc:"San Marzano, buffalo mozzarella, truffle oil & microgreens"},
+      {name:"Spicy Honey Pepperoni", desc:"Pepperoni, mozzarella, hot honey drizzle"},
+    ],
+    sides: [
+      {name:"Mixed Leaf Salad", desc:"Fresh mixed greens"},
+      {name:"Garlic Bread", desc:"Toasted garlic & herb bread"},
+      {name:"Fries", desc:"Classic crispy fries"},
+      {name:"Coleslaw", desc:"Creamy house slaw"},
+      {name:"Dough Balls", desc:"Warm dough balls with garlic butter"},
+    ],
+    upsells: []
+  },
+  streetfood: {
+    title: "Street Food Experience",
+    packages: [
+      {name:"Taster", price:20, desc:"Choose 3 stations + 2 sides", maxP:3, maxS:2},
+      {name:"Full Experience", price:25, desc:"Choose 4 stations + 3 sides", tag:"POPULAR", maxP:4, maxS:3},
+      {name:"Festival", price:30, desc:"All 5 stations + 4 sides + dessert", maxP:5, maxS:4},
+    ],
+    proteins: [
+      {name:"Birria Quesadilla Station", desc:"Slow-cooked beef birria in crispy cheese quesadillas"},
+      {name:"Smash Burger Station", desc:"British beef double-smashed on the griddle"},
+      {name:"Steak & Cajun Fries", desc:"Rump steak with chimichurri"},
+      {name:"Fried Chicken Station", desc:"Buttermilk fried chicken with signature sauce"},
+      {name:"Jerk Chicken Station", desc:"Charcoal-grilled jerk chicken"},
+    ],
+    sides: [
+      {name:"Cajun Fries", desc:"Seasoned with Cajun spice blend"},
+      {name:"Signature Slaw", desc:"Fresh house coleslaw"},
+      {name:"Sweet Potato Fries", desc:"Crispy sweet potato fries"},
+      {name:"Mac & Cheese", desc:"Baked mac & cheese (+£1pp)", upsell:1},
+      {name:"Loaded Nachos", desc:"Cheese, jalapenos, sour cream & salsa (+£2pp)", upsell:2},
+    ],
+    upsells: [
+      {name:"Add Dessert Station", price:6, desc:"Churros, crepes & waffles"},
+    ]
+  },
+  finedining: {
+    title: "Feasting Tables",
+    packages: [
+      {name:"3-Course", price:35, desc:"Choose 1 starter + 1 main + 1 dessert", maxP:3, maxS:2},
+      {name:"4-Course", price:45, desc:"Choose 2 starters + 1 main + 1 dessert", tag:"POPULAR", maxP:4, maxS:3},
+      {name:"Prestige", price:65, desc:"Choose 3 starters + 2 mains + 1 dessert", maxP:6, maxS:4},
+    ],
+    proteins: [
+      {name:"Seared Scallops", desc:"Pea puree, morel mushrooms & beurre blanc"},
+      {name:"Grilled Octopus", desc:"Chorizo, haricot beans & smoked sea broth"},
+      {name:"Pan-Fried Sea Bass", desc:"Balsamic cherry tomatoes, asparagus, white wine sauce"},
+      {name:"Braised Short Rib", desc:"Tagliatelle, baby spinach & red wine jus"},
+      {name:"Slow Roasted Pork Belly", desc:"Creamy polenta, pearl onions, madeira sauce"},
+      {name:"Lobster Tail & Scallops", desc:"With lobster bisque (+\u00A315pp)", upsell:15},
+      {name:"Chateaubriand", desc:"Prime beef fillet, fondant potato, truffle (+\u00A320pp)", upsell:20},
+      {name:"Wild Mushroom Risotto (V)", desc:"With rocket & parmesan"},
+      {name:"Dark Chocolate Fondant", desc:"With vanilla bean ice cream"},
+    ],
+    sides: [
+      {name:"Seasonal Vegetables", desc:"Chef's selection of roasted seasonal veg"},
+      {name:"Artisan Bread", desc:"Freshly baked selection"},
+      {name:"Roast Potatoes", desc:"Crispy roast potatoes with rosemary"},
+      {name:"Truffle Fries", desc:"Hand-cut fries with truffle oil (+£3pp)", upsell:3},
+    ],
+    upsells: [
+      {name:"Add Canap\u00e9 Reception", price:8, desc:"Choose 4 from our warm & cold selection"},
+      {name:"Add Cheese Course", price:6, desc:"British artisan cheese board with chutney"},
+    ]
+  },
+  hog: {
+    title: "Hog Roast & Carvery",
+    packages: [
+      {name:"Classic Hog", price:16, desc:"Whole hog + choose 2 sides", maxP:3, maxS:2},
+      {name:"Full Feast", price:20, desc:"Whole hog + choose 4 sides", tag:"POPULAR", maxP:4, maxS:4},
+      {name:"Premium", price:26, desc:"Whole hog + choose 5 sides + dessert", maxP:4, maxS:5},
+    ],
+    proteins: [
+      {name:"Whole Slow Roasted Hog", desc:"Slow-roasted for 8+ hours with crispy crackling"},
+      {name:"Garlic, Lemon & Herb Roast Chicken", desc:"Whole roasted chicken with garlic, lemon & fresh herbs (+£3pp)", upsell:3},
+      {name:"Traditional Stuffing", desc:"Sage & onion stuffing"},
+      {name:"Apple Sauce", desc:"Classic accompaniment"},
+    ],
+    sides: [
+      {name:"Roast Potatoes", desc:"Crispy roast potatoes"},
+      {name:"Coleslaw", desc:"Creamy house slaw"},
+      {name:"Mixed Leaf Salad", desc:"Fresh mixed greens"},
+      {name:"Baguettes", desc:"Fresh crusty baguettes with butter"},
+      {name:"Bread Rolls", desc:"Soft bread rolls with butter"},
+      {name:"Fries", desc:"Classic crispy fries"},
+      {name:"Stuffing Balls", desc:"Sage & onion stuffing balls"},
+      {name:"Mac & Cheese", desc:"Baked mac & cheese (+£1pp)", upsell:1},
+      {name:"Corn on the Cob", desc:"Charred & buttered"},
+      {name:"Sweet Potato Fries", desc:"Crispy sweet potato fries"},
+    ],
+    upsells: [
+      {name:"Add Turkey", price:4, desc:"Roasted turkey with cranberry sauce"},
+    ]
+  },
+  mediterranean: {
+    title: "Mediterranean Grill",
+    packages: [
+      {name:"Mezze & Grill", price:20, desc:"Choose 3 mains + 2 sides", maxP:3, maxS:2},
+      {name:"Full Feast", price:26, desc:"Choose 4 mains + 3 sides", tag:"POPULAR", maxP:4, maxS:3},
+      {name:"Banquet", price:34, desc:"Choose 5 mains + 4 sides + dessert", maxP:5, maxS:4},
+    ],
+    proteins: [
+      {name:"Spiced Lamb Kebabs", desc:"Served with Khobez bread"},
+      {name:"Spiced Chicken Kebabs", desc:"With peppers, flatbread & tzatziki"},
+      {name:"Kofta Kebabs", desc:"Seasoned lamb kofta on the grill"},
+      {name:"Aged Sirloin Steak", desc:"Premium cut (+\u00A34pp)", upsell:4},
+      {name:"Grilled King Prawns", desc:"With garlic herb butter (+\u00A35pp)", upsell:5},
+      {name:"Ras El Hanout Seabass", desc:"North African spice blend (+\u00A33pp)", upsell:3},
+      {name:"Spiced Honey BBQ Lamb", desc:"Slow-smoked with honey glaze"},
+      {name:"Grilled Halloumi (V)", desc:"With garlic butter"},
+      {name:"Grilled Aubergine (V)", desc:"With Moroccan chickpea sauce & ricotta"},
+    ],
+    sides: [
+      {name:"Quinoa & Pomegranate Salad", desc:"Turkish brown rice, pomegranate & quinoa"},
+      {name:"Minted Couscous", desc:"Fragrant minted vegetable couscous"},
+      {name:"Hand-Cut Chips", desc:"Triple-cooked hand-cut chips"},
+      {name:"Greek Salad", desc:"Feta, olives, cucumber & tomato"},
+      {name:"Butternut Squash Salad", desc:"Roasted squash with ginger & tomato"},
+      {name:"Roast Broccoli & Miso", desc:"Charred broccoli with shiitake & miso"},
+      {name:"Heritage Tomato & Goats Cheese", desc:"With basil & balsamic"},
+      {name:"King Prawns", desc:"Giant grilled with garlic herb butter (+£5pp)", upsell:5},
+    ],
+    upsells: [
+      {name:"Add Mezze Platter", price:5, desc:"Hummus, baba ganoush, tzatziki, olives, flatbread"},
+    ]
+  },
+  paella: {
+    title: "Paella Station",
+    packages: [
+      {name:"Classic", price:16, desc:"Choose 1 paella + 2 sides", maxP:1, maxS:2},
+      {name:"Fiesta", price:22, desc:"Choose 2 paellas + 3 sides", tag:"POPULAR", maxP:2, maxS:3},
+      {name:"Full Spanish", price:28, desc:"All paellas + all sides + dessert", maxP:4, maxS:6},
+    ],
+    proteins: [
+      {name:"Mixed Paella", desc:"Chicken, chorizo, prawns, mussels & saffron rice"},
+      {name:"Chicken & Chorizo Paella", desc:"Classic Spanish with smoked chorizo"},
+      {name:"Seafood Paella", desc:"King prawns, mussels, squid & clams (+\u00A33pp)", upsell:3},
+      {name:"Vegan Paella Huertana", desc:"Seasonal vegetables, artichokes & saffron"},
+    ],
+    sides: [
+      {name:"Mixed Leaf Salad", desc:"Fresh mixed greens with lemon dressing"},
+      {name:"Crusty Bread", desc:"Warm artisan bread with olive oil"},
+      {name:"Patatas Bravas", desc:"Crispy potatoes with spicy tomato sauce"},
+      {name:"Garlic Prawns", desc:"Sizzling prawns in garlic & chilli (+\u00A34pp)", upsell:4},
+      {name:"Spanish Tortilla", desc:"Traditional potato omelette"},
+      {name:"Padron Peppers", desc:"Blistered peppers with sea salt"},
+    ],
+    upsells: [
+      {name:"Add Tapas Selection", price:6, desc:"Croquetas, olives, Serrano ham, manchego & more"},
+      {name:"Add Sangria Bar", price:5, desc:"Traditional red & white sangria"},
+    ]
+  },
+  grazing: {
+    title: "Grazing Tables",
+    packages: [
+      {name:"Classic Board", price:16, desc:"Choose 2 board items + 3 sides", maxP:2, maxS:3},
+      {name:"Premium Spread", price:22, desc:"Choose 3 board items + 4 sides", tag:"POPULAR", maxP:3, maxS:4},
+      {name:"Luxury Experience", price:30, desc:"Choose all items + all sides", maxP:5, maxS:6},
+    ],
+    proteins: [
+      {name:"British Charcuterie", desc:"Bresaola, salami, prosciutto & coppa"},
+      {name:"Artisan Cheese Selection", desc:"British & continental cheeses"},
+      {name:"Smoked Salmon", desc:"Scottish smoked salmon with capers & cream cheese"},
+      {name:"Fresh Seafood", desc:"Prawns, crab & smoked mackerel (+\u00A35pp)", upsell:5},
+      {name:"Vegan Board", desc:"Hummus, baba ganoush, falafel, olives & crudit\u00e9s"},
+    ],
+    sides: [
+      {name:"Sourdough & Crackers", desc:"Artisan sourdough, oatcakes & crackers"},
+      {name:"Fresh Fruit", desc:"Seasonal fruit display"},
+      {name:"Honey & Preserves", desc:"Local honey, chutneys & preserves"},
+      {name:"Mixed Olives", desc:"Marinated with garlic & herbs"},
+      {name:"Nuts & Seeds", desc:"Spiced mixed nuts & seeds"},
+      {name:"Crudit\u00e9s & Dips", desc:"Fresh vegetables with hummus & tzatziki"},
+    ],
+    upsells: [
+      {name:"Add Focaccia Station", price:3, desc:"Freshly baked with rosemary & garlic butter"},
+    ]
+  },
+  christmas: {
+    title: "Christmas Feast",
+    packages: [
+      {name:"Festive Carvery", price:24, desc:"Choose 2 meats + 3 sides + pudding", maxP:2, maxS:3},
+      {name:"Christmas Dinner", price:35, desc:"Choose 3 meats + 4 sides + crackers", tag:"POPULAR", maxP:3, maxS:4},
+      {name:"Premium Festive", price:48, desc:"Choose all meats + 5 sides + mulled wine", maxP:5, maxS:5},
+    ],
+    proteins: [
+      {name:"Roast Turkey", desc:"Free-range turkey with sage & cranberry stuffing"},
+      {name:"Honey Glazed Ham", desc:"Slow-roasted with clove & honey glaze"},
+      {name:"Roast Beef", desc:"Slow-roasted British beef with red wine gravy (+£4pp)", upsell:4},
+      {name:"Nut Roast (V)", desc:"Chestnut, cranberry & herb roast with gravy"},
+      {name:"Yorkshire Pudding Wraps", desc:"Turkey, stuffing & cranberry in a giant Yorkshire"},
+    ],
+    sides: [
+      {name:"Roast Potatoes", desc:"Crispy goose-fat roast potatoes"},
+      {name:"Honey Roasted Parsnips", desc:"With carrots & thyme"},
+      {name:"Brussels Sprouts", desc:"With pancetta & chestnuts"},
+      {name:"Pigs in Blankets", desc:"Chipolatas wrapped in bacon"},
+      {name:"Cauliflower Cheese", desc:"Creamy baked cauliflower"},
+      {name:"Cranberry & Orange Relish", desc:"Sweet & tangy cranberry sauce"},
+      {name:"Bread Sauce", desc:"Traditional creamy bread sauce"},
+    ],
+    upsells: [
+      {name:"Add Christmas Pudding", price:5, desc:"Traditional pud with brandy sauce & cream"},
+      {name:"Add Mince Pie Station", price:3, desc:"Freshly baked mince pies with brandy butter"},
+      {name:"Add Mulled Wine", price:4, desc:"Spiced red wine served warm"},
+    ]
+  }
+};
+
+let selectedMenu = null;
+let selectedAddons = new Set();
+let selectedPackageIdx = -1;
+let selectedProteins = new Set();
+let selectedSides = new Set();
+let selectedUpsells = new Set();
+
+// Sliding scale: fewer guests = higher per-person price (covers fixed costs)
+// Base prices are for 80+ guests. Scales up to cover £300-400 fixed costs on small jobs.
+// Competitors: budget £15-20pp, buffet £20-30pp, sit-down £40-50pp, premium £55-70pp
+function getScaledPrice(basePrice, guests) {
+  if (guests >= 80) return basePrice;
+  if (guests >= 50) return Math.round(basePrice * 1.2);   // +20%
+  if (guests >= 35) return Math.round(basePrice * 1.45);  // +45%
+  if (guests >= 25) return Math.round(basePrice * 1.75);  // +75%
+  if (guests >= 15) return Math.round(basePrice * 2.2);   // +120%
+  return Math.round(basePrice * 3);                        // Under 15: ×3
+}
+
+// Price tier labels for display
+function getPriceTierLabel(guests) {
+  if (guests >= 80) return '80+ guests — best value';
+  if (guests >= 50) return '50-79 guests';
+  if (guests >= 35) return '35-49 guests';
+  if (guests >= 25) return '25-34 guests';
+  if (guests >= 15) return '15-24 guests — intimate service';
+  return 'Under 15 guests — private chef experience';
+}
+let currentSeason = 'summer';
+
+function setSeason(season) {
+  currentSeason = season;
+  document.getElementById('btnSummer').classList.toggle('active', season === 'summer');
+  document.getElementById('btnWinter').classList.toggle('active', season === 'winter');
+
+  document.querySelectorAll('.menu-card').forEach(card => {
+    const cardSeason = card.dataset.season;
+    const visible = cardSeason === 'both' || cardSeason === season;
+    card.style.display = visible ? '' : 'none';
+
+    // If the hidden card is currently selected, deselect it
+    if (!visible && card.classList.contains('selected')) {
+      card.classList.remove('selected');
+      selectedMenu = null;
+      selectedPackageIdx = -1;
+      selectedProteins.clear();
+      selectedSides.clear();
+      selectedUpsells.clear();
+      document.getElementById('menuDetail').style.display = 'none';
+    }
+  });
+}
+
+// Auto-detect season on load: months 4-10 = summer, 11-3 = winter
+(function() {
+  const month = new Date().getMonth() + 1; // 1-12
+  const season = (month >= 4 && month <= 10) ? 'summer' : 'winter';
+  setSeason(season);
+})();
+
+function selectMenu(card) {
+  document.querySelectorAll('.menu-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  const menuKey = card.dataset.menu;
+  const data = MENU_DETAILS[menuKey];
+  selectedPackageIdx = -1;
+  selectedProteins.clear();
+  selectedSides.clear();
+  selectedUpsells.clear();
+
+  selectedMenu = {
+    name: card.querySelector('.name').textContent,
+    price: parseInt(card.dataset.price),
+    key: menuKey
+  };
+
+  const detail = document.getElementById('menuDetail');
+  if (!data) return;
+
+  let html = `<h3>${data.title}</h3>`;
+
+  // Package tiers
+  html += `<div class="section-title">Step 1 — Choose Your Package</div>`;
+  html += `<div class="guide-text">Select one package below. Prices shown are per person for 80+ guests — smaller groups see adjusted pricing at checkout.</div>`;
+  html += `<div class="pkg-grid">`;
+  data.packages.forEach((pkg, i) => {
+    html += `<div class="pkg-option" data-idx="${i}" onclick="selectPackage(${i})">`;
+    if (pkg.tag) html += `<span class="pkg-tag">${pkg.tag}</span>`;
+    html += `<div class="pkg-name">${pkg.name}</div>`;
+    html += `<div class="pkg-price">&pound;${pkg.price}pp</div>`;
+    html += `<div class="pkg-desc">${pkg.desc}</div></div>`;
+  });
+  html += `</div>`;
+
+  // Proteins / mains
+  const proteinLabel = menuKey === 'pizza' ? 'Pizza Types' : menuKey === 'streetfood' ? 'Stations' : menuKey === 'grazing' ? 'Board Items' : 'Proteins &amp; Mains';
+  html += `<div class="section-title">Step 2 — Choose Your ${proteinLabel} <span id="proteinCounter" style="float:right;font-size:0.75rem;font-weight:600;color:var(--accent);">0 / ? selected</span></div>`;
+  html += `<div class="guide-text">Tick the items you'd like. Your package determines how many you can pick. Premium items have a supplement.</div>`;
+  html += `<div class="protein-grid">`;
+  data.proteins.forEach((p, i) => {
+    html += `<div class="protein-item" data-idx="${i}" onclick="toggleProtein(this, ${i})">`;
+    html += `<div class="pcheck"></div><div>`;
+    html += `<div class="p-name">${p.name}</div>`;
+    html += `<div class="p-desc">${p.desc}</div>`;
+    if (p.upsell) html += `<div class="p-upsell">+&pound;${p.upsell}pp supplement</div>`;
+    html += `</div></div>`;
+  });
+  html += `</div>`;
+
+  // Sides (selectable like proteins)
+  html += `<div class="section-title">Step 3 — Choose Your Sides <span id="sideCounter" style="float:right;font-size:0.75rem;font-weight:600;color:var(--accent);">0 / ? selected</span></div>`;
+  html += `<div class="guide-text">Tick the sides you'd like. Your package determines how many you can pick.</div>`;
+  html += `<div class="protein-grid">`;
+  data.sides.forEach((s, i) => {
+    html += `<div class="protein-item" data-sidx="${i}" onclick="toggleSide(this, ${i})">`;
+    html += `<div class="pcheck"></div><div>`;
+    html += `<div class="p-name">${s.name}</div>`;
+    html += `<div class="p-desc">${s.desc}</div>`;
+    if (s.upsell) html += `<div class="p-upsell">+£${s.upsell}pp supplement</div>`;
+    html += `</div></div>`;
+  });
+  html += `</div>`;
+
+  // Menu-specific upsells
+  if (data.upsells && data.upsells.length) {
+    html += `<div class="section-title">Step 4 — Upgrade Your Event</div>`;
+    html += `<div class="guide-text">Optional extras to make your event even more special.</div>`;
+    data.upsells.forEach((u, i) => {
+      html += `<div class="upsell-item" data-idx="${i}" onclick="toggleMenuUpsell(this, ${i})">`;
+      html += `<div class="pcheck"></div><div>`;
+      html += `<span class="u-name">${u.name}</span> <span class="u-price">&pound;${u.price}pp</span>`;
+      html += `<div class="u-desc">${u.desc}</div>`;
+      html += `</div></div>`;
+    });
+  }
+
+  // Note
+  if (data.note) html += `<div class="note">${data.note}</div>`;
+
+  detail.innerHTML = html;
+  detail.style.display = 'block';
+
+  // Auto-select the tagged (popular) package
+  const tagged = data.packages.findIndex(p => p.tag);
+  if (tagged >= 0) selectPackage(tagged);
+}
+
+function selectPackage(idx) {
+  selectedPackageIdx = idx;
+  const data = MENU_DETAILS[selectedMenu.key];
+  const pkg = data.packages[idx];
+  selectedMenu.price = pkg.price;
+  // Clear selections when switching packages (limits may differ)
+  selectedProteins.clear();
+  selectedSides.clear();
+  document.querySelectorAll('#menuDetail .protein-item').forEach(el => el.classList.remove('checked'));
+  // Update counter text
+  updateCounters();
+  document.querySelectorAll('#menuDetail .pkg-option').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+  });
+}
+
+function toggleProtein(el, idx) {
+  if (selectedPackageIdx < 0) return alert('Please select a package first');
+  const pkg = MENU_DETAILS[selectedMenu.key].packages[selectedPackageIdx];
+  if (!selectedProteins.has(idx) && selectedProteins.size >= pkg.maxP) {
+    return; // At limit — can't add more
+  }
+  el.classList.toggle('checked');
+  selectedProteins.has(idx) ? selectedProteins.delete(idx) : selectedProteins.add(idx);
+  updateCounters();
+}
+
+function toggleSide(el, idx) {
+  if (selectedPackageIdx < 0) return alert('Please select a package first');
+  const pkg = MENU_DETAILS[selectedMenu.key].packages[selectedPackageIdx];
+  if (!selectedSides.has(idx) && selectedSides.size >= pkg.maxS) {
+    return; // At limit — can't add more
+  }
+  el.classList.toggle('checked');
+  selectedSides.has(idx) ? selectedSides.delete(idx) : selectedSides.add(idx);
+  updateCounters();
+}
+
+function updateCounters() {
+  if (selectedPackageIdx < 0 || !selectedMenu) return;
+  const pkg = MENU_DETAILS[selectedMenu.key].packages[selectedPackageIdx];
+  const pc = document.getElementById('proteinCounter');
+  const sc = document.getElementById('sideCounter');
+  if (pc) {
+    pc.textContent = `${selectedProteins.size} / ${pkg.maxP} selected`;
+    pc.style.color = selectedProteins.size >= pkg.maxP ? 'var(--green)' : 'var(--accent)';
+  }
+  if (sc) {
+    sc.textContent = `${selectedSides.size} / ${pkg.maxS} selected`;
+    sc.style.color = selectedSides.size >= pkg.maxS ? 'var(--green)' : 'var(--accent)';
+  }
+}
+
+function toggleMenuUpsell(el, idx) {
+  el.classList.toggle('checked');
+  selectedUpsells.has(idx) ? selectedUpsells.delete(idx) : selectedUpsells.add(idx);
+}
+
+function toggleAddon(el) {
+  el.classList.toggle('selected');
+  const key = el.dataset.addon;
+  selectedAddons.has(key) ? selectedAddons.delete(key) : selectedAddons.add(key);
+  const isOpen = el.classList.contains('selected');
+  // Show/hide sub-menus
+  const subMenus = {staff: 'staffOptions', canapes: 'canapesOptions', premiumdessert: 'dessertOptions'};
+  if (subMenus[key]) {
+    document.getElementById(subMenus[key]).style.display = isOpen ? 'block' : 'none';
+  }
+}
+
+function calculateQuote() {
+  if (!selectedMenu) return alert('Please select a menu');
+  if (selectedPackageIdx < 0) return alert('Please select a package tier');
+  const guests = parseInt(document.getElementById('guests').value);
+  if (!guests || guests < 1) return alert('Please enter number of guests');
+  if (!document.getElementById('eventDate').value) return alert('Please select a date');
+  if (!document.getElementById('name').value.trim() || !document.getElementById('email').value.trim())
+    return alert('Please enter your name and email');
+
+  const data = MENU_DETAILS[selectedMenu.key];
+  const pkg = data.packages[selectedPackageIdx];
+
+  const day = new Date(document.getElementById('eventDate').value).getDay();
+  const isWeekend = (day === 0 || day === 5 || day === 6);
+  const minSpend = isWeekend ? 1000 : 600;
+  const effectiveGuests = Math.max(guests, 15);
+
+  // Sliding scale — fewer guests = higher per-person price
+  const scaledPrice = getScaledPrice(pkg.price, effectiveGuests);
+
+  let lines = [];
+  lines.push({ label: `${data.title} — ${pkg.name} Package`, amount: scaledPrice * effectiveGuests, detail: `${effectiveGuests} × £${scaledPrice}pp` });
+
+  // Protein upsells (also scaled)
+  selectedProteins.forEach(idx => {
+    const p = data.proteins[idx];
+    if (p.upsell) {
+      const su = getScaledPrice(p.upsell, effectiveGuests);
+      lines.push({ label: `${p.name} supplement`, amount: su * effectiveGuests, detail: `${effectiveGuests} × £${su}pp` });
+    }
+  });
+
+  // Side upsells (also scaled)
+  selectedSides.forEach(idx => {
+    const s = data.sides[idx];
+    if (s.upsell) {
+      const su = getScaledPrice(s.upsell, effectiveGuests);
+      lines.push({ label: `${s.name} supplement`, amount: su * effectiveGuests, detail: `${effectiveGuests} × £${su}pp` });
+    }
+  });
+
+  // Menu-specific upsells (also scaled)
+  selectedUpsells.forEach(idx => {
+    const u = data.upsells[idx];
+    const su = getScaledPrice(u.price, effectiveGuests);
+    lines.push({ label: u.name, amount: su * effectiveGuests, detail: `${effectiveGuests} × £${su}pp` });
+  });
+
+  // Global addons (dessert station, canapes, staff etc.)
+  document.querySelectorAll('.addon.selected').forEach(el => {
+    const key = el.dataset.addon;
+    const n = el.querySelector('.addon-title').textContent.split('—')[0].trim();
+    if (key === 'staff') {
+      const tier = document.getElementById('staffTier').value;
+      if (tier && tier !== '0' && tier !== 'custom') {
+        const cost = parseInt(tier);
+        lines.push({ label: 'Waiting Staff', amount: cost, detail: 'flat rate' });
+      }
+    } else {
+      const p = parseInt(el.dataset.price);
+      lines.push({ label: n, amount: p * effectiveGuests, detail: `${effectiveGuests} × £${p}` });
+    }
+  });
+
+  let subtotal = lines.reduce((s, l) => s + l.amount, 0);
+  const mw = document.getElementById('minWarning');
+  if (subtotal < minSpend) { mw.style.display = 'block'; document.getElementById('minAmount').textContent = minSpend; subtotal = minSpend; } else { mw.style.display = 'none'; }
+
+  let html = '';
+  lines.forEach(l => html += `<div class="line"><span>${l.label} <span style="color:var(--dim)">(${l.detail})</span></span><span>£${l.amount.toLocaleString()}</span></div>`);
+  if (effectiveGuests < 80) html += `<div class="line"><span>Pricing tier <span style="color:var(--dim)">(${getPriceTierLabel(effectiveGuests)})</span></span><span>—</span></div>`;
+  if (guests < 15) html += `<div class="line"><span>Min guest adjustment <span style="color:var(--dim)">(${guests}→15)</span></span><span>—</span></div>`;
+  html += `<div class="line"><span>Estimated Total</span><span>£${subtotal.toLocaleString()}</span></div>`;
+
+  document.getElementById('breakdown').innerHTML = html;
+  document.getElementById('quoteTotal').textContent = `£${subtotal.toLocaleString()}`;
+  const perHead = Math.ceil(subtotal/effectiveGuests);
+  document.getElementById('quotePerHead').textContent = `£${perHead} per person · ${effectiveGuests} guests`;
+  // Show savings hint for small groups
+  if (effectiveGuests < 50) {
+    document.getElementById('quotePerHead').textContent += ` · Save with 50+ guests`;
+  }
+
+  const r = document.getElementById('quoteResult');
+  r.style.display = 'block';
+  r.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  document.getElementById('quoteBtn').textContent = 'Update Quote';
+}
+
+function submitEnquiry() {
+  const g = document.getElementById('guests').value;
+  const data = MENU_DETAILS[selectedMenu.key];
+  const pkg = data.packages[selectedPackageIdx];
+  const proteins = Array.from(selectedProteins).map(i => data.proteins[i].name).join(', ');
+  const sides = Array.from(selectedSides).map(i => data.sides[i].name).join(', ');
+  const menuUpsells = Array.from(selectedUpsells).map(i => data.upsells[i].name).join(', ');
+  const addons = Array.from(document.querySelectorAll('.addon.selected')).map(a => a.querySelector('.addon-title').textContent.split('—')[0].trim()).join(', ');
+  const canapes = Array.from(document.querySelectorAll('#canapesGrid input:checked')).map(i => i.value).join(', ');
+  const dessert = (document.querySelector('#dessertGrid input:checked') || {}).value || '';
+  const subject = encodeURIComponent(`Quote Request — ${data.title} ${pkg.name} — ${g} guests`);
+  const body = encodeURIComponent(
+    `BASH EVENTS QUOTE REQUEST\n${'='.repeat(40)}\n\nName: ${document.getElementById('name').value}\nEmail: ${document.getElementById('email').value}\nPhone: ${document.getElementById('phone').value || 'N/A'}\n\nMenu: ${data.title}\nPackage: ${pkg.name} (£${pkg.price}pp)\nSelected Mains: ${proteins || 'Not specified'}\nSelected Sides: ${sides || 'Not specified'}\nGuests: ${g}\nDate: ${document.getElementById('eventDate').value}\nType: ${document.getElementById('eventType').value}\nLocation: ${document.getElementById('location').value}\nMenu Upgrades: ${menuUpsells || 'None'}\nCanapés: ${canapes || 'None'}\nDessert: ${dessert || 'None'}\nExtras: ${addons || 'None'}\n\nTotal: ${document.getElementById('quoteTotal').textContent}\n\nNotes: ${document.getElementById('notes').value || 'None'}\n\n—\nGenerated by Bash Events Quote Tool`
+  );
+  window.location.href = `mailto:info@bashevents.co.uk?subject=${subject}&body=${body}`;
+  document.getElementById('quoteResult').style.display = 'none';
+  const c = document.getElementById('confirmation');
+  c.style.display = 'block';
+  c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetForm() {
+  selectedMenu = null; selectedAddons.clear(); selectedPackageIdx = -1; selectedProteins.clear(); selectedSides.clear(); selectedUpsells.clear();
+  document.querySelectorAll('.menu-card').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('.addon').forEach(a => a.classList.remove('selected'));
+  document.querySelectorAll('.addon-submenu').forEach(s => s.style.display = 'none');
+  document.querySelectorAll('.addon-check-grid input').forEach(i => i.checked = false);
+  document.getElementById('menuDetail').style.display = 'none';
+  ['guests','eventDate','eventType','location','name','email','phone','notes'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('quoteResult').style.display = 'none';
+  document.getElementById('confirmation').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.getElementById('eventDate').min = new Date().toISOString().split('T')[0];
+
+// ── Booking & Payment Flow ──
+
+let currentQuoteData = null;
+
+// Store quote data when calculated (hook into existing calculateQuote)
+const _origCalcQuote = calculateQuote;
+calculateQuote = function() {
+  _origCalcQuote();
+  // After quote is shown, compute deposit
+  const totalText = document.getElementById('quoteTotal').textContent.replace(/[^0-9]/g, '');
+  const total = parseInt(totalText);
+  if (total > 0) {
+    const deposit = Math.round(total * 0.2);
+    document.getElementById('depositAmount').textContent = `£${deposit.toLocaleString()}`;
+    document.getElementById('payAmount').textContent = `£${deposit.toLocaleString()}`;
+    currentQuoteData = buildBookingData(total, deposit);
+  }
+};
+
+function buildBookingData(total, deposit) {
+  const data = MENU_DETAILS[selectedMenu.key];
+  const pkg = data.packages[selectedPackageIdx];
+  const proteins = Array.from(selectedProteins).map(i => data.proteins[i].name);
+  const sides = Array.from(selectedSides).map(i => data.sides[i].name);
+  const menuUpsellNames = Array.from(selectedUpsells).map(i => data.upsells[i].name);
+  const addonNames = Array.from(document.querySelectorAll('.addon.selected')).map(a => a.querySelector('.addon-title').textContent.split('—')[0].trim());
+  const canapes = Array.from(document.querySelectorAll('#canapesGrid input:checked')).map(i => i.value);
+  const dessert = (document.querySelector('#dessertGrid input:checked') || {}).value || '';
+  const staffTier = document.getElementById('staffTier').value;
+
+  return {
+    customerName: document.getElementById('name').value,
+    customerEmail: document.getElementById('email').value,
+    customerPhone: document.getElementById('phone').value || '',
+    eventDate: document.getElementById('eventDate').value,
+    eventType: document.getElementById('eventType').value,
+    location: document.getElementById('location').value,
+    guestCount: parseInt(document.getElementById('guests').value),
+    menuKey: selectedMenu.key,
+    menuTitle: data.title,
+    packageName: pkg.name,
+    packagePrice: pkg.price,
+    selectedProteins: proteins,
+    selectedSides: sides,
+    menuUpsells: menuUpsellNames,
+    addons: addonNames,
+    selectedCanapes: canapes,
+    selectedDessert: dessert,
+    staffOption: staffTier !== '0' ? document.getElementById('staffTier').selectedOptions[0].text : '',
+    subtotal: total,
+    depositAmount: deposit,
+    balanceDue: total - deposit,
+    notes: document.getElementById('notes').value || '',
+  };
+}
+
+function showBookingForm() {
+  if (!currentQuoteData) return;
+
+  // Build summary
+  let summary = '';
+  summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;"><span style="color:var(--dim)">Menu</span><span>${currentQuoteData.menuTitle} — ${currentQuoteData.packageName}</span></div>`;
+  summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;"><span style="color:var(--dim)">Guests</span><span>${currentQuoteData.guestCount}</span></div>`;
+  summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;"><span style="color:var(--dim)">Date</span><span>${currentQuoteData.eventDate}</span></div>`;
+  summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;"><span style="color:var(--dim)">Mains</span><span style="text-align:right;max-width:60%">${currentQuoteData.selectedProteins.join(', ') || 'None'}</span></div>`;
+  summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;"><span style="color:var(--dim)">Sides</span><span style="text-align:right;max-width:60%">${currentQuoteData.selectedSides.join(', ') || 'None'}</span></div>`;
+  if (currentQuoteData.selectedCanapes.length) summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;"><span style="color:var(--dim)">Canap&eacute;s</span><span style="text-align:right;max-width:60%">${currentQuoteData.selectedCanapes.join(', ')}</span></div>`;
+  if (currentQuoteData.selectedDessert) summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;"><span style="color:var(--dim)">Dessert</span><span>${currentQuoteData.selectedDessert}</span></div>`;
+  summary += `<div style="display:flex;justify-content:space-between;padding:8px 0;font-size:1.1rem;font-weight:700;"><span>Total</span><span>£${currentQuoteData.subtotal.toLocaleString()}</span></div>`;
+  summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;color:var(--green);font-weight:600;"><span>Deposit (20%)</span><span>£${currentQuoteData.depositAmount.toLocaleString()}</span></div>`;
+
+  document.getElementById('bookingSummary').innerHTML = summary;
+  document.getElementById('bookingAddress').value = currentQuoteData.location || '';
+
+  document.getElementById('quoteResult').style.display = 'none';
+  document.getElementById('bookingForm').style.display = 'block';
+  document.getElementById('bookingForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function hideBookingForm() {
+  document.getElementById('bookingForm').style.display = 'none';
+  document.getElementById('quoteResult').style.display = 'block';
+}
+
+async function processPayment() {
+  const btn = document.getElementById('payBtn');
+  const origText = btn.innerHTML;
+  btn.innerHTML = 'Processing...';
+  btn.disabled = true;
+
+  // Update with booking form data
+  currentQuoteData.location = document.getElementById('bookingAddress').value || currentQuoteData.location;
+  currentQuoteData.notes = document.getElementById('bookingNotes').value || currentQuoteData.notes;
+
+  try {
+    const response = await fetch('/api/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(currentQuoteData),
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+      if (data.error.includes('not configured')) {
+        // Stripe not set up yet — fall back to enquiry
+        alert('Online payments coming soon! Sending as enquiry instead.');
+        submitEnquiry();
+        return;
+      }
+      throw new Error(data.error);
+    }
+
+    // Redirect to Stripe Checkout
+    if (data.sessionUrl) {
+      window.location.href = data.sessionUrl;
+    }
+  } catch (err) {
+    console.error('Payment error:', err);
+    alert('Something went wrong. Please try again or use the enquiry option.');
+    btn.innerHTML = origText;
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>
