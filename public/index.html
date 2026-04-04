@@ -636,6 +636,30 @@
       </div>
       <div class="selected-badge">&check;</div>
     </div>
+    <div class="menu-card" data-menu="greek" data-price="14" data-season="summer" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Greek gyros" loading="lazy">
+      <div class="overlay">
+        <div class="name">Greek Street Food</div>
+        <div class="price">From &pound;14pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card" data-menu="asian" data-price="16" data-season="both" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1617093727343-374698b1b08d?w=600&q=80" alt="Asian street food" loading="lazy">
+      <div class="overlay">
+        <div class="name">Asian Street Food</div>
+        <div class="price">From &pound;16pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card" data-menu="loaded" data-price="12" data-season="both" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1585109649139-366815a0d713?w=600&q=80" alt="Loaded fries" loading="lazy">
+      <div class="overlay">
+        <div class="name">Loaded Fries &amp; Mac</div>
+        <div class="price">From &pound;12pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
   </div>
 
   <!-- Menu detail panel -->
@@ -880,6 +904,7 @@ const MENU_DETAILS = {
       {name:"Seasoned Corn on the Cob", desc:"Charred & seasoned (2pcs)"},
       {name:"Sweet Potato Fries", desc:"Crispy sweet potato fries (+£1pp)", upsell:1},
       {name:"French Fries", desc:"Classic crispy fries"},
+      {name:"Jamaican Patties", desc:"Spiced beef or vegetable stuffed pastry (2pcs)"},
     ],
     upsells: [
       {name:"Add Milkshake Bar", price:5, desc:"14 flavours \u2014 Oreo, Biscoff, Kinder Bueno & more"},
@@ -905,6 +930,10 @@ const MENU_DETAILS = {
       {name:"Halloumi Kebab (V)", desc:"With peppers, flatbread & tzatziki"},
       {name:"Chicken Shish Kebab", desc:"With peppers, flatbread & tzatziki"},
       {name:"Chimichurri Lamb Chops", desc:"Herb-marinated lamb chops with fresh chimichurri"},
+      {name:"Hot Honey Brisket", desc:"Slow-smoked brisket with hot honey & pickles"},
+      {name:"Butterflied Lamb Leg", desc:"Herb-marinated whole lamb leg (+£5pp)", upsell:5},
+      {name:"Venison Sausage", desc:"Premium venison & juniper sausage"},
+      {name:"Grilled Octopus", desc:"Charred octopus with chimichurri (+£5pp)", upsell:5},
     ],
     sides: [
       {name:"Cajun Fries", desc:"Seasoned with Cajun spice blend"},
@@ -935,6 +964,10 @@ const MENU_DETAILS = {
       {name:"Al Pastor", desc:"Marinated pork with pineapple & coriander"},
       {name:"Baja Fish", desc:"Deep-fried battered fish goujons with chipotle (+\u00A32pp)", upsell:2},
       {name:"Vegan Jackfruit", desc:"Pulled jackfruit with Mexican spices"},
+      {name:"Cochinita Pibil", desc:"Slow-roasted pork in achiote & citrus"},
+      {name:"Birria de Res", desc:"Braised beef birria with consommé (+£2pp)", upsell:2},
+      {name:"Chicken Tinga", desc:"Shredded chicken in smoky chipotle & tomato"},
+      {name:"Tuna Tostada", desc:"Seared tuna on crispy tortilla with avocado (+£3pp)", upsell:3},
     ],
     sides: [
       {name:"Fresh Tortilla Wraps", desc:"Soft flour tortillas"},
@@ -973,6 +1006,8 @@ const MENU_DETAILS = {
       {name:"Truffle-Infused Beef Burger", desc:"British beef with black truffle (+\u00A32pp)", upsell:2},
       {name:"Kimchi Pork Burger", desc:"Slow-cooked pulled pork, house-made kimchi, gochujang mayo"},
       {name:"Miso-Glazed Chicken Burger", desc:"Grilled chicken, miso glaze, pickled daikon"},
+      {name:"Korean Fried Chicken Burger", desc:"Crispy fried chicken, gochujang glaze, pickled daikon"},
+      {name:"Vegan Mushroom Burger", desc:"Portobello mushroom, vegan cheese, truffle mayo"},
     ],
     sides: [
       {name:"French Fries", desc:"Classic crispy fries"},
@@ -1003,6 +1038,10 @@ const MENU_DETAILS = {
       {name:"Custom Toppings", desc:"Create your own combination"},
       {name:"Truffle Margherita", desc:"San Marzano, buffalo mozzarella, truffle oil & microgreens"},
       {name:"Spicy Honey Pepperoni", desc:"Pepperoni, mozzarella, hot honey drizzle"},
+      {name:"Quattro Formaggi", desc:"Mozzarella, gorgonzola, taleggio & parmesan"},
+      {name:"Prosciutto e Funghi", desc:"Prosciutto, mushrooms, mozzarella & rocket"},
+      {name:"Florentine", desc:"Spinach, egg, garlic, cream & mozzarella"},
+      {name:"Calzone", desc:"Folded pizza with ham, mushroom, ricotta & mozzarella"},
     ],
     sides: [
       {name:"Mixed Leaf Salad", desc:"Fresh mixed greens"},
@@ -1026,6 +1065,8 @@ const MENU_DETAILS = {
       {name:"Steak & Cajun Fries", desc:"Rump steak with chimichurri (+£3pp)", upsell:3},
       {name:"Fried Chicken Station", desc:"Buttermilk fried chicken with signature sauce"},
       {name:"Jerk Chicken Station", desc:"Charcoal-grilled jerk chicken"},
+      {name:"Chicken & Waffles Station", desc:"Buttermilk fried chicken on Belgian waffles with maple & hot sauce"},
+      {name:"Portobello Mushroom Station (V)", desc:"Grilled portobello with halloumi, roasted peppers & pesto"},
     ],
     sides: [
       {name:"Cajun Fries", desc:"Seasoned with Cajun spice blend"},
@@ -1033,6 +1074,7 @@ const MENU_DETAILS = {
       {name:"Sweet Potato Fries", desc:"Crispy sweet potato fries (+£1pp)", upsell:1},
       {name:"Mac & Cheese", desc:"Baked mac & cheese"},
       {name:"Loaded Nachos", desc:"Cheese, jalapenos, sour cream & salsa (+£2pp)", upsell:2},
+      {name:"Onion Rings", desc:"Beer-battered onion rings"},
     ],
     upsells: [
       {name:"Add Dessert Station", price:6, desc:"Churros, crepes & waffles"},
@@ -1054,6 +1096,12 @@ const MENU_DETAILS = {
       {name:"Lobster Tail & Scallops", desc:"With lobster bisque (+\u00A315pp)", upsell:15},
       {name:"Chateaubriand", desc:"Prime beef fillet, fondant potato, truffle (+\u00A320pp)", upsell:20},
       {name:"Wild Mushroom Risotto (V)", desc:"With rocket & parmesan"},
+      {name:"Harissa Chicken", desc:"Spiced chicken, couscous, pomegranate & yoghurt"},
+      {name:"Bavette Steak", desc:"Chargrilled bavette with chimichurri & roasted bone marrow (+£8pp)", upsell:8},
+      {name:"Turkish Lamb Ribs", desc:"Slow-cooked lamb ribs with sumac & pomegranate (+£6pp)", upsell:6},
+      {name:"Truffle Gnocchi (V)", desc:"Pan-fried gnocchi with wild mushrooms & truffle cream"},
+      {name:"Aubergine Parmigiana (V)", desc:"Layered aubergine, tomato, mozzarella & basil"},
+      {name:"Barolo Braised Lamb", desc:"Lamb shoulder slow-braised in Barolo wine (+£10pp)", upsell:10},
     ],
     sides: [
       {name:"Seasonal Vegetables", desc:"Chef's selection of roasted seasonal veg"},
@@ -1082,6 +1130,7 @@ const MENU_DETAILS = {
       {name:"Garlic, Lemon & Herb Roast Chicken", desc:"Whole roasted chicken with garlic, lemon & fresh herbs (+£3pp)", upsell:3},
       {name:"Traditional Stuffing", desc:"Sage & onion stuffing"},
       {name:"Apple Sauce", desc:"Classic accompaniment"},
+      {name:"Jamaican Jerk Hog Roast", desc:"Whole hog with jerk marinade & Caribbean sides"},
     ],
     sides: [
       {name:"Roast Potatoes", desc:"Crispy roast potatoes"},
@@ -1094,6 +1143,8 @@ const MENU_DETAILS = {
       {name:"Mac & Cheese", desc:"Baked mac & cheese (+£1pp)", upsell:1},
       {name:"Corn on the Cob", desc:"Charred & buttered"},
       {name:"Sweet Potato Fries", desc:"Crispy sweet potato fries"},
+      {name:"Rice & Peas", desc:"Traditional Jamaican coconut rice"},
+      {name:"Plantain", desc:"Fried sweet plantain slices"},
     ],
     upsells: [
       {name:"Add Turkey", price:4, desc:"Roasted turkey with cranberry sauce"},
@@ -1214,6 +1265,94 @@ const MENU_DETAILS = {
       {name:"Add Mince Pie Station", price:3, desc:"Freshly baked mince pies with brandy butter"},
       {name:"Add Mulled Wine", price:4, desc:"Spiced red wine served warm"},
     ]
+  },
+  greek: {
+    title: "Greek Street Food",
+    packages: [
+      {name:"Gyros Box", price:14, desc:"Choose 2 proteins + 2 sides", maxP:2, maxS:2},
+      {name:"Full Greek", price:18, desc:"Choose 3 proteins + 3 sides + baklava", tag:"POPULAR", maxP:3, maxS:3},
+      {name:"Symposium", price:24, desc:"Choose 4 proteins + 4 sides + dessert", maxP:4, maxS:4},
+    ],
+    proteins: [
+      {name:"Lamb Gyros", desc:"Slow-roasted lamb, tzatziki, onion & tomato in warm pitta"},
+      {name:"Pork Souvlaki", desc:"Chargrilled pork skewers with lemon & oregano"},
+      {name:"Chicken Souvlaki", desc:"Marinated chicken skewers with garlic yoghurt"},
+      {name:"Halloumi Souvlaki (V)", desc:"Grilled halloumi with peppers & mint"},
+      {name:"Falafel Wrap (VG)", desc:"Crispy falafel, hummus, pickled turnip & tahini"},
+      {name:"Zucchini Fritters (V)", desc:"Courgette & feta fritters with dill yoghurt"},
+    ],
+    sides: [
+      {name:"Greek Fries", desc:"Crispy fries with oregano, feta & lemon"},
+      {name:"Hummus & Pitta", desc:"Creamy hummus with warm pitta bread"},
+      {name:"Tzatziki", desc:"Cucumber, garlic & yoghurt dip"},
+      {name:"Greek Salad", desc:"Feta, olives, cucumber, tomato & red onion"},
+      {name:"Spanakopita", desc:"Crispy filo pastry with spinach & feta"},
+      {name:"Dolmades", desc:"Stuffed vine leaves with rice & herbs"},
+    ],
+    upsells: [
+      {name:"Add Baklava Dessert", price:4, desc:"Pistachio & walnut baklava with honey syrup"},
+    ]
+  },
+  asian: {
+    title: "Asian Street Food",
+    packages: [
+      {name:"Bento", price:16, desc:"Choose 2 mains + 2 sides", maxP:2, maxS:2},
+      {name:"Feast", price:22, desc:"Choose 3 mains + 3 sides", tag:"POPULAR", maxP:3, maxS:3},
+      {name:"Grand Asian", price:28, desc:"Choose 4 mains + 4 sides + dessert", maxP:4, maxS:4},
+    ],
+    proteins: [
+      {name:"Teriyaki Chicken", desc:"Grilled chicken thigh with teriyaki glaze & sesame"},
+      {name:"Teriyaki Beef", desc:"Seared beef strips with teriyaki & spring onion"},
+      {name:"Teriyaki Salmon", desc:"Grilled salmon fillet with teriyaki (+£3pp)", upsell:3},
+      {name:"Teppanyaki King Prawns", desc:"Seared prawns with garlic & soy (+£4pp)", upsell:4},
+      {name:"Korean Fried Chicken", desc:"Crispy double-fried chicken with gochujang glaze"},
+      {name:"Korean BBQ Beef (Bulgogi)", desc:"Marinated beef bulgogi with sesame"},
+      {name:"Korean BBQ Short Rib (Galbi)", desc:"Sweet soy marinated short rib (+£4pp)", upsell:4},
+      {name:"Crispy Tofu (VG)", desc:"Sesame-crusted tofu with sweet chilli"},
+    ],
+    sides: [
+      {name:"Steamed Rice", desc:"Jasmine or sticky rice"},
+      {name:"Egg Fried Rice", desc:"Wok-fried with egg, spring onion & soy"},
+      {name:"Kimchi", desc:"Traditional fermented cabbage"},
+      {name:"Edamame", desc:"Steamed & salted edamame beans"},
+      {name:"Asian Slaw", desc:"Crunchy slaw with sesame & lime dressing"},
+      {name:"Gyoza", desc:"Pan-fried pork or vegetable dumplings (+£2pp)", upsell:2},
+      {name:"Bao Buns", desc:"Fluffy steamed bao with hoisin (+£2pp)", upsell:2},
+    ],
+    upsells: [
+      {name:"Add Mochi Ice Cream", price:4, desc:"Japanese mochi in matcha, mango & strawberry"},
+    ]
+  },
+  loaded: {
+    title: "Loaded Fries & Mac",
+    packages: [
+      {name:"Classic", price:12, desc:"Choose 2 toppings + 1 side", maxP:2, maxS:1},
+      {name:"Stacked", price:16, desc:"Choose 3 toppings + 2 sides", tag:"POPULAR", maxP:3, maxS:2},
+      {name:"All In", price:20, desc:"Choose 4 toppings + 3 sides", maxP:4, maxS:3},
+    ],
+    proteins: [
+      {name:"BBQ Pulled Pork Fries", desc:"Slow-cooked pork, BBQ sauce, crispy onions & cheese"},
+      {name:"Buffalo Chicken Fries", desc:"Fried chicken, buffalo sauce, blue cheese & spring onion"},
+      {name:"Bacon Cheeseburger Fries", desc:"Smashed beef, bacon, American cheese & burger sauce"},
+      {name:"Philly Cheesesteak Fries", desc:"Shaved steak, peppers, onions & melted provolone"},
+      {name:"Carnitas Fries", desc:"Mexican pulled pork, salsa, guac, sour cream & jalapenos"},
+      {name:"BBQ Pulled Pork Mac", desc:"Mac & cheese topped with BBQ pulled pork"},
+      {name:"Buffalo Chicken Mac", desc:"Mac & cheese with buffalo chicken & blue cheese crumbs"},
+      {name:"Bacon Cheeseburger Mac", desc:"Mac & cheese with beef, bacon & pickles"},
+      {name:"Vegan Loaded Fries (VG)", desc:"Jackfruit, vegan cheese sauce, jalapenos & salsa"},
+      {name:"Vegan Loaded Mac (VG)", desc:"Plant-based mac with roasted peppers & cashew cream"},
+    ],
+    sides: [
+      {name:"Coleslaw", desc:"Creamy house slaw"},
+      {name:"Mixed Leaf Salad", desc:"Fresh mixed greens"},
+      {name:"Onion Rings", desc:"Beer-battered onion rings"},
+      {name:"Corn on the Cob", desc:"Charred & buttered"},
+      {name:"Garlic Bread", desc:"Toasted garlic & herb bread"},
+    ],
+    note: "Choose fries or mac & cheese as your base. All toppings can go on either base.",
+    upsells: [
+      {name:"Add Milkshake Bar", price:5, desc:"14 premium flavours per person"},
+    ]
   }
 };
 
@@ -1312,7 +1451,7 @@ function selectMenu(card) {
   html += `</div>`;
 
   // Proteins / mains
-  const proteinLabel = menuKey === 'pizza' ? 'Pizza Types' : menuKey === 'streetfood' ? 'Stations' : menuKey === 'grazing' ? 'Board Items' : 'Proteins &amp; Mains';
+  const proteinLabel = menuKey === 'pizza' ? 'Pizza Types' : menuKey === 'streetfood' ? 'Stations' : menuKey === 'grazing' ? 'Board Items' : menuKey === 'loaded' ? 'Toppings' : 'Proteins &amp; Mains';
   html += `<div class="section-title">Step 2 — Choose Your ${proteinLabel} <span id="proteinCounter" style="float:right;font-size:0.75rem;font-weight:600;color:var(--accent);">0 / ? selected</span></div>`;
   html += `<div class="guide-text">Tick the items you'd like. Your package determines how many you can pick. Premium items have a supplement.</div>`;
   html += `<div class="protein-grid">`;
