@@ -647,7 +647,9 @@
   <span class="progress-sep">&rsaquo;</span>
   <div class="progress-step" id="ps4"><div class="progress-dot"></div> Contact</div>
   <span class="progress-sep">&rsaquo;</span>
-  <div class="progress-step" id="ps5"><div class="progress-dot"></div> Quote</div>
+  <div class="progress-step" id="ps5"><div class="progress-dot"></div> Booking</div>
+  <span class="progress-sep">&rsaquo;</span>
+  <div class="progress-step" id="ps6"><div class="progress-dot"></div> Confirm</div>
 </div>
 
 <div class="hero">
@@ -1072,12 +1074,259 @@
     <div style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:16px;">Secure with 20% Deposit</div>
     <div id="bookingSummary" style="text-align:left;margin-bottom:20px;padding:16px;background:#161616;border-radius:10px;font-size:0.85rem;line-height:1.8;"></div>
 
-    <div style="text-align:left;">
-      <label style="font-size:0.8rem;color:var(--dim);margin-bottom:4px;display:block;">Event Address / Venue</label>
-      <input type="text" id="bookingAddress" placeholder="Full event address" style="width:100%;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:0.9rem;margin-bottom:12px;">
+    <style>
+      .booking-section { margin-bottom:28px; }
+      .booking-section-title { font-size:0.75rem;color:var(--dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border); }
+      .booking-row { margin-bottom:14px;text-align:left; }
+      .booking-label { font-size:0.82rem;color:var(--text2);margin-bottom:6px;display:block; }
+      .booking-input { width:100%;padding:11px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:0.9rem;box-sizing:border-box; }
+      .booking-input:focus { outline:none;border-color:var(--accent); }
+      .booking-select { width:100%;padding:11px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:0.9rem;appearance:none;box-sizing:border-box; }
+      .yn-group { display:flex;gap:8px;flex-wrap:wrap; }
+      .yn-btn { padding:8px 22px;border-radius:50px;border:1px solid var(--border);background:transparent;color:var(--text2);font-family:inherit;font-size:0.82rem;cursor:pointer;transition:all 0.2s; }
+      .yn-btn.selected-yes { background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600; }
+      .yn-btn.selected-no { background:var(--surface);border-color:var(--accent);color:var(--accent);font-weight:600; }
+      .yn-btn.selected-unsure { background:#333;border-color:#666;color:var(--text2);font-weight:600; }
+      .yn-note { margin-top:8px;font-size:0.78rem;color:var(--green);padding:8px 12px;background:rgba(0,214,143,0.07);border-radius:6px;display:none; }
+      .yn-note.show { display:block; }
+      .allergen-checkboxes { display:flex;flex-wrap:wrap;gap:8px;margin-top:10px; }
+      .allergen-check { display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:0.82rem;transition:border-color 0.2s; }
+      .allergen-check input { accent-color:var(--accent);cursor:pointer; }
+      .allergen-check:has(input:checked) { border-color:var(--accent);color:var(--accent); }
+      .terms-box { background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;max-height:180px;overflow-y:auto;font-size:0.78rem;color:var(--text2);line-height:1.7;text-align:left; }
+      .terms-box ul { margin:0;padding-left:18px; }
+      .terms-box li { margin-bottom:4px; }
+      .terms-accept { display:flex;align-items:flex-start;gap:10px;margin-top:14px;text-align:left; }
+      .terms-accept input[type=checkbox] { accent-color:var(--accent);width:16px;height:16px;margin-top:2px;flex-shrink:0;cursor:pointer; }
+      .terms-accept label { font-size:0.85rem;color:var(--text2);cursor:pointer; }
+      .allergen-extra { margin-top:14px;display:none; }
+      .allergen-extra.show { display:block; }
+    </style>
 
-      <label style="font-size:0.8rem;color:var(--dim);margin-bottom:4px;display:block;">Any additional notes for the kitchen</label>
-      <textarea id="bookingNotes" placeholder="Allergies, dietary requirements, special requests..." style="width:100%;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:0.9rem;min-height:80px;resize:vertical;margin-bottom:16px;"></textarea>
+    <!-- VENUE ADDRESS -->
+    <div class="booking-section">
+      <div class="booking-section-title">Venue Details</div>
+      <div class="booking-row">
+        <label class="booking-label">Event Address / Venue</label>
+        <input type="text" id="bookingAddress" placeholder="Full event address including postcode" class="booking-input">
+      </div>
+    </div>
+
+    <!-- VENUE FACILITIES -->
+    <div class="booking-section">
+      <div class="booking-section-title">Venue Facilities</div>
+
+      <div class="booking-row">
+        <label class="booking-label">Is there a kitchen available?</label>
+        <div class="yn-group" data-field="venueKitchen">
+          <button class="yn-btn" onclick="setYN(this,'venueKitchen','yes')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'venueKitchen','no')">No</button>
+          <button class="yn-btn" onclick="setYN(this,'venueKitchen','unsure')">Not sure</button>
+        </div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Is there an oven?</label>
+        <div class="yn-group" data-field="venueOven">
+          <button class="yn-btn" onclick="setYN(this,'venueOven','yes')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'venueOven','no')">No</button>
+          <button class="yn-btn" onclick="setYN(this,'venueOven','unsure')">Not sure</button>
+        </div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Are there adequate tables for food preparation?</label>
+        <div class="yn-group" data-field="venuePrepTables">
+          <button class="yn-btn" onclick="setYN(this,'venuePrepTables','yes')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'venuePrepTables','no')">No</button>
+          <button class="yn-btn" onclick="setYN(this,'venuePrepTables','unsure')">Not sure</button>
+        </div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Is there a sink with running water?</label>
+        <div class="yn-group" data-field="venueSink">
+          <button class="yn-btn" onclick="setYN(this,'venueSink','yes')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'venueSink','no')">No</button>
+          <button class="yn-btn" onclick="setYN(this,'venueSink','unsure')">Not sure</button>
+        </div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Is there a toilet on site?</label>
+        <div class="yn-group" data-field="venueToilet">
+          <button class="yn-btn" onclick="setYN(this,'venueToilet','yes')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'venueToilet','no')">No</button>
+          <button class="yn-btn" onclick="setYN(this,'venueToilet','unsure')">Not sure</button>
+        </div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Is there electricity available?</label>
+        <div class="yn-group" data-field="venueElectricity">
+          <button class="yn-btn" onclick="setYN(this,'venueElectricity','yes')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'venueElectricity','no')">No</button>
+          <button class="yn-btn" onclick="setYN(this,'venueElectricity','unsure')">Not sure</button>
+        </div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Is it gas or electric?</label>
+        <select id="venueGasElectric" class="booking-select">
+          <option value="">Select&hellip;</option>
+          <option value="gas">Gas</option>
+          <option value="electric">Electric</option>
+          <option value="both">Both</option>
+          <option value="neither">Neither</option>
+          <option value="not_sure">Not sure</option>
+        </select>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Is there parking for a catering van?</label>
+        <div class="yn-group" data-field="venueParking">
+          <button class="yn-btn" onclick="setYN(this,'venueParking','yes')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'venueParking','no')">No</button>
+          <button class="yn-btn" onclick="setYN(this,'venueParking','unsure')">Not sure</button>
+        </div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Is there adequate loading access?</label>
+        <div class="yn-group" data-field="venueLoading">
+          <button class="yn-btn" onclick="setYN(this,'venueLoading','yes')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'venueLoading','no')">No</button>
+          <button class="yn-btn" onclick="setYN(this,'venueLoading','unsure')">Not sure</button>
+        </div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Indoor or outdoor event?</label>
+        <div class="yn-group" data-field="venueIndoorOutdoor">
+          <button class="yn-btn" onclick="setYN(this,'venueIndoorOutdoor','indoor')">Indoor</button>
+          <button class="yn-btn" onclick="setYN(this,'venueIndoorOutdoor','outdoor')">Outdoor</button>
+          <button class="yn-btn" onclick="setYN(this,'venueIndoorOutdoor','both')">Both</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EQUIPMENT & SUPPLIES -->
+    <div class="booking-section">
+      <div class="booking-section-title">Equipment &amp; Supplies</div>
+
+      <div class="booking-row">
+        <label class="booking-label">Do you need cutlery provided?</label>
+        <div class="yn-group" data-field="needCutlery">
+          <button class="yn-btn" onclick="setYN(this,'needCutlery','yes','cutleryNote')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'needCutlery','no','cutleryNote')">No</button>
+        </div>
+        <div class="yn-note" id="cutleryNote">Biodegradable cutlery included as standard.</div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Do you need plates provided?</label>
+        <div class="yn-group" data-field="needPlates">
+          <button class="yn-btn" onclick="setYN(this,'needPlates','yes','platesNote')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'needPlates','no','platesNote')">No</button>
+        </div>
+        <div class="yn-note" id="platesNote">Biodegradable plates included as standard.</div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Do you need serving tables?</label>
+        <div class="yn-group" data-field="needTables">
+          <button class="yn-btn" onclick="setYN(this,'needTables','yes','tablesNote')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'needTables','no','tablesNote')">No</button>
+        </div>
+        <div class="yn-note" id="tablesNote">We don&rsquo;t supply tables but can recommend a hire company.</div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Do you need napkins?</label>
+        <div class="yn-group" data-field="needNapkins">
+          <button class="yn-btn" onclick="setYN(this,'needNapkins','yes','napkinsNote')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'needNapkins','no','napkinsNote')">No</button>
+        </div>
+        <div class="yn-note" id="napkinsNote">Napkins included as standard.</div>
+      </div>
+    </div>
+
+    <!-- ALLERGEN INFORMATION -->
+    <div class="booking-section">
+      <div class="booking-section-title">Guest Allergen Information</div>
+
+      <div class="booking-row">
+        <label class="booking-label">Do any guests have allergies?</label>
+        <div class="yn-group" data-field="hasAllergies">
+          <button class="yn-btn" onclick="setYN(this,'hasAllergies','yes');toggleAllergenSection(true)">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'hasAllergies','no');toggleAllergenSection(false)">No</button>
+        </div>
+      </div>
+
+      <div class="allergen-extra" id="allergenSection">
+        <div class="booking-row">
+          <label class="booking-label">How many guests with allergies?</label>
+          <input type="number" id="allergyGuestCount" min="1" placeholder="e.g. 3" class="booking-input" style="max-width:160px;">
+        </div>
+        <div class="booking-row">
+          <label class="booking-label">Select all applicable allergens:</label>
+          <div class="allergen-checkboxes">
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Gluten"> Gluten</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Dairy"> Dairy</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Eggs"> Eggs</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Fish"> Fish</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Crustaceans"> Crustaceans</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Nuts"> Nuts</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Peanuts"> Peanuts</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Soy"> Soy</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Sesame"> Sesame</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Celery"> Celery</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Mustard"> Mustard</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Sulphites"> Sulphites</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Lupin"> Lupin</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Molluscs"> Molluscs</label>
+          </div>
+        </div>
+        <div class="booking-row">
+          <label class="booking-label">Any other dietary requirements or allergen details:</label>
+          <textarea id="allergenDetails" placeholder="e.g. 2 guests are coeliac, 1 is vegan..." class="booking-input" style="min-height:80px;resize:vertical;"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADDITIONAL NOTES -->
+    <div class="booking-section">
+      <div class="booking-section-title">Additional Notes</div>
+      <div class="booking-row">
+        <label class="booking-label">Anything else we should know?</label>
+        <textarea id="bookingNotes" placeholder="Special requests, access instructions, timing requirements..." class="booking-input" style="min-height:80px;resize:vertical;"></textarea>
+      </div>
+    </div>
+
+    <!-- TERMS & CONDITIONS -->
+    <div class="booking-section">
+      <div class="booking-section-title">Terms &amp; Conditions</div>
+      <div class="terms-box">
+        <ul>
+          <li>A non-refundable deposit of 20% is required to secure your date.</li>
+          <li>The remaining balance is due 14 days before the event.</li>
+          <li>Cancellations within 7 days of the event are charged at 100% of the total.</li>
+          <li>Cancellations 7&ndash;14 days before the event: 50% of the total is charged.</li>
+          <li>Cancellations 14&ndash;30 days before the event: deposit is forfeited.</li>
+          <li>Menu changes can be made up to 14 days before the event.</li>
+          <li>Final guest numbers must be confirmed 7 days before the event.</li>
+          <li>We require access to the venue at least 2 hours before service.</li>
+          <li>All food is prepared fresh on-site using quality ingredients.</li>
+          <li>Food hygiene rating: 5/5.</li>
+          <li>We carry full public liability insurance.</li>
+          <li>Prices include professional chefs, food van/setup, biodegradable plates &amp; cutlery, and waste removal.</li>
+          <li>Travel is included within 150km of London.</li>
+        </ul>
+      </div>
+      <div class="terms-accept">
+        <input type="checkbox" id="termsAccepted">
+        <label for="termsAccepted">I have read and agree to the terms and conditions.</label>
+      </div>
     </div>
 
     <button class="btn btn-green" id="payBtn" onclick="processPayment()" style="width:100%;padding:16px;font-size:1rem;">
@@ -2024,7 +2273,7 @@ function toggleAddon(el) {
 }
 
 function updateProgress() {
-  const steps = ['ps1','ps2','ps3','ps4','ps5'];
+  const steps = ['ps1','ps2','ps3','ps4','ps5','ps6'];
   const hasMenu = !!selectedMenu;
   const hasDetails = document.getElementById('guests').value && document.getElementById('eventDate').value;
   const hasExtras = selectedAddons.size > 0;
@@ -2033,11 +2282,16 @@ function updateProgress() {
   steps.forEach(s => {
     document.getElementById(s).className = 'progress-step';
   });
-  if (hasMenu) { document.getElementById('ps1').className = 'progress-step done'; document.getElementById('ps2').className = 'progress-step active'; }
-  if (hasDetails) { document.getElementById('ps2').className = 'progress-step done'; document.getElementById('ps3').className = 'progress-step active'; }
-  if (hasDetails) { document.getElementById('ps3').className = 'progress-step' + (hasExtras ? ' done' : ' active'); }
-  if (hasContact) { document.getElementById('ps4').className = 'progress-step done'; document.getElementById('ps5').className = 'progress-step active'; }
-  if (!hasMenu) document.getElementById('ps1').className = 'progress-step active';
+  if (!hasMenu) { document.getElementById('ps1').className = 'progress-step active'; return; }
+  document.getElementById('ps1').className = 'progress-step done';
+  document.getElementById('ps2').className = 'progress-step active';
+  if (!hasDetails) return;
+  document.getElementById('ps2').className = 'progress-step done';
+  document.getElementById('ps3').className = 'progress-step' + (hasExtras ? ' done' : ' active');
+  if (hasExtras) { document.getElementById('ps4').className = 'progress-step active'; }
+  if (!hasContact) return;
+  document.getElementById('ps4').className = 'progress-step done';
+  document.getElementById('ps5').className = 'progress-step active';
 }
 
 function calculateQuote() {
@@ -2247,22 +2501,96 @@ function showBookingForm() {
 
   document.getElementById('quoteResult').style.display = 'none';
   document.getElementById('bookingForm').style.display = 'block';
-  document.getElementById('bookingForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  document.getElementById('bookingForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Mark step 5 active in progress bar
+  ['ps1','ps2','ps3','ps4'].forEach(s => document.getElementById(s).className = 'progress-step done');
+  document.getElementById('ps5').className = 'progress-step active';
+  document.getElementById('ps6').className = 'progress-step';
 }
 
 function hideBookingForm() {
   document.getElementById('bookingForm').style.display = 'none';
   document.getElementById('quoteResult').style.display = 'block';
+  // Revert progress bar to quote state
+  ['ps1','ps2','ps3','ps4'].forEach(s => document.getElementById(s).className = 'progress-step done');
+  document.getElementById('ps5').className = 'progress-step active';
+  document.getElementById('ps6').className = 'progress-step';
+}
+
+// Booking form state
+const bookingAnswers = {};
+
+function setYN(btn, field, value, noteId) {
+  bookingAnswers[field] = value;
+  // Clear all sibling buttons
+  const group = btn.closest('.yn-group');
+  group.querySelectorAll('.yn-btn').forEach(b => b.className = 'yn-btn');
+  // Highlight selected
+  if (value === 'yes') btn.classList.add('selected-yes');
+  else if (value === 'no') btn.classList.add('selected-no');
+  else btn.classList.add('selected-unsure');
+  // Show/hide note
+  if (noteId) {
+    const note = document.getElementById(noteId);
+    if (note) note.classList.toggle('show', value === 'yes');
+  }
+}
+
+function toggleAllergenSection(show) {
+  const el = document.getElementById('allergenSection');
+  if (el) el.classList.toggle('show', show);
 }
 
 async function processPayment() {
+  // Validate T&Cs
+  if (!document.getElementById('termsAccepted').checked) {
+    alert('Please accept the terms and conditions before proceeding.');
+    document.getElementById('termsAccepted').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
   const btn = document.getElementById('payBtn');
   const origText = btn.innerHTML;
   btn.innerHTML = 'Processing...';
   btn.disabled = true;
 
+  // Collect venue facility answers
   currentQuoteData.location = document.getElementById('bookingAddress').value || currentQuoteData.location;
   currentQuoteData.notes = document.getElementById('bookingNotes').value || currentQuoteData.notes;
+
+  currentQuoteData.venueFacilities = {
+    kitchen: bookingAnswers.venueKitchen || null,
+    oven: bookingAnswers.venueOven || null,
+    prepTables: bookingAnswers.venuePrepTables || null,
+    sink: bookingAnswers.venueSink || null,
+    toilet: bookingAnswers.venueToilet || null,
+    electricity: bookingAnswers.venueElectricity || null,
+    gasElectric: document.getElementById('venueGasElectric').value || null,
+    parking: bookingAnswers.venueParking || null,
+    loadingAccess: bookingAnswers.venueLoading || null,
+    indoorOutdoor: bookingAnswers.venueIndoorOutdoor || null,
+  };
+
+  currentQuoteData.equipment = {
+    cutlery: bookingAnswers.needCutlery || null,
+    plates: bookingAnswers.needPlates || null,
+    tables: bookingAnswers.needTables || null,
+    napkins: bookingAnswers.needNapkins || null,
+  };
+
+  currentQuoteData.allergenInfo = {
+    hasAllergies: bookingAnswers.hasAllergies || null,
+    guestCount: document.getElementById('allergyGuestCount').value || null,
+    allergens: Array.from(document.querySelectorAll('input[name="allergen"]:checked')).map(c => c.value),
+    details: document.getElementById('allergenDetails').value || null,
+  };
+
+  currentQuoteData.termsAccepted = true;
+
+  // Mark confirm step active
+  ['ps1','ps2','ps3','ps4','ps5'].forEach(s => document.getElementById(s).className = 'progress-step done');
+  document.getElementById('ps6').className = 'progress-step active';
 
   try {
     const response = await fetch('/api/create-checkout', {

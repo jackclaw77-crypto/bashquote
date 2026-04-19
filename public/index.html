@@ -101,6 +101,43 @@
     margin: 24px auto;
   }
 
+  /* ── Progress bar ── */
+  .progress-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,8,8,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    transition: opacity 0.3s;
+  }
+  .progress-step {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .progress-step.active { color: var(--accent); }
+  .progress-step.done { color: var(--green); }
+  .progress-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--border-light);
+    transition: all 0.3s;
+  }
+  .progress-step.active .progress-dot { background: var(--accent); box-shadow: 0 0 8px rgba(255,107,43,0.4); }
+  .progress-step.done .progress-dot { background: var(--green); }
+  .progress-sep { color: var(--border-light); font-size: 0.7rem; margin: 0 4px; }
+
   /* ── Container ── */
   .container {
     max-width: 780px;
@@ -117,6 +154,39 @@
     color: var(--accent);
     margin-bottom: 16px;
     margin-top: 40px;
+  }
+
+  /* ── Tier toggle (Street Food / Premium) ── */
+  .tier-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 16px;
+  }
+  .tier-btn {
+    padding: 10px 24px;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    color: var(--dim);
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    letter-spacing: 0.3px;
+  }
+  .tier-btn:first-child { border-radius: 40px 0 0 40px; border-right: none; }
+  .tier-btn:last-child { border-radius: 0 40px 40px 0; }
+  .tier-btn:hover { border-color: var(--border-light); color: var(--text2); }
+  .tier-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .tier-btn.premium.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: var(--gold-soft);
   }
 
   /* ── Menu cards with real photos ── */
@@ -136,6 +206,7 @@
   }
   .menu-card:hover { transform: translateY(-3px); border-color: #333; }
   .menu-card.selected { border-color: var(--accent); box-shadow: 0 0 30px rgba(255,107,43,0.2); }
+  .menu-card.premium-card.selected { border-color: var(--gold); box-shadow: 0 0 30px rgba(212,169,83,0.2); }
   .menu-card img {
     width: 100%;
     height: 100%;
@@ -164,6 +235,7 @@
     font-weight: 600;
     color: var(--accent);
   }
+  .menu-card.premium-card .price { color: var(--gold); }
   .menu-card .selected-badge {
     position: absolute;
     top: 12px;
@@ -180,6 +252,19 @@
     font-weight: 900;
   }
   .menu-card.selected .selected-badge { display: flex; }
+  .menu-card .premium-tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: linear-gradient(135deg, #D4A953, #B8941F);
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
 
   /* ── Menu detail panel ── */
   .menu-detail {
@@ -238,6 +323,7 @@
   .menu-detail .protein-item.checked .pcheck { border-color: var(--accent); background: var(--accent); color: #fff; }
   .menu-detail .protein-item .p-name { font-weight: 600; font-size: 0.85rem; color: var(--text); }
   .menu-detail .protein-item .p-desc { font-size: 0.75rem; color: var(--dim); margin-top: 1px; }
+  .menu-detail .protein-item .p-allergens { font-size: 0.65rem; color: #888; margin-top: 2px; letter-spacing: 0.3px; }
   .menu-detail .protein-item .p-upsell { font-size: 0.7rem; color: var(--accent2); font-weight: 600; margin-top: 2px; }
 
   .menu-detail .upsell-item {
@@ -348,7 +434,7 @@
     display: flex; align-items: center; gap: 8px;
     padding: 8px 12px; background: var(--surface); border: 1px solid var(--border);
     border-radius: 8px; font-size: 0.8rem; color: var(--text2);
-    cursor: pointer; transition: all 0.2s;
+    cursor: pointer; transition: all 0.2s; text-transform: none; letter-spacing: 0; margin: 0;
   }
   .addon-check-grid label:hover { border-color: var(--border-light); }
   .addon-check-grid label:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); color: var(--text); }
@@ -402,6 +488,12 @@
     box-shadow: 0 4px 20px rgba(0,214,143,0.15);
   }
   .btn-green:hover { transform: translateY(-2px); box-shadow: 0 8px 35px rgba(0,214,143,0.3); }
+  .btn-whatsapp {
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.15);
+  }
+  .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 8px 35px rgba(37,211,102,0.3); }
   .btn-ghost {
     background: transparent;
     color: var(--dim);
@@ -478,6 +570,7 @@
     border-top: 1px solid var(--border);
     margin-top: 40px;
   }
+  .footer a { color: var(--accent); text-decoration: none; }
 
   /* ── Season Toggle ── */
   .season-toggle {
@@ -510,6 +603,19 @@
     box-shadow: 0 0 20px rgba(255,107,43,0.15);
   }
 
+  /* ── Allergen tag ── */
+  .allergen-tag {
+    display: inline-block;
+    font-size: 0.55rem;
+    font-weight: 700;
+    background: rgba(255,255,255,0.06);
+    color: #888;
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-right: 2px;
+    letter-spacing: 0.3px;
+  }
+
   @media (max-width: 600px) {
     .menu-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
     .row { flex-direction: column; gap: 0; }
@@ -517,30 +623,61 @@
     .container { padding: 10px 14px 40px; }
     .season-toggle { gap: 8px; padding: 18px 14px 6px; }
     .season-btn { padding: 10px 16px; font-size: 0.78rem; }
+    .progress-bar { gap: 4px; padding: 10px 12px; }
+    .progress-step { font-size: 0.6rem; gap: 4px; }
+    .progress-sep { margin: 0 2px; }
+    .tier-toggle { flex-wrap: wrap; }
+    .tier-btn { font-size: 0.72rem; padding: 8px 14px; }
+    .menu-card .name { font-size: 0.95rem; }
+    .menu-card .price { font-size: 0.75rem; }
+    .quote-result { padding: 24px 16px; }
+    .quote-result .total { font-size: 2.5rem; }
   }
 </style>
 </head>
 <body>
 
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar">
+  <div class="progress-step active" id="ps1"><div class="progress-dot"></div> Menu</div>
+  <span class="progress-sep">&rsaquo;</span>
+  <div class="progress-step" id="ps2"><div class="progress-dot"></div> Details</div>
+  <span class="progress-sep">&rsaquo;</span>
+  <div class="progress-step" id="ps3"><div class="progress-dot"></div> Extras</div>
+  <span class="progress-sep">&rsaquo;</span>
+  <div class="progress-step" id="ps4"><div class="progress-dot"></div> Contact</div>
+  <span class="progress-sep">&rsaquo;</span>
+  <div class="progress-step" id="ps5"><div class="progress-dot"></div> Booking</div>
+  <span class="progress-sep">&rsaquo;</span>
+  <div class="progress-step" id="ps6"><div class="progress-dot"></div> Confirm</div>
+</div>
+
 <div class="hero">
   <img src="logo.png" alt="Bash Events Logo" style="width:340px;height:340px;object-fit:contain;margin:0 auto 24px;display:block;filter:brightness(1.3) contrast(1.1) saturate(1.2);">
-  <div class="hero-badge">London &amp; Essex</div>
+  <div class="hero-badge">London &amp; Essex &middot; Est. 2021</div>
   <h1>Premium Event &amp; Street Food<br><span>Catering</span></h1>
   <div class="hero-divider"></div>
   <p>From intimate dinners to weddings and festivals. Real chefs, real flavour, zero stress. Get your instant quote below.</p>
 </div>
 
 <div class="season-toggle">
-  <button class="season-btn" id="btnSummer" onclick="setSeason('summer')">Summer Season (Apr–Oct)</button>
-  <button class="season-btn" id="btnWinter" onclick="setSeason('winter')">Winter Season (Nov–Mar)</button>
+  <button class="season-btn" id="btnSummer" onclick="setSeason('summer')">Summer Season (Apr&ndash;Oct)</button>
+  <button class="season-btn" id="btnWinter" onclick="setSeason('winter')">Winter Season (Nov&ndash;Mar)</button>
 </div>
 
 <div class="container">
 
   <!-- STEP 1: Menu Selection -->
-  <div class="section-label">Step 1 &mdash; Choose Your Menu</div>
+  <div class="section-label" id="step1">Step 1 &mdash; Choose Your Menu</div>
+
+  <div class="tier-toggle">
+    <button class="tier-btn active" id="btnStreetFood" onclick="setTier('street')">Street Food &amp; Casual</button>
+    <button class="tier-btn premium" id="btnPremium" onclick="setTier('premium')">Premium &amp; Fine Dining</button>
+  </div>
+
   <div class="menu-grid" id="menuGrid">
-    <div class="menu-card" data-menu="caribbean" data-price="14" data-season="both" onclick="selectMenu(this)">
+    <!-- STREET FOOD TIER -->
+    <div class="menu-card" data-menu="caribbean" data-price="14" data-season="both" data-tier="street" onclick="selectMenu(this)">
       <img src="carib_new.jpg" alt="Jerk chicken on charcoal grill" loading="lazy">
       <div class="overlay">
         <div class="name">Caribbean</div>
@@ -548,7 +685,7 @@
       </div>
       <div class="selected-badge">&check;</div>
     </div>
-    <div class="menu-card" data-menu="bbq" data-price="20" data-season="summer" onclick="selectMenu(this)">
+    <div class="menu-card" data-menu="bbq" data-price="25" data-season="summer" data-tier="street" onclick="selectMenu(this)">
       <img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=600&q=80" alt="BBQ" loading="lazy">
       <div class="overlay">
         <div class="name">BBQ</div>
@@ -556,7 +693,7 @@
       </div>
       <div class="selected-badge">&check;</div>
     </div>
-    <div class="menu-card" data-menu="mexican" data-price="12" data-season="both" onclick="selectMenu(this)">
+    <div class="menu-card" data-menu="mexican" data-price="12" data-season="both" data-tier="street" onclick="selectMenu(this)">
       <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80" alt="Mexican tacos" loading="lazy">
       <div class="overlay">
         <div class="name">Mexican</div>
@@ -564,7 +701,7 @@
       </div>
       <div class="selected-badge">&check;</div>
     </div>
-    <div class="menu-card" data-menu="burgers" data-price="14" data-season="both" onclick="selectMenu(this)">
+    <div class="menu-card" data-menu="burgers" data-price="14" data-season="both" data-tier="street" onclick="selectMenu(this)">
       <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80" alt="Gourmet burger" loading="lazy">
       <div class="overlay">
         <div class="name">Gourmet Burgers</div>
@@ -572,7 +709,7 @@
       </div>
       <div class="selected-badge">&check;</div>
     </div>
-    <div class="menu-card" data-menu="pizza" data-price="10" data-season="both" onclick="selectMenu(this)">
+    <div class="menu-card" data-menu="pizza" data-price="10" data-season="both" data-tier="street" onclick="selectMenu(this)">
       <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&q=80" alt="Pizza" loading="lazy">
       <div class="overlay">
         <div class="name">Pizza</div>
@@ -580,7 +717,7 @@
       </div>
       <div class="selected-badge">&check;</div>
     </div>
-    <div class="menu-card" data-menu="streetfood" data-price="20" data-season="summer" onclick="selectMenu(this)">
+    <div class="menu-card" data-menu="streetfood" data-price="25" data-season="summer" data-tier="street" onclick="selectMenu(this)">
       <img src="streetfood.jpg" alt="Bash Events food truck at night" loading="lazy">
       <div class="overlay">
         <div class="name">Street Food Experience</div>
@@ -588,15 +725,7 @@
       </div>
       <div class="selected-badge">&check;</div>
     </div>
-    <div class="menu-card" data-menu="finedining" data-price="35" data-season="both" onclick="selectMenu(this)">
-      <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=600&q=80" alt="Feasting tables" loading="lazy">
-      <div class="overlay">
-        <div class="name">Feasting Tables</div>
-        <div class="price">From &pound;35pp</div>
-      </div>
-      <div class="selected-badge">&check;</div>
-    </div>
-    <div class="menu-card" data-menu="hog" data-price="16" data-season="winter" onclick="selectMenu(this)">
+    <div class="menu-card" data-menu="hog" data-price="18" data-season="both" data-tier="street" onclick="selectMenu(this)">
       <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80" alt="Hog roast" loading="lazy">
       <div class="overlay">
         <div class="name">Hog Roast &amp; Carvery</div>
@@ -604,7 +733,7 @@
       </div>
       <div class="selected-badge">&check;</div>
     </div>
-    <div class="menu-card" data-menu="mediterranean" data-price="20" data-season="summer" onclick="selectMenu(this)">
+    <div class="menu-card" data-menu="mediterranean" data-price="20" data-season="summer" data-tier="street" onclick="selectMenu(this)">
       <img src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=600&q=80" alt="Shawarma kebabs on the grill" loading="lazy">
       <div class="overlay">
         <div class="name">Mediterranean Grill</div>
@@ -612,15 +741,15 @@
       </div>
       <div class="selected-badge">&check;</div>
     </div>
-    <div class="menu-card" data-menu="paella" data-price="16" data-season="both" onclick="selectMenu(this)">
+    <div class="menu-card" data-menu="paella" data-price="18" data-season="both" data-tier="street" onclick="selectMenu(this)">
       <img src="https://images.unsplash.com/photo-1534080564583-6be75777b70a?w=600&q=80" alt="Paella station" loading="lazy">
       <div class="overlay">
-        <div class="name">Paella Station</div>
-        <div class="price">From &pound;16pp</div>
+        <div class="name">Paella &amp; Tapas</div>
+        <div class="price">From &pound;18pp</div>
       </div>
       <div class="selected-badge">&check;</div>
     </div>
-    <div class="menu-card" data-menu="grazing" data-price="16" data-season="both" onclick="selectMenu(this)">
+    <div class="menu-card" data-menu="grazing" data-price="16" data-season="both" data-tier="street" onclick="selectMenu(this)">
       <img src="grazing.jpg" alt="Grazing table with charcuterie and cheese" loading="lazy">
       <div class="overlay">
         <div class="name">Grazing Tables</div>
@@ -628,15 +757,7 @@
       </div>
       <div class="selected-badge">&check;</div>
     </div>
-    <div class="menu-card" data-menu="christmas" data-price="24" data-season="winter" onclick="selectMenu(this)">
-      <img src="https://images.unsplash.com/photo-1608039829572-4d3b75a43239?w=600&q=80" alt="Christmas dinner table" loading="lazy">
-      <div class="overlay">
-        <div class="name">Christmas Feast</div>
-        <div class="price">From &pound;22pp</div>
-      </div>
-      <div class="selected-badge">&check;</div>
-    </div>
-    <div class="menu-card" data-menu="greek" data-price="14" data-season="summer" onclick="selectMenu(this)">
+    <div class="menu-card" data-menu="greek" data-price="14" data-season="summer" data-tier="street" onclick="selectMenu(this)">
       <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Greek gyros" loading="lazy">
       <div class="overlay">
         <div class="name">Greek Street Food</div>
@@ -644,7 +765,7 @@
       </div>
       <div class="selected-badge">&check;</div>
     </div>
-    <div class="menu-card" data-menu="asian" data-price="16" data-season="both" onclick="selectMenu(this)">
+    <div class="menu-card" data-menu="asian" data-price="16" data-season="both" data-tier="street" onclick="selectMenu(this)">
       <img src="https://images.unsplash.com/photo-1617093727343-374698b1b08d?w=600&q=80" alt="Asian street food" loading="lazy">
       <div class="overlay">
         <div class="name">Asian Street Food</div>
@@ -652,11 +773,82 @@
       </div>
       <div class="selected-badge">&check;</div>
     </div>
-    <div class="menu-card" data-menu="loaded" data-price="12" data-season="both" onclick="selectMenu(this)">
+    <div class="menu-card" data-menu="loaded" data-price="12" data-season="both" data-tier="street" onclick="selectMenu(this)">
       <img src="https://images.unsplash.com/photo-1585109649139-366815a0d713?w=600&q=80" alt="Loaded fries" loading="lazy">
       <div class="overlay">
         <div class="name">Loaded Fries &amp; Mac</div>
         <div class="price">From &pound;12pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card" data-menu="christmas" data-price="22" data-season="winter" data-tier="street" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1608039829572-4d3b75a43239?w=600&q=80" alt="Christmas dinner table" loading="lazy">
+      <div class="overlay">
+        <div class="name">Christmas Feast</div>
+        <div class="price">From &pound;22pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card" data-menu="roast" data-price="22" data-season="winter" data-tier="street" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80" alt="Sunday roast" loading="lazy">
+      <div class="overlay">
+        <div class="name">Classic Roast</div>
+        <div class="price">From &pound;22pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card" data-menu="buffet" data-price="18" data-season="both" data-tier="street" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=600&q=80" alt="Buffet spread" loading="lazy">
+      <div class="overlay">
+        <div class="name">Buffet Selection</div>
+        <div class="price">From &pound;18pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+
+    <!-- PREMIUM TIER -->
+    <div class="menu-card premium-card" data-menu="canapes" data-price="15" data-season="both" data-tier="premium" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1541529086526-db283c563270?w=600&q=80" alt="Canapés" loading="lazy">
+      <div class="premium-tag">Chef Lopez</div>
+      <div class="overlay">
+        <div class="name">Canap&eacute;s &amp; Bowl Food</div>
+        <div class="price">From &pound;15pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card premium-card" data-menu="finedining" data-price="35" data-season="both" data-tier="premium" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Fine dining plated course" loading="lazy">
+      <div class="premium-tag">Chef Lopez</div>
+      <div class="overlay">
+        <div class="name">Fine Dining</div>
+        <div class="price">From &pound;35pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card premium-card" data-menu="fusion" data-price="60" data-season="both" data-tier="premium" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Feasting table" loading="lazy">
+      <div class="premium-tag">Chef Lopez</div>
+      <div class="overlay">
+        <div class="name">Feasting Tables</div>
+        <div class="price">From &pound;60pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card premium-card" data-menu="asado" data-price="70" data-season="summer" data-tier="premium" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80" alt="Live fire BBQ asado" loading="lazy">
+      <div class="premium-tag">Chef Lopez</div>
+      <div class="overlay">
+        <div class="name">Live Fire BBQ &amp; Asado</div>
+        <div class="price">From &pound;65pp</div>
+      </div>
+      <div class="selected-badge">&check;</div>
+    </div>
+    <div class="menu-card premium-card" data-menu="weddingbbq" data-price="35" data-season="both" data-tier="premium" onclick="selectMenu(this)">
+      <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&q=80" alt="Wedding reception" loading="lazy">
+      <div class="premium-tag">Chef Lopez</div>
+      <div class="overlay">
+        <div class="name">Wedding BBQ &amp; Buffet</div>
+        <div class="price">From &pound;35pp</div>
       </div>
       <div class="selected-badge">&check;</div>
     </div>
@@ -666,40 +858,44 @@
   <div class="menu-detail" id="menuDetail"></div>
 
   <!-- STEP 2: Event Details -->
-  <div class="section-label">Step 2 &mdash; Event Details</div>
+  <div class="section-label" id="step2">Step 2 &mdash; Event Details</div>
   <div class="form-section">
     <div class="row">
       <div>
         <label>Number of Guests</label>
-        <input type="number" id="guests" min="10" max="500" placeholder="e.g. 80">
+        <input type="number" id="guests" min="10" max="2000" placeholder="e.g. 80" oninput="updateProgress()">
       </div>
       <div>
         <label>Event Date</label>
-        <input type="date" id="eventDate">
+        <input type="date" id="eventDate" oninput="updateProgress()">
       </div>
     </div>
     <div class="row" style="margin-top:4px;">
       <div>
         <label>Event Type</label>
-        <select id="eventType">
+        <select id="eventType" oninput="updateProgress()">
           <option value="">Select...</option>
           <option value="wedding">Wedding</option>
           <option value="birthday">Birthday Party</option>
           <option value="corporate">Corporate Event</option>
           <option value="festival">Festival / Market</option>
           <option value="private">Private Party</option>
+          <option value="engagement">Engagement Party</option>
+          <option value="anniversary">Anniversary</option>
+          <option value="christening">Christening / Baby Shower</option>
+          <option value="funeral">Wake / Memorial</option>
           <option value="other">Other</option>
         </select>
       </div>
       <div>
         <label>Location / Postcode</label>
-        <input type="text" id="location" placeholder="e.g. CM13 or London">
+        <input type="text" id="location" placeholder="e.g. CM13 or London" oninput="updateProgress()">
       </div>
     </div>
   </div>
 
   <!-- STEP 3: Extras -->
-  <div class="section-label">Step 3 &mdash; Extras</div>
+  <div class="section-label" id="step3">Step 3 &mdash; Extras</div>
   <div class="form-section">
     <div class="addon" data-addon="dessert" data-price="6" onclick="toggleAddon(this)">
       <div class="tick"></div>
@@ -718,26 +914,26 @@
     <div id="canapesOptions" class="addon-submenu" style="display:none;">
       <div class="addon-submenu-label">Choose your canap&eacute;s (pick 4):</div>
       <div class="addon-check-grid" id="canapesGrid">
-        <label><input type="checkbox" name="canape" value="Chicken, Leek & Black Truffle Pie"> Chicken, Leek &amp; Black Truffle Pie</label>
-        <label><input type="checkbox" name="canape" value="Pork Croquette with Garlic Aioli"> Pork Croquette with Garlic Aioli</label>
-        <label><input type="checkbox" name="canape" value="Smoked Salmon & Chive Quiche"> Smoked Salmon &amp; Chive Quiche</label>
-        <label><input type="checkbox" name="canape" value="Garlic & Paprika Butter Prawn"> Garlic &amp; Paprika Butter Prawn</label>
-        <label><input type="checkbox" name="canape" value="Butternut Squash & Sage Arancini"> Butternut Squash &amp; Sage Arancini</label>
-        <label><input type="checkbox" name="canape" value="Wild Mushroom & Goats Cheese Bruschetta"> Wild Mushroom &amp; Goats Cheese Bruschetta</label>
+        <label><input type="checkbox" name="canape" value="Goat Cheese Beet Hazelnut Bon Bons"> Goat Cheese &amp; Beet Bon Bons <span class="allergen-tag">G D E N</span></label>
+        <label><input type="checkbox" name="canape" value="Mushroom Vol au Vent"> Mushroom &amp; Mascarpone Vol au Vent <span class="allergen-tag">G D</span></label>
+        <label><input type="checkbox" name="canape" value="Smoked Salmon Caviar Blini"> Smoked Salmon &amp; Caviar Blini <span class="allergen-tag">G D E F</span></label>
+        <label><input type="checkbox" name="canape" value="Prawn Tostada"> Prawn Tostada with Guacamole <span class="allergen-tag">C G</span></label>
+        <label><input type="checkbox" name="canape" value="Spanish Jamon Croquettes"> Spanish Jam&oacute;n Croquettes <span class="allergen-tag">G D E</span></label>
+        <label><input type="checkbox" name="canape" value="Braised Beef Croqueta"> Braised Beef Croqueta with Parmesan <span class="allergen-tag">G D E</span></label>
+        <label><input type="checkbox" name="canape" value="Chicken Lollipops BBQ"> Chicken Lollipops with BBQ Glaze <span class="allergen-tag">G SE</span></label>
+        <label><input type="checkbox" name="canape" value="Mini Beef Sliders"> Mini Beef Sliders on Brioche <span class="allergen-tag">G D E</span></label>
+        <label><input type="checkbox" name="canape" value="Butternut Squash Arancini"> Butternut Squash &amp; Sage Arancini <span class="allergen-tag">G D E</span></label>
         <label><input type="checkbox" name="canape" value="Sweet Chilli Chicken Skewers"> Sweet Chilli Chicken Skewers</label>
-        <label><input type="checkbox" name="canape" value="British Beef Sliders"> 100% British Beef Sliders with Cheese</label>
-        <label><input type="checkbox" name="canape" value="Duck Croquette with Garlic Aioli"> Duck Croquette with Garlic Aioli</label>
-        <label><input type="checkbox" name="canape" value="Mini Butter Chicken Parcels"> Mini Butter Chicken Parcels</label>
+        <label><input type="checkbox" name="canape" value="Pork Belly Miso Skewers"> Pork Belly Miso Skewers <span class="allergen-tag">G SY</span></label>
+        <label><input type="checkbox" name="canape" value="Lamb Kofta Tzatziki"> Lamb Kofta with Mint &amp; Tzatziki <span class="allergen-tag">G D</span></label>
+        <label><input type="checkbox" name="canape" value="Harissa Salmon Skewers"> Harissa Salmon Skewers <span class="allergen-tag">F</span></label>
+        <label><input type="checkbox" name="canape" value="Salt Pepper King Prawn Tempura"> Salt &amp; Pepper King Prawn Tempura <span class="allergen-tag">G C E</span></label>
+        <label><input type="checkbox" name="canape" value="Moroccan Chicken Beetroot Hummus"> Moroccan Chicken &amp; Beetroot Hummus <span class="allergen-tag">SE</span></label>
+        <label><input type="checkbox" name="canape" value="Wild Mushroom Goats Cheese Bruschetta"> Wild Mushroom &amp; Goats Cheese Bruschetta <span class="allergen-tag">G D</span></label>
+        <label><input type="checkbox" name="canape" value="Crispy Polenta Black Bean"> Crispy Polenta &amp; Black Bean Pur&eacute;e (VG)</label>
+        <label><input type="checkbox" name="canape" value="Tomato Mozzarella Basil Skewers"> Tomato, Mozzarella &amp; Basil Skewers (V) <span class="allergen-tag">D</span></label>
         <label><input type="checkbox" name="canape" value="Pani Puri"> Pani Puri with Spiced Potatoes &amp; Tamarind</label>
         <label><input type="checkbox" name="canape" value="Mini Vegetable Samosas"> Mini Vegetable Samosas with Mango Chutney</label>
-        <label><input type="checkbox" name="canape" value="Scottish Smoked Salmon Crostini"> Scottish Smoked Salmon Crostini with Caviar</label>
-        <label><input type="checkbox" name="canape" value="Smoked Mackerel Pate"> Smoked Mackerel Pate with Crispy Capers</label>
-        <label><input type="checkbox" name="canape" value="Coronation Chicken"> Smoked Coronation Chicken &amp; Pistachio</label>
-        <label><input type="checkbox" name="canape" value="Roast Beef & Horseradish Crostini"> Roast Beef &amp; Horseradish Cream Crostini</label>
-        <label><input type="checkbox" name="canape" value="Serrano Ham Bruschetta"> Serrano Ham &amp; Tomate Frito Bruschetta</label>
-        <label><input type="checkbox" name="canape" value="Avocado & Feta Tart (V)"> Avocado, Cherry Tomato &amp; Feta Tart (V)</label>
-        <label><input type="checkbox" name="canape" value="Piri Piri Hummus & Pomegranate"> Minted Cucumber, Piri Piri Hummus &amp; Pomegranate</label>
-        <label><input type="checkbox" name="canape" value="Grilled Octopus Bruschetta"> Grilled Octopus with Salsa Verde</label>
       </div>
     </div>
     <div class="addon" data-addon="premiumdessert" data-price="9" onclick="toggleAddon(this)">
@@ -750,7 +946,7 @@
     <div id="dessertOptions" class="addon-submenu" style="display:none;">
       <div class="addon-submenu-label">Choose your dessert:</div>
       <div class="addon-check-grid" id="dessertGrid">
-        <label><input type="radio" name="dessert" value="Vanilla Crème Brûlée"> Vanilla Cr&egrave;me Br&ucirc;l&eacute;e with Fresh Berries</label>
+        <label><input type="radio" name="dessert" value="Vanilla Cr&egrave;me Br&ucirc;l&eacute;e"> Vanilla Cr&egrave;me Br&ucirc;l&eacute;e with Fresh Berries</label>
         <label><input type="radio" name="dessert" value="Pistachio & Rose Water Panna Cotta"> Pistachio &amp; Rose Water Panna Cotta</label>
         <label><input type="radio" name="dessert" value="Salted Caramel & Hazelnut Tart"> Salted Caramel &amp; Hazelnut Tart</label>
         <label><input type="radio" name="dessert" value="Raspberry & White Chocolate Mousse"> Raspberry &amp; White Chocolate Mousse</label>
@@ -758,8 +954,29 @@
         <label><input type="radio" name="dessert" value="Sticky Toffee Pudding"> Sticky Toffee Pudding with Clotted Cream</label>
         <label><input type="radio" name="dessert" value="Chocolate & Hazelnut Mille-Feuille"> Chocolate &amp; Hazelnut Mille-Feuille</label>
         <label><input type="radio" name="dessert" value="Passion Fruit & Coconut Parfait"> Passion Fruit &amp; Coconut Parfait</label>
-        <label><input type="radio" name="dessert" value="Poached Pears in Red Wine"> Poached Pears in Red Wine</label>
-        <label><input type="radio" name="dessert" value="Lemon & Lavender Shortbread"> Lemon &amp; Lavender Shortbread with Lemon Curd</label>
+        <label><input type="radio" name="dessert" value="Dark Chocolate Fondant"> Dark Chocolate Fondant &amp; Vanilla Ice Cream</label>
+        <label><input type="radio" name="dessert" value="Baked Lemon Cheesecake"> Baked Lemon Cheesecake with Clotted Cream</label>
+      </div>
+    </div>
+    <div class="addon" data-addon="bowlfood" data-price="6" onclick="toggleAddon(this)">
+      <div class="tick"></div>
+      <div class="addon-info">
+        <div class="addon-title">Bowl Food (3 bowls) &mdash; &pound;6pp</div>
+        <div class="addon-sub">Perfect paired with canap&eacute;s. Risotto, curry, stir-fry &amp; more</div>
+      </div>
+    </div>
+    <div id="bowlfoodOptions" class="addon-submenu" style="display:none;">
+      <div class="addon-submenu-label">Choose 3 bowls:</div>
+      <div class="addon-check-grid" id="bowlfoodGrid">
+        <label><input type="checkbox" name="bowlfood" value="Wild Mushroom Risotto"> Wild Mushroom Risotto, Truffle &amp; Parmesan</label>
+        <label><input type="checkbox" name="bowlfood" value="Thai Green Curry"> Thai Green Curry with Sweet Potato &amp; Rice</label>
+        <label><input type="checkbox" name="bowlfood" value="Beef Stroganoff"> Beef &amp; Mushroom Stroganoff with Polenta</label>
+        <label><input type="checkbox" name="bowlfood" value="Chicken Tajine"> Chicken Tajine with Saffron Veg &amp; Couscous</label>
+        <label><input type="checkbox" name="bowlfood" value="Korean Salmon Skewers"> Korean Salmon Skewers with Sticky Rice</label>
+        <label><input type="checkbox" name="bowlfood" value="Miso Pork Belly"> Miso Glazed Pork Belly with Sticky Rice</label>
+        <label><input type="checkbox" name="bowlfood" value="Cauliflower Coconut Curry"> Cauliflower &amp; Coconut Curry with Wild Rice (VG)</label>
+        <label><input type="checkbox" name="bowlfood" value="Fish & Chips"> Mini Fish &amp; Chips with Tartar Sauce</label>
+        <label><input type="checkbox" name="bowlfood" value="Roast Beef Mustard Mash"> Roast Beef, Mustard Mash &amp; Red Wine Jus</label>
       </div>
     </div>
     <div class="addon" data-addon="staff" data-price="0" onclick="toggleAddon(this)">
@@ -779,27 +996,42 @@
         <option value="custom">150+ guests &mdash; get a custom quote</option>
       </select>
     </div>
+    <div class="addon" data-addon="mobilebar" data-price="20" onclick="toggleAddon(this)">
+      <div class="tick"></div>
+      <div class="addon-info">
+        <div class="addon-title">Mobile Bar Service &mdash; from &pound;20pp</div>
+        <div class="addon-sub">Professional bartender, cocktails, spirits, wine &amp; beer</div>
+      </div>
+    </div>
+    <div class="addon" data-addon="tasting" data-price="0" onclick="toggleAddon(this)">
+      <div class="tick"></div>
+      <div class="addon-info">
+        <div class="addon-title">Food Tasting Session &mdash; &pound;150 per couple</div>
+        <div class="addon-sub">Sample your menu before the event. Cost deducted from final invoice.</div>
+      </div>
+    </div>
 
     <div class="includes">
       <span>&#10003; Professional Chefs</span>
-      <span>&#10003; Food Van</span>
+      <span>&#10003; Food Van / Setup</span>
       <span>&#10003; Biodegradable Plates</span>
       <span>&#10003; Cutlery</span>
       <span>&#10003; Waste Removal</span>
+      <span>&#10003; 150km Radius</span>
     </div>
   </div>
 
   <!-- STEP 4: Contact -->
-  <div class="section-label">Step 4 &mdash; Your Details</div>
+  <div class="section-label" id="step4">Step 4 &mdash; Your Details</div>
   <div class="form-section">
     <div class="row">
       <div>
         <label>Your Name</label>
-        <input type="text" id="name" placeholder="Full name">
+        <input type="text" id="name" placeholder="Full name" oninput="updateProgress()">
       </div>
       <div>
         <label>Email</label>
-        <input type="email" id="email" placeholder="you@email.com">
+        <input type="email" id="email" placeholder="you@email.com" oninput="updateProgress()">
       </div>
     </div>
     <label>Phone (optional)</label>
@@ -821,17 +1053,18 @@
     <div class="breakdown" id="breakdown"></div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;">
       <button class="btn btn-green" onclick="showBookingForm()" style="flex:1;min-width:200px;">Book &amp; Pay 20% Deposit</button>
-      <button class="btn btn-primary" onclick="submitEnquiry()" style="flex:1;min-width:200px;">Just Send Enquiry</button>
+      <button class="btn btn-primary" onclick="submitEnquiry()" style="flex:1;min-width:200px;">Send Email Enquiry</button>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
-      <button class="btn btn-ghost" onclick="document.getElementById('menuDetail').scrollIntoView({behavior:'smooth',block:'start'})" style="flex:1;">Edit Selections</button>
-      <button class="btn btn-ghost" onclick="resetForm()" style="flex:1;">Start Over</button>
+      <button class="btn btn-whatsapp" onclick="sendWhatsApp()" style="flex:1;min-width:200px;">WhatsApp Us</button>
+      <button class="btn btn-ghost" onclick="resetForm()" style="flex:1;min-width:200px;">Start Over</button>
     </div>
     <div id="depositInfo" style="margin-top:12px;padding:12px;background:rgba(0,214,143,0.06);border:1px solid rgba(0,214,143,0.15);border-radius:10px;font-size:0.8rem;color:var(--green);">
       <strong>Deposit:</strong> <span id="depositAmount">&pound;0</span> (20%) &mdash; Balance due 7 days before event
     </div>
     <p style="margin-top:12px;font-size:0.75rem;color:var(--dim);">
-      Estimate only. Final pricing confirmed after consultation. Quote valid 5 days.
+      Estimate only. Final pricing confirmed after consultation. Quote valid 5 days.<br>
+      <span style="color:var(--accent);">Google Reviews: 4.8/5</span> &middot; Food Hygiene: 5/5 &middot; Caterer of the Year 2022
     </p>
   </div>
 
@@ -841,12 +1074,259 @@
     <div style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:16px;">Secure with 20% Deposit</div>
     <div id="bookingSummary" style="text-align:left;margin-bottom:20px;padding:16px;background:#161616;border-radius:10px;font-size:0.85rem;line-height:1.8;"></div>
 
-    <div style="text-align:left;">
-      <label style="font-size:0.8rem;color:var(--dim);margin-bottom:4px;display:block;">Event Address / Venue</label>
-      <input type="text" id="bookingAddress" placeholder="Full event address" style="width:100%;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:0.9rem;margin-bottom:12px;">
+    <style>
+      .booking-section { margin-bottom:28px; }
+      .booking-section-title { font-size:0.75rem;color:var(--dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border); }
+      .booking-row { margin-bottom:14px;text-align:left; }
+      .booking-label { font-size:0.82rem;color:var(--text2);margin-bottom:6px;display:block; }
+      .booking-input { width:100%;padding:11px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:0.9rem;box-sizing:border-box; }
+      .booking-input:focus { outline:none;border-color:var(--accent); }
+      .booking-select { width:100%;padding:11px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:0.9rem;appearance:none;box-sizing:border-box; }
+      .yn-group { display:flex;gap:8px;flex-wrap:wrap; }
+      .yn-btn { padding:8px 22px;border-radius:50px;border:1px solid var(--border);background:transparent;color:var(--text2);font-family:inherit;font-size:0.82rem;cursor:pointer;transition:all 0.2s; }
+      .yn-btn.selected-yes { background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600; }
+      .yn-btn.selected-no { background:var(--surface);border-color:var(--accent);color:var(--accent);font-weight:600; }
+      .yn-btn.selected-unsure { background:#333;border-color:#666;color:var(--text2);font-weight:600; }
+      .yn-note { margin-top:8px;font-size:0.78rem;color:var(--green);padding:8px 12px;background:rgba(0,214,143,0.07);border-radius:6px;display:none; }
+      .yn-note.show { display:block; }
+      .allergen-checkboxes { display:flex;flex-wrap:wrap;gap:8px;margin-top:10px; }
+      .allergen-check { display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:0.82rem;transition:border-color 0.2s; }
+      .allergen-check input { accent-color:var(--accent);cursor:pointer; }
+      .allergen-check:has(input:checked) { border-color:var(--accent);color:var(--accent); }
+      .terms-box { background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;max-height:180px;overflow-y:auto;font-size:0.78rem;color:var(--text2);line-height:1.7;text-align:left; }
+      .terms-box ul { margin:0;padding-left:18px; }
+      .terms-box li { margin-bottom:4px; }
+      .terms-accept { display:flex;align-items:flex-start;gap:10px;margin-top:14px;text-align:left; }
+      .terms-accept input[type=checkbox] { accent-color:var(--accent);width:16px;height:16px;margin-top:2px;flex-shrink:0;cursor:pointer; }
+      .terms-accept label { font-size:0.85rem;color:var(--text2);cursor:pointer; }
+      .allergen-extra { margin-top:14px;display:none; }
+      .allergen-extra.show { display:block; }
+    </style>
 
-      <label style="font-size:0.8rem;color:var(--dim);margin-bottom:4px;display:block;">Any additional notes for the kitchen</label>
-      <textarea id="bookingNotes" placeholder="Allergies, dietary requirements, special requests..." style="width:100%;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:0.9rem;min-height:80px;resize:vertical;margin-bottom:16px;"></textarea>
+    <!-- VENUE ADDRESS -->
+    <div class="booking-section">
+      <div class="booking-section-title">Venue Details</div>
+      <div class="booking-row">
+        <label class="booking-label">Event Address / Venue</label>
+        <input type="text" id="bookingAddress" placeholder="Full event address including postcode" class="booking-input">
+      </div>
+    </div>
+
+    <!-- VENUE FACILITIES -->
+    <div class="booking-section">
+      <div class="booking-section-title">Venue Facilities</div>
+
+      <div class="booking-row">
+        <label class="booking-label">Is there a kitchen available?</label>
+        <div class="yn-group" data-field="venueKitchen">
+          <button class="yn-btn" onclick="setYN(this,'venueKitchen','yes')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'venueKitchen','no')">No</button>
+          <button class="yn-btn" onclick="setYN(this,'venueKitchen','unsure')">Not sure</button>
+        </div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Is there an oven?</label>
+        <div class="yn-group" data-field="venueOven">
+          <button class="yn-btn" onclick="setYN(this,'venueOven','yes')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'venueOven','no')">No</button>
+          <button class="yn-btn" onclick="setYN(this,'venueOven','unsure')">Not sure</button>
+        </div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Are there adequate tables for food preparation?</label>
+        <div class="yn-group" data-field="venuePrepTables">
+          <button class="yn-btn" onclick="setYN(this,'venuePrepTables','yes')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'venuePrepTables','no')">No</button>
+          <button class="yn-btn" onclick="setYN(this,'venuePrepTables','unsure')">Not sure</button>
+        </div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Is there a sink with running water?</label>
+        <div class="yn-group" data-field="venueSink">
+          <button class="yn-btn" onclick="setYN(this,'venueSink','yes')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'venueSink','no')">No</button>
+          <button class="yn-btn" onclick="setYN(this,'venueSink','unsure')">Not sure</button>
+        </div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Is there a toilet on site?</label>
+        <div class="yn-group" data-field="venueToilet">
+          <button class="yn-btn" onclick="setYN(this,'venueToilet','yes')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'venueToilet','no')">No</button>
+          <button class="yn-btn" onclick="setYN(this,'venueToilet','unsure')">Not sure</button>
+        </div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Is there electricity available?</label>
+        <div class="yn-group" data-field="venueElectricity">
+          <button class="yn-btn" onclick="setYN(this,'venueElectricity','yes')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'venueElectricity','no')">No</button>
+          <button class="yn-btn" onclick="setYN(this,'venueElectricity','unsure')">Not sure</button>
+        </div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Is it gas or electric?</label>
+        <select id="venueGasElectric" class="booking-select">
+          <option value="">Select&hellip;</option>
+          <option value="gas">Gas</option>
+          <option value="electric">Electric</option>
+          <option value="both">Both</option>
+          <option value="neither">Neither</option>
+          <option value="not_sure">Not sure</option>
+        </select>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Is there parking for a catering van?</label>
+        <div class="yn-group" data-field="venueParking">
+          <button class="yn-btn" onclick="setYN(this,'venueParking','yes')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'venueParking','no')">No</button>
+          <button class="yn-btn" onclick="setYN(this,'venueParking','unsure')">Not sure</button>
+        </div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Is there adequate loading access?</label>
+        <div class="yn-group" data-field="venueLoading">
+          <button class="yn-btn" onclick="setYN(this,'venueLoading','yes')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'venueLoading','no')">No</button>
+          <button class="yn-btn" onclick="setYN(this,'venueLoading','unsure')">Not sure</button>
+        </div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Indoor or outdoor event?</label>
+        <div class="yn-group" data-field="venueIndoorOutdoor">
+          <button class="yn-btn" onclick="setYN(this,'venueIndoorOutdoor','indoor')">Indoor</button>
+          <button class="yn-btn" onclick="setYN(this,'venueIndoorOutdoor','outdoor')">Outdoor</button>
+          <button class="yn-btn" onclick="setYN(this,'venueIndoorOutdoor','both')">Both</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EQUIPMENT & SUPPLIES -->
+    <div class="booking-section">
+      <div class="booking-section-title">Equipment &amp; Supplies</div>
+
+      <div class="booking-row">
+        <label class="booking-label">Do you need cutlery provided?</label>
+        <div class="yn-group" data-field="needCutlery">
+          <button class="yn-btn" onclick="setYN(this,'needCutlery','yes','cutleryNote')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'needCutlery','no','cutleryNote')">No</button>
+        </div>
+        <div class="yn-note" id="cutleryNote">Biodegradable cutlery included as standard.</div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Do you need plates provided?</label>
+        <div class="yn-group" data-field="needPlates">
+          <button class="yn-btn" onclick="setYN(this,'needPlates','yes','platesNote')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'needPlates','no','platesNote')">No</button>
+        </div>
+        <div class="yn-note" id="platesNote">Biodegradable plates included as standard.</div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Do you need serving tables?</label>
+        <div class="yn-group" data-field="needTables">
+          <button class="yn-btn" onclick="setYN(this,'needTables','yes','tablesNote')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'needTables','no','tablesNote')">No</button>
+        </div>
+        <div class="yn-note" id="tablesNote">We don&rsquo;t supply tables but can recommend a hire company.</div>
+      </div>
+
+      <div class="booking-row">
+        <label class="booking-label">Do you need napkins?</label>
+        <div class="yn-group" data-field="needNapkins">
+          <button class="yn-btn" onclick="setYN(this,'needNapkins','yes','napkinsNote')">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'needNapkins','no','napkinsNote')">No</button>
+        </div>
+        <div class="yn-note" id="napkinsNote">Napkins included as standard.</div>
+      </div>
+    </div>
+
+    <!-- ALLERGEN INFORMATION -->
+    <div class="booking-section">
+      <div class="booking-section-title">Guest Allergen Information</div>
+
+      <div class="booking-row">
+        <label class="booking-label">Do any guests have allergies?</label>
+        <div class="yn-group" data-field="hasAllergies">
+          <button class="yn-btn" onclick="setYN(this,'hasAllergies','yes');toggleAllergenSection(true)">Yes</button>
+          <button class="yn-btn" onclick="setYN(this,'hasAllergies','no');toggleAllergenSection(false)">No</button>
+        </div>
+      </div>
+
+      <div class="allergen-extra" id="allergenSection">
+        <div class="booking-row">
+          <label class="booking-label">How many guests with allergies?</label>
+          <input type="number" id="allergyGuestCount" min="1" placeholder="e.g. 3" class="booking-input" style="max-width:160px;">
+        </div>
+        <div class="booking-row">
+          <label class="booking-label">Select all applicable allergens:</label>
+          <div class="allergen-checkboxes">
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Gluten"> Gluten</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Dairy"> Dairy</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Eggs"> Eggs</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Fish"> Fish</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Crustaceans"> Crustaceans</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Nuts"> Nuts</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Peanuts"> Peanuts</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Soy"> Soy</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Sesame"> Sesame</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Celery"> Celery</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Mustard"> Mustard</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Sulphites"> Sulphites</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Lupin"> Lupin</label>
+            <label class="allergen-check"><input type="checkbox" name="allergen" value="Molluscs"> Molluscs</label>
+          </div>
+        </div>
+        <div class="booking-row">
+          <label class="booking-label">Any other dietary requirements or allergen details:</label>
+          <textarea id="allergenDetails" placeholder="e.g. 2 guests are coeliac, 1 is vegan..." class="booking-input" style="min-height:80px;resize:vertical;"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADDITIONAL NOTES -->
+    <div class="booking-section">
+      <div class="booking-section-title">Additional Notes</div>
+      <div class="booking-row">
+        <label class="booking-label">Anything else we should know?</label>
+        <textarea id="bookingNotes" placeholder="Special requests, access instructions, timing requirements..." class="booking-input" style="min-height:80px;resize:vertical;"></textarea>
+      </div>
+    </div>
+
+    <!-- TERMS & CONDITIONS -->
+    <div class="booking-section">
+      <div class="booking-section-title">Terms &amp; Conditions</div>
+      <div class="terms-box">
+        <ul>
+          <li>A non-refundable deposit of 20% is required to secure your date.</li>
+          <li>The remaining balance is due 14 days before the event.</li>
+          <li>Cancellations within 7 days of the event are charged at 100% of the total.</li>
+          <li>Cancellations 7&ndash;14 days before the event: 50% of the total is charged.</li>
+          <li>Cancellations 14&ndash;30 days before the event: deposit is forfeited.</li>
+          <li>Menu changes can be made up to 14 days before the event.</li>
+          <li>Final guest numbers must be confirmed 7 days before the event.</li>
+          <li>We require access to the venue at least 2 hours before service.</li>
+          <li>All food is prepared fresh on-site using quality ingredients.</li>
+          <li>Food hygiene rating: 5/5.</li>
+          <li>We carry full public liability insurance.</li>
+          <li>Prices include professional chefs, food van/setup, biodegradable plates &amp; cutlery, and waste removal.</li>
+          <li>Travel is included within 150km of London.</li>
+        </ul>
+      </div>
+      <div class="terms-accept">
+        <input type="checkbox" id="termsAccepted">
+        <label for="termsAccepted">I have read and agree to the terms and conditions.</label>
+      </div>
     </div>
 
     <button class="btn btn-green" id="payBtn" onclick="processPayment()" style="width:100%;padding:16px;font-size:1rem;">
@@ -869,8 +1349,9 @@
 </div>
 
 <div class="footer">
-  &copy; 2025 Bash Events &middot; Premium Event &amp; Street Food Catering<br>
-  London &amp; Essex &middot; info@bashevents.co.uk
+  &copy; 2026 Bash Events &amp; Chef Lopez Events &middot; Premium Catering<br>
+  London &amp; Essex &middot; <a href="mailto:info@bashevents.co.uk">info@bashevents.co.uk</a><br>
+  <span style="font-size:0.7rem;margin-top:4px;display:inline-block;">Fine Dining Caterer of the Year 2022 &middot; Food Hygiene 5/5 &middot; Togather Nominated 2025</span>
 </div>
 
 <script>
@@ -892,19 +1373,20 @@ const MENU_DETAILS = {
       {name:"Coconut Curried Lentils", desc:"Vegan \u2014 coconut milk & Jamaican curry"},
       {name:"Jerk Wings", desc:"Charcoal-grilled with smoky jerk marinade"},
       {name:"Sweet Chilli Wings", desc:"Roasted & glazed in sweet chilli"},
+      {name:"BBQ Jerk Wings", desc:"BBQ glaze over charcoal jerk wings"},
     ],
     sides: [
       {name:"Rice & Peas", desc:"Traditional Jamaican coconut rice"},
       {name:"Plantain", desc:"Fried sweet plantain slices"},
       {name:"Mac & Cheese", desc:"Creamy baked mac & cheese"},
-      {name:"Truffle Mac & Cheese", desc:"Premium truffle-infused (+£2pp)", upsell:2},
+      {name:"Truffle Mac & Cheese", desc:"Premium truffle-infused (+\u00A32pp)", upsell:2},
       {name:"Signature Slaw", desc:"Fresh house coleslaw"},
       {name:"Festival Dumplings", desc:"Sweet fried dumplings (2pcs)"},
       {name:"Coconut White Rice", desc:"Fragrant coconut rice"},
       {name:"Seasoned Corn on the Cob", desc:"Charred & seasoned (2pcs)"},
-      {name:"Sweet Potato Fries", desc:"Crispy sweet potato fries (+£1pp)", upsell:1},
+      {name:"Sweet Potato Fries", desc:"Crispy sweet potato fries (+\u00A31pp)", upsell:1},
       {name:"French Fries", desc:"Classic crispy fries"},
-      {name:"Jamaican Patties", desc:"Spiced beef or vegetable stuffed pastry (2pcs)"},
+      {name:"Jamaican Patties", desc:"Spiced beef or vegetable stuffed pastry"},
     ],
     upsells: [
       {name:"Add Milkshake Bar", price:5, desc:"14 flavours \u2014 Oreo, Biscoff, Kinder Bueno & more"},
@@ -931,9 +1413,8 @@ const MENU_DETAILS = {
       {name:"Chicken Shish Kebab", desc:"With peppers, flatbread & tzatziki"},
       {name:"Chimichurri Lamb Chops", desc:"Herb-marinated lamb chops with fresh chimichurri"},
       {name:"Hot Honey Brisket", desc:"Slow-smoked brisket with hot honey & pickles"},
-      {name:"Butterflied Lamb Leg", desc:"Herb-marinated whole lamb leg (+£5pp)", upsell:5},
+      {name:"Butterflied Lamb Leg", desc:"Herb-marinated whole lamb leg (+\u00A35pp)", upsell:5},
       {name:"Venison Sausage", desc:"Premium venison & juniper sausage"},
-      {name:"Grilled Octopus", desc:"Charred octopus with chimichurri (+£5pp)", upsell:5},
     ],
     sides: [
       {name:"Cajun Fries", desc:"Seasoned with Cajun spice blend"},
@@ -955,7 +1436,7 @@ const MENU_DETAILS = {
     packages: [
       {name:"Taco Bar", price:12, desc:"Choose 2 proteins + 3 sides", maxP:2, maxS:3},
       {name:"Fiesta", price:16, desc:"Choose 3 proteins + 5 sides + guac & salsa", tag:"POPULAR", maxP:3, maxS:5},
-      {name:"Full Mexican", price:22, desc:"Choose 4 proteins + all sides", maxP:4, maxS:9},
+      {name:"Full Mexican", price:25, desc:"Choose 4 proteins + all sides", maxP:4, maxS:9},
     ],
     proteins: [
       {name:"Carnitas Michoacan", desc:"Slow-braised sweet pork with coriander & green salsa"},
@@ -965,9 +1446,8 @@ const MENU_DETAILS = {
       {name:"Baja Fish", desc:"Deep-fried battered fish goujons with chipotle (+\u00A32pp)", upsell:2},
       {name:"Vegan Jackfruit", desc:"Pulled jackfruit with Mexican spices"},
       {name:"Cochinita Pibil", desc:"Slow-roasted pork in achiote & citrus"},
-      {name:"Birria de Res", desc:"Braised beef birria with consommé (+£2pp)", upsell:2},
+      {name:"Birria de Res", desc:"Braised beef birria with consom\u00e9 (+\u00A32pp)", upsell:2},
       {name:"Chicken Tinga", desc:"Shredded chicken in smoky chipotle & tomato"},
-      {name:"Tuna Tostada", desc:"Seared tuna on crispy tortilla with avocado (+£3pp)", upsell:3},
     ],
     sides: [
       {name:"Fresh Tortilla Wraps", desc:"Soft flour tortillas"},
@@ -977,7 +1457,7 @@ const MENU_DETAILS = {
       {name:"Coriander Salsa", desc:"Vibrant green coriander salsa"},
       {name:"Tortilla Chips", desc:"Crispy salted tortilla chips"},
       {name:"Mexican Street Corn", desc:"Grilled elote with mayo, chilli & lime"},
-      {name:"Quesadillas", desc:"Cheese-filled grilled tortillas (+£2pp)", upsell:2},
+      {name:"Quesadillas", desc:"Cheese-filled grilled tortillas (+\u00A32pp)", upsell:2},
       {name:"Refried Beans", desc:"Smoky Mexican-style beans"},
     ],
     note: "All served with mixed salad. Tortillas & wraps included in all packages.",
@@ -1003,15 +1483,11 @@ const MENU_DETAILS = {
       {name:"Piri Piri Chicken Burger", desc:"Grilled chicken thighs in signature Piri Piri"},
       {name:"Grilled Halloumi (V)", desc:"Caramelised halloumi with guacamole"},
       {name:"Plant Based Burger (V)", desc:"Plant-based patty with standard toppings"},
-      {name:"Truffle-Infused Beef Burger", desc:"British beef with black truffle (+\u00A32pp)", upsell:2},
-      {name:"Kimchi Pork Burger", desc:"Slow-cooked pulled pork, house-made kimchi, gochujang mayo"},
-      {name:"Miso-Glazed Chicken Burger", desc:"Grilled chicken, miso glaze, pickled daikon"},
       {name:"Korean Fried Chicken Burger", desc:"Crispy fried chicken, gochujang glaze, pickled daikon"},
-      {name:"Vegan Mushroom Burger", desc:"Portobello mushroom, vegan cheese, truffle mayo"},
     ],
     sides: [
       {name:"French Fries", desc:"Classic crispy fries"},
-      {name:"Sweet Potato Fries", desc:"Crispy sweet potato fries (+£1pp)", upsell:1},
+      {name:"Sweet Potato Fries", desc:"Crispy sweet potato fries (+\u00A31pp)", upsell:1},
       {name:"Coleslaw", desc:"Creamy house slaw"},
       {name:"Mac & Cheese", desc:"Baked mac & cheese"},
       {name:"Mixed Leaf Salad", desc:"Fresh mixed greens"},
@@ -1033,22 +1509,21 @@ const MENU_DETAILS = {
       {name:"Pepperoni", desc:"Loaded pepperoni, oregano, mozzarella"},
       {name:"BBQ Chicken", desc:"Pulled chicken, BBQ sauce, red onion, mozzarella"},
       {name:"Meat Feast", desc:"Pepperoni, sausage, ham, ground beef"},
-      {name:"Vegetable Supreme (V)", desc:"Roasted peppers, mushrooms, olives, artichoke"},
-      {name:"Vegan (VG)", desc:"Plant-based cheese, roasted vegetables"},
-      {name:"Custom Toppings", desc:"Create your own combination"},
-      {name:"Truffle Margherita", desc:"San Marzano, buffalo mozzarella, truffle oil & microgreens"},
-      {name:"Spicy Honey Pepperoni", desc:"Pepperoni, mozzarella, hot honey drizzle"},
-      {name:"Quattro Formaggi", desc:"Mozzarella, gorgonzola, taleggio & parmesan"},
       {name:"Prosciutto e Funghi", desc:"Prosciutto, mushrooms, mozzarella & rocket"},
+      {name:"Quattro Formaggi", desc:"Mozzarella, gorgonzola, taleggio & parmesan"},
       {name:"Florentine", desc:"Spinach, egg, garlic, cream & mozzarella"},
+      {name:"Spicy Honey Pepperoni", desc:"Pepperoni, mozzarella, hot honey drizzle"},
+      {name:"Vegetable Supreme (V)", desc:"Roasted peppers, mushrooms, olives, artichoke"},
+      {name:"Vegan Margherita (VG)", desc:"Plant-based cheese, roasted vegetables"},
+      {name:"BBQ Jackfruit (VG)", desc:"Pulled jackfruit, BBQ sauce, vegan cheese"},
       {name:"Calzone", desc:"Folded pizza with ham, mushroom, ricotta & mozzarella"},
     ],
     sides: [
       {name:"Mixed Leaf Salad", desc:"Fresh mixed greens"},
       {name:"Garlic Bread", desc:"Toasted garlic & herb bread"},
       {name:"Fries", desc:"Classic crispy fries"},
-      {name:"Coleslaw", desc:"Creamy house slaw"},
       {name:"Dough Balls", desc:"Warm dough balls with garlic butter"},
+      {name:"Coleslaw", desc:"Creamy house slaw"},
     ],
     upsells: []
   },
@@ -1057,12 +1532,12 @@ const MENU_DETAILS = {
     packages: [
       {name:"Taster", price:20, desc:"Choose 3 stations + 2 sides", maxP:3, maxS:2},
       {name:"Full Experience", price:25, desc:"Choose 4 stations + 3 sides", tag:"POPULAR", maxP:4, maxS:3},
-      {name:"Festival", price:30, desc:"All 5 stations + 4 sides + dessert", maxP:5, maxS:4},
+      {name:"Festival", price:30, desc:"All stations + 4 sides + dessert", maxP:7, maxS:4},
     ],
     proteins: [
       {name:"Birria Quesadilla Station", desc:"Slow-cooked beef birria in crispy cheese quesadillas"},
       {name:"Smash Burger Station", desc:"British beef double-smashed on the griddle"},
-      {name:"Steak & Cajun Fries", desc:"Rump steak with chimichurri (+£3pp)", upsell:3},
+      {name:"Steak & Cajun Fries", desc:"Rump steak with chimichurri (+\u00A33pp)", upsell:3},
       {name:"Fried Chicken Station", desc:"Buttermilk fried chicken with signature sauce"},
       {name:"Jerk Chicken Station", desc:"Charcoal-grilled jerk chicken"},
       {name:"Chicken & Waffles Station", desc:"Buttermilk fried chicken on Belgian waffles with maple & hot sauce"},
@@ -1071,81 +1546,43 @@ const MENU_DETAILS = {
     sides: [
       {name:"Cajun Fries", desc:"Seasoned with Cajun spice blend"},
       {name:"Signature Slaw", desc:"Fresh house coleslaw"},
-      {name:"Sweet Potato Fries", desc:"Crispy sweet potato fries (+£1pp)", upsell:1},
+      {name:"Sweet Potato Fries", desc:"Crispy sweet potato fries (+\u00A31pp)", upsell:1},
       {name:"Mac & Cheese", desc:"Baked mac & cheese"},
-      {name:"Loaded Nachos", desc:"Cheese, jalapenos, sour cream & salsa (+£2pp)", upsell:2},
+      {name:"Loaded Nachos", desc:"Cheese, jalapenos, sour cream & salsa (+\u00A32pp)", upsell:2},
       {name:"Onion Rings", desc:"Beer-battered onion rings"},
     ],
     upsells: [
       {name:"Add Dessert Station", price:6, desc:"Churros, crepes & waffles"},
     ]
   },
-  finedining: {
-    title: "Feasting Tables",
-    packages: [
-      {name:"3-Course", price:35, desc:"Choose 1 starter + 1 main + 1 dessert", maxP:3, maxS:2},
-      {name:"4-Course", price:45, desc:"Choose 2 starters + 1 main + 1 dessert", tag:"POPULAR", maxP:4, maxS:3},
-      {name:"Prestige", price:65, desc:"Choose 3 starters + 2 mains + 1 dessert", maxP:6, maxS:4},
-    ],
-    proteins: [
-      {name:"Seared Scallops", desc:"Pea puree, morel mushrooms & beurre blanc"},
-      {name:"Grilled Octopus", desc:"Chorizo, haricot beans & smoked sea broth"},
-      {name:"Pan-Fried Sea Bass", desc:"Balsamic cherry tomatoes, asparagus, white wine sauce"},
-      {name:"Braised Short Rib", desc:"Tagliatelle, baby spinach & red wine jus"},
-      {name:"Slow Roasted Pork Belly", desc:"Creamy polenta, pearl onions, madeira sauce"},
-      {name:"Lobster Tail & Scallops", desc:"With lobster bisque (+\u00A315pp)", upsell:15},
-      {name:"Chateaubriand", desc:"Prime beef fillet, fondant potato, truffle (+\u00A320pp)", upsell:20},
-      {name:"Wild Mushroom Risotto (V)", desc:"With rocket & parmesan"},
-      {name:"Harissa Chicken", desc:"Spiced chicken, couscous, pomegranate & yoghurt"},
-      {name:"Bavette Steak", desc:"Chargrilled bavette with chimichurri & roasted bone marrow (+£8pp)", upsell:8},
-      {name:"Turkish Lamb Ribs", desc:"Slow-cooked lamb ribs with sumac & pomegranate (+£6pp)", upsell:6},
-      {name:"Truffle Gnocchi (V)", desc:"Pan-fried gnocchi with wild mushrooms & truffle cream"},
-      {name:"Aubergine Parmigiana (V)", desc:"Layered aubergine, tomato, mozzarella & basil"},
-      {name:"Barolo Braised Lamb", desc:"Lamb shoulder slow-braised in Barolo wine (+£10pp)", upsell:10},
-    ],
-    sides: [
-      {name:"Seasonal Vegetables", desc:"Chef's selection of roasted seasonal veg"},
-      {name:"Artisan Bread", desc:"Freshly baked selection"},
-      {name:"Roast Potatoes", desc:"Crispy roast potatoes with rosemary"},
-      {name:"Truffle Fries", desc:"Hand-cut fries with truffle oil (+£3pp)", upsell:3},
-      {name:"Fondant Potato", desc:"Butter-braised fondant potatoes"},
-      {name:"Creamed Spinach", desc:"Wilted spinach with cream and nutmeg"},
-      {name:"Dauphinoise Potatoes", desc:"Layers of potato baked in cream and garlic"},
-      {name:"Honey Glazed Carrots", desc:"Baby carrots with honey and thyme"},
-    ],
-    upsells: [
-      {name:"Add Canap\u00e9 Reception", price:8, desc:"Choose 4 from our warm & cold selection"},
-      {name:"Add Cheese Course", price:6, desc:"British artisan cheese board with chutney"},
-    ]
-  },
   hog: {
     title: "Hog Roast & Carvery",
     packages: [
-      {name:"Classic Hog", price:16, desc:"Whole hog + choose 2 sides", maxP:3, maxS:2},
-      {name:"Full Feast", price:20, desc:"Whole hog + choose 4 sides", tag:"POPULAR", maxP:4, maxS:4},
-      {name:"Premium", price:26, desc:"Whole hog + choose 5 sides + dessert", maxP:4, maxS:5},
+      {name:"Classic Hog", price:18, desc:"Whole hog + choose 2 sides", maxP:3, maxS:2},
+      {name:"Full Feast", price:22, desc:"Whole hog + choose 4 sides", tag:"POPULAR", maxP:4, maxS:4},
+      {name:"Premium", price:28, desc:"Whole hog + choose 5 sides + dessert", maxP:5, maxS:5},
     ],
     proteins: [
       {name:"Whole Slow Roasted Hog", desc:"Slow-roasted for 8+ hours with crispy crackling"},
-      {name:"Garlic, Lemon & Herb Roast Chicken", desc:"Whole roasted chicken with garlic, lemon & fresh herbs (+£3pp)", upsell:3},
+      {name:"Jamaican Jerk Hog Roast", desc:"Jerk-spiced whole pig with mango chutney & BBQ jerk sauce"},
       {name:"Traditional Stuffing", desc:"Sage & onion stuffing"},
       {name:"Apple Sauce", desc:"Classic accompaniment"},
-      {name:"Jamaican Jerk Hog Roast", desc:"Whole hog with jerk marinade & Caribbean sides"},
+      {name:"Garlic Herb Roast Chicken", desc:"Whole roasted with lemon & herbs (+\u00A33pp)", upsell:3},
     ],
     sides: [
       {name:"Roast Potatoes", desc:"Crispy roast potatoes"},
       {name:"Coleslaw", desc:"Creamy house slaw"},
       {name:"Mixed Leaf Salad", desc:"Fresh mixed greens"},
-      {name:"Baguettes", desc:"Fresh crusty baguettes with butter"},
-      {name:"Bread Rolls", desc:"Soft bread rolls with butter"},
+      {name:"Baguettes & Rolls", desc:"Fresh bread with butter"},
       {name:"Fries", desc:"Classic crispy fries"},
-      {name:"Stuffing Balls", desc:"Sage & onion stuffing balls"},
-      {name:"Mac & Cheese", desc:"Baked mac & cheese (+£1pp)", upsell:1},
+      {name:"Mac & Cheese", desc:"Baked mac & cheese (+\u00A31pp)", upsell:1},
       {name:"Corn on the Cob", desc:"Charred & buttered"},
       {name:"Sweet Potato Fries", desc:"Crispy sweet potato fries"},
       {name:"Rice & Peas", desc:"Traditional Jamaican coconut rice"},
       {name:"Plantain", desc:"Fried sweet plantain slices"},
+      {name:"Festival Dumplings", desc:"Sweet fried Jamaican dumplings"},
     ],
+    note: "Jamaican Jerk Hog Roast includes coco bread, rice & peas, festival dumplings & plantains.",
     upsells: [
       {name:"Add Turkey", price:4, desc:"Roasted turkey with cranberry sauce"},
     ]
@@ -1165,6 +1602,7 @@ const MENU_DETAILS = {
       {name:"Grilled King Prawns", desc:"With garlic herb butter (+\u00A35pp)", upsell:5},
       {name:"Ras El Hanout Seabass", desc:"North African spice blend (+\u00A33pp)", upsell:3},
       {name:"Spiced Honey BBQ Lamb", desc:"Slow-smoked with honey glaze"},
+      {name:"Salmon on Spiced Couscous", desc:"Mediterranean spiced couscous bed (+\u00A33pp)", upsell:3},
       {name:"Grilled Halloumi (V)", desc:"With garlic butter"},
       {name:"Grilled Aubergine (V)", desc:"With Moroccan chickpea sauce & ricotta"},
     ],
@@ -1182,11 +1620,11 @@ const MENU_DETAILS = {
     ]
   },
   paella: {
-    title: "Paella Station",
+    title: "Paella & Tapas",
     packages: [
-      {name:"Classic", price:16, desc:"Choose 1 paella + 2 sides", maxP:1, maxS:2},
-      {name:"Fiesta", price:22, desc:"Choose 2 paellas + 3 sides", tag:"POPULAR", maxP:2, maxS:3},
-      {name:"Full Spanish", price:28, desc:"All paellas + all sides + dessert", maxP:4, maxS:6},
+      {name:"Classic", price:18, desc:"Choose 1 paella + 2 sides", maxP:1, maxS:2},
+      {name:"Fiesta", price:24, desc:"Choose 2 paellas + 3 tapas", tag:"POPULAR", maxP:2, maxS:3},
+      {name:"Full Spanish", price:28, desc:"All paellas + all tapas + dessert", maxP:4, maxS:7},
     ],
     proteins: [
       {name:"Mixed Paella", desc:"Chicken, chorizo, prawns, mussels & saffron rice"},
@@ -1195,32 +1633,32 @@ const MENU_DETAILS = {
       {name:"Vegan Paella Huertana", desc:"Seasonal vegetables, artichokes & saffron"},
     ],
     sides: [
-      {name:"Mixed Leaf Salad", desc:"Fresh mixed greens with lemon dressing"},
-      {name:"Crusty Bread", desc:"Warm artisan bread with olive oil"},
       {name:"Patatas Bravas", desc:"Crispy potatoes with spicy tomato sauce"},
-      {name:"Garlic Prawns", desc:"Sizzling prawns in garlic & chilli (+\u00A34pp)", upsell:4},
+      {name:"Pan con Tomate", desc:"Toasted bread with garlic, tomato & olive oil"},
       {name:"Spanish Tortilla", desc:"Traditional potato omelette"},
+      {name:"Croquetas", desc:"Creamy ham croquettes with aioli"},
       {name:"Padron Peppers", desc:"Blistered peppers with sea salt"},
-      {name:"Pan con Tomate", desc:"Toasted bread rubbed with garlic, ripe tomato and olive oil"},
+      {name:"Garlic Prawns Pil Pil", desc:"Sizzling prawns in garlic & chilli (+\u00A34pp)", upsell:4},
+      {name:"Mixed Leaf Salad", desc:"Fresh mixed greens with lemon dressing"},
     ],
     upsells: [
-      {name:"Add Tapas Selection", price:6, desc:"Croquetas, olives, Serrano ham, manchego & more"},
+      {name:"Add Tapas Selection", price:6, desc:"Olives, Serrano ham, manchego, albondigas & more"},
       {name:"Add Sangria Bar", price:5, desc:"Traditional red & white sangria"},
     ]
   },
   grazing: {
     title: "Grazing Tables",
     packages: [
-      {name:"Classic Board", price:16, desc:"Choose 2 board items + 3 sides", maxP:2, maxS:3},
-      {name:"Premium Spread", price:22, desc:"Choose 3 board items + 4 sides", tag:"POPULAR", maxP:3, maxS:4},
-      {name:"Luxury Experience", price:30, desc:"Choose all items + all sides", maxP:5, maxS:6},
+      {name:"Classic Board", price:16, desc:"Choose 2 items + 3 sides", maxP:2, maxS:3},
+      {name:"Premium Spread", price:22, desc:"Choose 3 items + 4 sides", tag:"POPULAR", maxP:3, maxS:4},
+      {name:"Luxury Experience", price:30, desc:"Choose all items + all sides", maxP:8, maxS:6},
     ],
     proteins: [
       {name:"British Charcuterie", desc:"Bresaola, salami, prosciutto & coppa"},
       {name:"Artisan Cheese Selection", desc:"British & continental cheeses"},
       {name:"Smoked Salmon", desc:"Scottish smoked salmon with capers & cream cheese"},
       {name:"Fresh Seafood", desc:"Prawns, crab & smoked mackerel (+\u00A35pp)", upsell:5},
-      {name:"Plant-Based Grazing", desc:"Marinated tofu, roasted vegetables, stuffed vine leaves, beetroot hummus & seed crackers"},
+      {name:"Plant-Based Grazing", desc:"Roasted veg, stuffed vine leaves, beetroot hummus & seed crackers"},
       {name:"Mediterranean Antipasti", desc:"Sun-dried tomatoes, artichokes, roasted peppers & olives"},
       {name:"Pate & Terrine Board", desc:"Chicken liver pate, pork terrine, cornichons & toast"},
       {name:"Cured Fish Selection", desc:"Gravlax, smoked trout & pickled herring with dill cream"},
@@ -1235,35 +1673,6 @@ const MENU_DETAILS = {
     ],
     upsells: [
       {name:"Add Focaccia Station", price:3, desc:"Freshly baked with rosemary & garlic butter"},
-    ]
-  },
-  christmas: {
-    title: "Christmas Feast",
-    packages: [
-      {name:"Festive Carvery", price:24, desc:"Choose 2 meats + 3 sides + pudding", maxP:2, maxS:3},
-      {name:"Christmas Dinner", price:35, desc:"Choose 3 meats + 4 sides + crackers", tag:"POPULAR", maxP:3, maxS:4},
-      {name:"Premium Festive", price:48, desc:"Choose all meats + 5 sides + mulled wine", maxP:5, maxS:5},
-    ],
-    proteins: [
-      {name:"Roast Turkey", desc:"Free-range turkey with sage & cranberry stuffing"},
-      {name:"Honey Glazed Ham", desc:"Slow-roasted with clove & honey glaze"},
-      {name:"Roast Beef", desc:"Slow-roasted British beef with red wine gravy (+£4pp)", upsell:4},
-      {name:"Nut Roast (V)", desc:"Chestnut, cranberry & herb roast with gravy"},
-      {name:"Yorkshire Pudding Wraps", desc:"Turkey, stuffing & cranberry in a giant Yorkshire"},
-    ],
-    sides: [
-      {name:"Roast Potatoes", desc:"Crispy goose-fat roast potatoes"},
-      {name:"Honey Roasted Parsnips", desc:"With carrots & thyme"},
-      {name:"Brussels Sprouts", desc:"With pancetta & chestnuts"},
-      {name:"Pigs in Blankets", desc:"Chipolatas wrapped in bacon"},
-      {name:"Cauliflower Cheese", desc:"Creamy baked cauliflower"},
-      {name:"Cranberry & Orange Relish", desc:"Sweet & tangy cranberry sauce"},
-      {name:"Bread Sauce", desc:"Traditional creamy bread sauce"},
-    ],
-    upsells: [
-      {name:"Add Christmas Pudding", price:5, desc:"Traditional pud with brandy sauce & cream"},
-      {name:"Add Mince Pie Station", price:3, desc:"Freshly baked mince pies with brandy butter"},
-      {name:"Add Mulled Wine", price:4, desc:"Spiced red wine served warm"},
     ]
   },
   greek: {
@@ -1303,11 +1712,11 @@ const MENU_DETAILS = {
     proteins: [
       {name:"Teriyaki Chicken", desc:"Grilled chicken thigh with teriyaki glaze & sesame"},
       {name:"Teriyaki Beef", desc:"Seared beef strips with teriyaki & spring onion"},
-      {name:"Teriyaki Salmon", desc:"Grilled salmon fillet with teriyaki (+£3pp)", upsell:3},
-      {name:"Teppanyaki King Prawns", desc:"Seared prawns with garlic & soy (+£4pp)", upsell:4},
+      {name:"Teriyaki Salmon", desc:"Grilled salmon fillet with teriyaki (+\u00A33pp)", upsell:3},
+      {name:"Teppanyaki King Prawns", desc:"Seared prawns with garlic & soy (+\u00A34pp)", upsell:4},
       {name:"Korean Fried Chicken", desc:"Crispy double-fried chicken with gochujang glaze"},
       {name:"Korean BBQ Beef (Bulgogi)", desc:"Marinated beef bulgogi with sesame"},
-      {name:"Korean BBQ Short Rib (Galbi)", desc:"Sweet soy marinated short rib (+£4pp)", upsell:4},
+      {name:"Korean BBQ Short Rib (Galbi)", desc:"Sweet soy marinated short rib (+\u00A34pp)", upsell:4},
       {name:"Crispy Tofu (VG)", desc:"Sesame-crusted tofu with sweet chilli"},
     ],
     sides: [
@@ -1316,8 +1725,8 @@ const MENU_DETAILS = {
       {name:"Kimchi", desc:"Traditional fermented cabbage"},
       {name:"Edamame", desc:"Steamed & salted edamame beans"},
       {name:"Asian Slaw", desc:"Crunchy slaw with sesame & lime dressing"},
-      {name:"Gyoza", desc:"Pan-fried pork or vegetable dumplings (+£2pp)", upsell:2},
-      {name:"Bao Buns", desc:"Fluffy steamed bao with hoisin (+£2pp)", upsell:2},
+      {name:"Gyoza", desc:"Pan-fried pork or vegetable dumplings (+\u00A32pp)", upsell:2},
+      {name:"Bao Buns", desc:"Fluffy steamed bao with hoisin (+\u00A32pp)", upsell:2},
     ],
     upsells: [
       {name:"Add Mochi Ice Cream", price:4, desc:"Japanese mochi in matcha, mango & strawberry"},
@@ -1353,6 +1762,289 @@ const MENU_DETAILS = {
     upsells: [
       {name:"Add Milkshake Bar", price:5, desc:"14 premium flavours per person"},
     ]
+  },
+  christmas: {
+    title: "Christmas Feast",
+    packages: [
+      {name:"Festive Carvery", price:22, desc:"Choose 2 meats + 3 sides + pudding", maxP:2, maxS:3},
+      {name:"Christmas Dinner", price:35, desc:"Choose 3 meats + 4 sides + crackers", tag:"POPULAR", maxP:3, maxS:4},
+      {name:"Premium Festive", price:48, desc:"Choose all meats + 5 sides + mulled wine", maxP:5, maxS:5},
+    ],
+    proteins: [
+      {name:"Roast Turkey", desc:"Free-range turkey with sage & cranberry stuffing"},
+      {name:"Honey Glazed Ham", desc:"Slow-roasted with clove & honey glaze"},
+      {name:"Roast Beef", desc:"Slow-roasted British beef with red wine gravy (+\u00A34pp)", upsell:4},
+      {name:"Nut Roast (V)", desc:"Chestnut, cranberry & herb roast with gravy"},
+      {name:"Yorkshire Pudding Wraps", desc:"Turkey, stuffing & cranberry in a giant Yorkshire"},
+    ],
+    sides: [
+      {name:"Roast Potatoes", desc:"Crispy goose-fat roast potatoes"},
+      {name:"Honey Roasted Parsnips", desc:"With carrots & thyme"},
+      {name:"Brussels Sprouts", desc:"With pancetta & chestnuts"},
+      {name:"Pigs in Blankets", desc:"Chipolatas wrapped in bacon"},
+      {name:"Cauliflower Cheese", desc:"Creamy baked cauliflower"},
+      {name:"Cranberry & Orange Relish", desc:"Sweet & tangy cranberry sauce"},
+      {name:"Bread Sauce", desc:"Traditional creamy bread sauce"},
+    ],
+    upsells: [
+      {name:"Add Christmas Pudding", price:5, desc:"Traditional pud with brandy sauce & cream"},
+      {name:"Add Mince Pie Station", price:3, desc:"Freshly baked mince pies with brandy butter"},
+      {name:"Add Mulled Wine", price:4, desc:"Spiced red wine served warm"},
+    ]
+  },
+  roast: {
+    title: "Classic Roast",
+    packages: [
+      {name:"Classic", price:22, desc:"Choose 1 meat + 3 sides + gravy", maxP:1, maxS:3},
+      {name:"Full Carvery", price:28, desc:"Choose 2 meats + 4 sides + Yorkshire", tag:"POPULAR", maxP:2, maxS:4},
+      {name:"Premium Roast", price:36, desc:"Choose all meats + 5 sides + dessert", maxP:4, maxS:5},
+    ],
+    proteins: [
+      {name:"Prime Rib Roast", desc:"Herbed crust with red wine reduction"},
+      {name:"Roasted Turkey", desc:"With sage & cranberry stuffing"},
+      {name:"Roast Pork", desc:"With crackling, apple sauce & stuffing"},
+      {name:"Roast Chicken", desc:"Lemon & herb roasted with gravy"},
+    ],
+    sides: [
+      {name:"Roast Potatoes", desc:"Crispy with rosemary & garlic"},
+      {name:"Honey Roasted Parsnips & Carrots", desc:"Glazed root vegetables"},
+      {name:"Brussels Sprouts", desc:"With pancetta & balsamic"},
+      {name:"Mashed Potatoes", desc:"With horseradish & chives"},
+      {name:"Yorkshire Puddings", desc:"Giant homemade Yorkshires"},
+      {name:"Seasonal Greens", desc:"Tenderstem broccoli, green beans & peas"},
+      {name:"Cauliflower Cheese", desc:"Creamy baked cauliflower"},
+    ],
+    upsells: [
+      {name:"Add Apple Crumble", price:5, desc:"With vanilla bean ice cream"},
+      {name:"Add Rosemary Focaccia", price:3, desc:"Freshly baked with garlic-herb butter"},
+    ]
+  },
+  buffet: {
+    title: "Buffet Selection",
+    packages: [
+      {name:"Chinese Buffet", price:18, desc:"Starters + 3 mains + 2 sides", maxP:3, maxS:2},
+      {name:"Indian Buffet", price:20, desc:"Starters + 3 mains + 3 sides", tag:"POPULAR", maxP:3, maxS:3},
+      {name:"Mixed Platter", price:22, desc:"Choose 5 items + 3 sides", maxP:5, maxS:3},
+    ],
+    proteins: [
+      {name:"Kung Pao Chicken (GF)", desc:"Stir-fried with peanuts, chilli & Sichuan pepper"},
+      {name:"Char Siu Pork Belly", desc:"Chinese BBQ glazed pork"},
+      {name:"Crispy Chilli Beef (GF)", desc:"Crispy shredded beef in sweet chilli sauce"},
+      {name:"Butter Chicken", desc:"Creamy spiced tomato curry with tender chicken"},
+      {name:"Chana Masala (VG)", desc:"Chickpea curry with aromatic spices"},
+      {name:"Jerk Chicken Wings", desc:"Charcoal-grilled jerk wings"},
+      {name:"Mini Cheeseburger Sliders", desc:"British beef, American cheese, brioche"},
+      {name:"Breaded King Prawns", desc:"Crispy prawns with sweet chilli sauce (+\u00A32pp)", upsell:2},
+      {name:"Duck & Veg Spring Rolls", desc:"Crispy spring rolls with hoisin"},
+      {name:"Char Siu Jackfruit (VG)", desc:"Plant-based BBQ pulled jackfruit"},
+    ],
+    sides: [
+      {name:"Egg Fried Rice", desc:"Wok-fried with egg & spring onion"},
+      {name:"Pilau Rice", desc:"Fragrant Indian spiced rice"},
+      {name:"Vegetable Chow Mein (VG)", desc:"Stir-fried noodles with vegetables"},
+      {name:"Garlic Naan", desc:"Freshly baked garlic naan bread"},
+      {name:"Bombay Aloo", desc:"Spiced potatoes with mustard seeds"},
+      {name:"Onion Bhaji", desc:"Crispy onion fritters"},
+      {name:"Stir-Fried Pak Choi (VG)", desc:"Garlic & soy pak choi"},
+    ],
+    upsells: [
+      {name:"Add Vegetable Samosas", price:3, desc:"Crispy samosas with mango chutney"},
+    ]
+  },
+
+  /* ═══ PREMIUM / CHEF LOPEZ TIER ═══ */
+  canapes: {
+    title: "Canap\u00e9s & Bowl Food",
+    isPremium: true,
+    packages: [
+      {name:"3 Canap\u00e9s", price:15, desc:"Choose 3 canap\u00e9s", maxP:3, maxS:0},
+      {name:"5 Canap\u00e9s", price:20, desc:"Choose 5 canap\u00e9s", tag:"POPULAR", maxP:5, maxS:0},
+      {name:"5 Canap\u00e9s + 3 Bowls", price:30, desc:"Choose 5 canap\u00e9s + 3 bowl food", tag:"BEST VALUE", maxP:5, maxS:3},
+    ],
+    proteins: [
+      {name:"Goat Cheese Beet Bon Bons", desc:"Hazelnut crumb, beetroot gel", allergens:"G/D/E/N"},
+      {name:"Smoked Salmon Caviar Blini", desc:"Cream cheese, dill & wild keta caviar", allergens:"G/D/E/F"},
+      {name:"Prawn Tostada", desc:"Guacamole, pickled cucumber, coriander", allergens:"C/G"},
+      {name:"Spanish Jam\u00f3n Croquettes", desc:"With aioli", allergens:"G/D/E/MU"},
+      {name:"Braised Beef Croqueta", desc:"With shaved parmesan", allergens:"G/D/E"},
+      {name:"Chicken Lollipops", desc:"BBQ glaze, chilli, coriander & sesame", allergens:"G/SE"},
+      {name:"Mini Beef Sliders", desc:"Caramelised onions, brioche bun", allergens:"G/D/E"},
+      {name:"Pork Belly Miso Skewers", desc:"Miso-glazed pork belly", allergens:"G/SY"},
+      {name:"Lamb Kofta & Tzatziki", desc:"Mint & yoghurt dressing", allergens:"G/D"},
+      {name:"Salt & Pepper Prawn Tempura", desc:"Sweet chilli sauce", allergens:"G/C/E"},
+      {name:"Harissa Salmon Skewers", desc:"North African spiced salmon", allergens:"F"},
+      {name:"Tuna Tartare Crostini", desc:"Soya, sesame, chilli & coriander", allergens:"G/F/SY/SE"},
+      {name:"Mushroom & Mascarpone Vol au Vent", desc:"Mushroom duxelles", allergens:"G/D"},
+      {name:"Crispy Polenta & Black Bean (VG)", desc:"Vegan-friendly"},
+      {name:"Tomato Mozzarella Basil Skewers (V)", desc:"Caprese style", allergens:"D"},
+      {name:"Butternut Squash Arancini (V)", desc:"With goats cheese", allergens:"G/D/E"},
+    ],
+    sides: [
+      {name:"Wild Mushroom Risotto", desc:"Truffle, parmesan", allergens:"D/CE"},
+      {name:"Thai Green Curry", desc:"Baby corn, sweet potato, rice", allergens:"D/CE"},
+      {name:"Beef & Mushroom Stroganoff", desc:"With polenta", allergens:"D/CE"},
+      {name:"Chicken Tajine", desc:"Saffron veg & couscous", allergens:"G/CE"},
+      {name:"Korean Salmon Skewers", desc:"Sesame, sticky rice", allergens:"F/SY/SE"},
+      {name:"Miso Pork Belly", desc:"Sticky rice, mango salsa", allergens:"G/SY"},
+      {name:"Cauliflower Coconut Curry (VG)", desc:"Wild rice", allergens:"CE"},
+      {name:"Fish & Chips", desc:"Tartar sauce", allergens:"G/D/E/F"},
+      {name:"Roast Beef & Mustard Mash", desc:"Greens, red wine jus", allergens:"D/MU/CE"},
+    ],
+    note: "Allergen key: G=Gluten, D=Dairy, E=Egg, F=Fish, C=Crustacean, N=Nuts, SY=Soya, SE=Sesame, MU=Mustard, CE=Celery",
+    upsells: [
+      {name:"Add Mocktail Station", price:4, desc:"Virgin Mojito & Strawberry Daiquiri"},
+    ]
+  },
+  finedining: {
+    title: "Fine Dining",
+    isPremium: true,
+    packages: [
+      {name:"3-Course", price:35, desc:"1 starter + 1 main + 1 dessert", maxP:3, maxS:2},
+      {name:"4-Course", price:45, desc:"2 starters + 1 main + 1 dessert", tag:"POPULAR", maxP:4, maxS:3},
+      {name:"Prestige", price:65, desc:"3 starters + 2 mains + dessert", maxP:6, maxS:4},
+    ],
+    proteins: [
+      {name:"Seared Scallops", desc:"Pea puree, morel mushrooms & beurre blanc"},
+      {name:"Grilled Octopus", desc:"Chorizo, haricot beans & smoked sea broth"},
+      {name:"Pan-Fried Sea Bass", desc:"Balsamic cherry tomatoes, asparagus, white wine sauce"},
+      {name:"Braised Short Rib", desc:"Tagliatelle, baby spinach & red wine jus"},
+      {name:"Slow Roasted Pork Belly", desc:"Creamy polenta, pearl onions, madeira sauce"},
+      {name:"Chicken Roulade", desc:"Squash risotto & chicken bone jus"},
+      {name:"Lobster Tail & Scallops", desc:"With lobster bisque (+\u00A315pp)", upsell:15},
+      {name:"Chateaubriand", desc:"Prime beef fillet, fondant potato, truffle (+\u00A320pp)", upsell:20},
+      {name:"Grilled Monkfish", desc:"Mussels, clams in tarantina sauce (+\u00A38pp)", upsell:8},
+      {name:"Confit Duck Leg", desc:"Seared leaves, pickled walnut, hoisin dressing"},
+      {name:"Wild Mushroom Risotto (V)", desc:"With rocket & parmesan"},
+      {name:"Cauliflower Steak (V)", desc:"Smoky spinach lentils"},
+    ],
+    sides: [
+      {name:"Seasonal Vegetables", desc:"Chef's selection of roasted seasonal veg"},
+      {name:"Artisan Bread", desc:"Freshly baked selection"},
+      {name:"Roast Potatoes", desc:"Crispy roast potatoes with rosemary"},
+      {name:"Truffle Fries", desc:"Hand-cut fries with truffle oil (+\u00A33pp)", upsell:3},
+      {name:"Fondant Potato", desc:"Butter-braised fondant potatoes"},
+      {name:"Creamed Spinach", desc:"Wilted spinach with cream and nutmeg"},
+      {name:"Dauphinoise Potatoes", desc:"Layers of potato baked in cream and garlic"},
+      {name:"Honey Glazed Carrots", desc:"Baby carrots with honey and thyme"},
+    ],
+    upsells: [
+      {name:"Add Canap\u00e9 Reception", price:8, desc:"Choose 4 from our warm & cold selection"},
+      {name:"Add Cheese Course", price:6, desc:"British artisan cheese board with chutney"},
+    ]
+  },
+  fusion: {
+    title: "Feasting Tables",
+    isPremium: true,
+    packages: [
+      {name:"Italian Feasting", price:60, desc:"Nibbles + 3 mains + 2 sides", maxP:3, maxS:2},
+      {name:"Fusion Feasting", price:65, desc:"Nibbles + 3 mains + 2 sides", tag:"POPULAR", maxP:3, maxS:2},
+      {name:"British Feasting", price:65, desc:"3 starters + 3 mains + 2 sides", maxP:6, maxS:2},
+    ],
+    proteins: [
+      {name:"Barolo Braised Lamb", desc:"Lamb shoulder slow-braised in Barolo wine, polenta", allergens:"D"},
+      {name:"Wild Mushroom Gnocchi", desc:"Asparagus, truffle oil", allergens:"G/D/E"},
+      {name:"Wild Boar Rigatoni", desc:"With nduja & San Marzano tomato", allergens:"G/D"},
+      {name:"Bavette Steak", desc:"Chimichurri, rocket, parmesan", allergens:"D"},
+      {name:"Harissa Spatchcock Chicken", desc:"With salsa verde"},
+      {name:"Lebanese Braised Lamb Shoulder", desc:"Fragrant rice, dates"},
+      {name:"Braised Short Rib", desc:"Polenta, balsamic carrots, truffle", allergens:"D"},
+      {name:"Grilled Turkish Lamb Ribs", desc:"Tomato bulgur, pomegranate molasses", allergens:"G"},
+      {name:"Salmon with Salsa Verde", desc:"Lemon herb, fennel", allergens:"F"},
+      {name:"Espresso Salmon", desc:"Artichokes, tenderstem broccoli", allergens:"F"},
+      {name:"Roast Whole Cauliflower (VG)", desc:"Saffron yogurt, chickpea coconut curry", allergens:"D"},
+      {name:"Crispy Gnocchi (V)", desc:"Roast butternut squash, burnt butter sage", allergens:"G/D/E"},
+      {name:"Aubergine Parmigiana (V)", desc:"Layered aubergine, tomato, mozzarella", allergens:"D"},
+    ],
+    sides: [
+      {name:"Roast Potatoes & Chimichurri", desc:"Crispy potatoes with fresh herb sauce"},
+      {name:"New Potatoes & Garlic Chive", desc:"Buttered baby potatoes"},
+      {name:"Spring Greens & Seeds", desc:"Broccoli, greens with toasted seeds"},
+      {name:"Burrata, Peas & Asparagus", desc:"Seasonal (when available)", allergens:"D"},
+      {name:"Heritage Tomato & Mozzarella", desc:"With basil pesto", allergens:"D/N"},
+      {name:"Lebanese Bulgur Salad", desc:"With herbs, pomegranate & lemon", allergens:"G"},
+      {name:"Caesar Salad", desc:"Gem lettuce, parmesan, croutons, anchovy dressing", allergens:"G/D/E/F"},
+    ],
+    note: "All feasting menus include nibbles on arrival: flatbread, hummus, tzatziki, smoked aubergine zaalouk & red cabbage salad.",
+    upsells: [
+      {name:"Add Canap\u00e9 Reception", price:8, desc:"Choose 4 from our warm & cold selection"},
+      {name:"Add Cheese Course", price:6, desc:"Stilton, Montgomery's Cheddar, Tunworth with chutney"},
+    ]
+  },
+  asado: {
+    title: "Live Fire BBQ & Asado",
+    isPremium: true,
+    packages: [
+      {name:"Modern European Silver", price:65, desc:"Flatbread + dips, 1 meat + 1 sausage + 1 fish + 1 vegan + 3 sides", maxP:4, maxS:3},
+      {name:"Asado Silver", price:70, desc:"Empanada, provoleta + full meat selection + 3 sides", tag:"POPULAR", maxP:6, maxS:3},
+      {name:"Asado Gold", price:80, desc:"Premium: ribeye, sweetbreads, whole salmon + all sides", tag:"PREMIUM", maxP:8, maxS:4},
+    ],
+    proteins: [
+      {name:"Porchetta", desc:"Herb-rolled roasted pork"},
+      {name:"Jerk Pork Shoulder", desc:"Slow-cooked jerk-spiced pork"},
+      {name:"Spatchcock Chicken", desc:"Herb-marinated whole chicken"},
+      {name:"16hr Smoked Brisket", desc:"Low & slow smoked beef brisket (+\u00A35pp)", upsell:5},
+      {name:"Butterflied Lamb Leg", desc:"Herb-marinated whole lamb"},
+      {name:"Vacio Beef (Flank)", desc:"South American cut with chimichurri"},
+      {name:"Ribeye Steak", desc:"Premium ribeye cut (+\u00A38pp)", upsell:8},
+      {name:"Creole Sausages", desc:"South American chorizo-style"},
+      {name:"Venison Sausage", desc:"Premium venison & juniper"},
+      {name:"Kimchi Beef Sausage", desc:"Korean-fusion sausage"},
+      {name:"Secreto de Cerdo", desc:"Iberian pork secreto"},
+      {name:"Molleja (Sweetbreads)", desc:"Traditional Asado sweetbreads (+\u00A36pp)", upsell:6},
+      {name:"Grilled Octopus", desc:"Charred with chimichurri (+\u00A35pp)", upsell:5},
+      {name:"Prawns Pil Pil", desc:"Garlic & chilli prawns (+\u00A35pp)", upsell:5},
+      {name:"Whole Mackerel", desc:"Grilled whole mackerel"},
+      {name:"Whole Salmon", desc:"Grilled whole salmon (+\u00A36pp)", upsell:6},
+      {name:"Roasted Vegetable Platter (VG)", desc:"Seasonal grilled vegetables"},
+    ],
+    sides: [
+      {name:"Chimichurri Sauce", desc:"Fresh herb & garlic sauce"},
+      {name:"Creole Sauce", desc:"Tomato, pepper & onion salsa"},
+      {name:"Mixed Salad Bar", desc:"Build your own salad"},
+      {name:"Roast Potatoes", desc:"Crispy roast potatoes"},
+      {name:"Grilled Corn", desc:"Charred sweetcorn"},
+      {name:"Empanadas", desc:"Beef or cheese empanadas"},
+      {name:"Provoleta", desc:"Grilled provolone cheese with oregano"},
+      {name:"Pickled Eggplant", desc:"Argentine-style pickled aubergine"},
+    ],
+    note: "All Live Fire menus include bone marrow butter or empanada nibbles on arrival, burrata salad & pickles.",
+    upsells: [
+      {name:"Add Whole Lamb", price:12, desc:"Whole lamb roasted Asado-style on the cross"},
+    ]
+  },
+  weddingbbq: {
+    title: "Wedding BBQ & Buffet",
+    isPremium: true,
+    packages: [
+      {name:"Modern British BBQ", price:35, desc:"Choose 3 mains + 3 sides + dessert", maxP:3, maxS:3},
+      {name:"Asado BBQ", price:40, desc:"Choose 4 mains + 3 sides + dessert", tag:"POPULAR", maxP:4, maxS:3},
+      {name:"BBQ + Paella + Dessert", price:45, desc:"Full spread: 4 mains + paella + 4 sides + dessert", tag:"BEST VALUE", maxP:4, maxS:4},
+    ],
+    proteins: [
+      {name:"Slow-Smoked Brisket", desc:"12-hour smoked beef brisket"},
+      {name:"BBQ Jerk Chicken", desc:"Charcoal-grilled Jamaican jerk"},
+      {name:"Pulled Pork", desc:"Slow-cooked with signature BBQ sauce"},
+      {name:"Hog Roast", desc:"Whole roasted pig with crackling & apple sauce"},
+      {name:"Lamb Leg", desc:"Herb-marinated whole lamb (+\u00A35pp)", upsell:5},
+      {name:"Mixed Paella", desc:"Chicken, chorizo, prawns & saffron"},
+      {name:"Seafood Paella", desc:"King prawns, mussels, squid (+\u00A33pp)", upsell:3},
+      {name:"Grilled Halloumi & Veg (V)", desc:"Mediterranean vegetables & halloumi"},
+    ],
+    sides: [
+      {name:"Cajun Fries", desc:"Seasoned with Cajun spice"},
+      {name:"Mac & Cheese", desc:"Creamy baked mac & cheese"},
+      {name:"Asian Slaw", desc:"Crunchy slaw with sesame dressing"},
+      {name:"Greek Salad", desc:"Feta, olives, cucumber & tomato"},
+      {name:"Corn on the Cob", desc:"Charred & buttered"},
+      {name:"Rice & Peas", desc:"Traditional Jamaican coconut rice"},
+      {name:"Potato Salad", desc:"Creamy herb potato salad"},
+    ],
+    note: "Wedding packages include table setup, serving crockery & biodegradable plates. Add canap\u00e9s or dessert station for the full experience.",
+    upsells: [
+      {name:"Add Canap\u00e9 Reception", price:8, desc:"Choose 4 from our full selection"},
+      {name:"Add Dessert Buffet", price:9, desc:"Cheesecake, tiramisu, brownie, mousse & fresh berries"},
+      {name:"Add Food Tasting", price:0, desc:"\u00a3150 per couple \u2014 deducted from final invoice"},
+    ]
   }
 };
 
@@ -1362,41 +2054,53 @@ let selectedPackageIdx = -1;
 let selectedProteins = new Set();
 let selectedSides = new Set();
 let selectedUpsells = new Set();
+let currentTier = 'street';
 
-// Sliding scale: fewer guests = higher per-person price (covers fixed costs)
-// Base prices are for 80+ guests. Scales up to cover £300-400 fixed costs on small jobs.
-// Competitors: budget £15-20pp, buffet £20-30pp, sit-down £40-50pp, premium £55-70pp
 function getScaledPrice(basePrice, guests) {
-  if (guests >= 80) return basePrice;
-  if (guests >= 50) return Math.round(basePrice * 1.2);   // +20%
-  if (guests >= 35) return Math.round(basePrice * 1.45);  // +45%
-  if (guests >= 25) return Math.round(basePrice * 1.75);  // +75%
-  if (guests >= 15) return Math.round(basePrice * 2.2);   // +120%
-  return Math.round(basePrice * 3);                        // Under 15: ×3
+  if (guests >= 100) return basePrice;
+  if (guests >= 80) return Math.round(basePrice * 1.05);
+  if (guests >= 50) return Math.round(basePrice * 1.2);
+  if (guests >= 35) return Math.round(basePrice * 1.45);
+  if (guests >= 25) return Math.round(basePrice * 1.75);
+  if (guests >= 15) return Math.round(basePrice * 2.2);
+  return Math.round(basePrice * 3);
 }
 
-// Price tier labels for display
 function getPriceTierLabel(guests) {
-  if (guests >= 80) return '80+ guests — best value';
+  if (guests >= 100) return '100+ guests \u2014 best rates';
+  if (guests >= 80) return '80-99 guests';
   if (guests >= 50) return '50-79 guests';
   if (guests >= 35) return '35-49 guests';
   if (guests >= 25) return '25-34 guests';
-  if (guests >= 15) return '15-24 guests — intimate service';
-  return 'Under 15 guests — private chef experience';
+  if (guests >= 15) return '15-24 guests \u2014 intimate service';
+  return 'Under 15 guests \u2014 private chef experience';
 }
+
 let currentSeason = 'summer';
 
 function setSeason(season) {
   currentSeason = season;
   document.getElementById('btnSummer').classList.toggle('active', season === 'summer');
   document.getElementById('btnWinter').classList.toggle('active', season === 'winter');
+  filterMenuCards();
+}
 
+function setTier(tier) {
+  currentTier = tier;
+  document.getElementById('btnStreetFood').classList.toggle('active', tier === 'street');
+  document.getElementById('btnPremium').classList.toggle('active', tier === 'premium');
+  filterMenuCards();
+}
+
+function filterMenuCards() {
   document.querySelectorAll('.menu-card').forEach(card => {
     const cardSeason = card.dataset.season;
-    const visible = cardSeason === 'both' || cardSeason === season;
+    const cardTier = card.dataset.tier;
+    const seasonOk = cardSeason === 'both' || cardSeason === currentSeason;
+    const tierOk = cardTier === currentTier;
+    const visible = seasonOk && tierOk;
     card.style.display = visible ? '' : 'none';
 
-    // If the hidden card is currently selected, deselect it
     if (!visible && card.classList.contains('selected')) {
       card.classList.remove('selected');
       selectedMenu = null;
@@ -1409,11 +2113,11 @@ function setSeason(season) {
   });
 }
 
-// Auto-detect season on load: months 4-10 = summer, 11-3 = winter
 (function() {
-  const month = new Date().getMonth() + 1; // 1-12
+  const month = new Date().getMonth() + 1;
   const season = (month >= 4 && month <= 10) ? 'summer' : 'winter';
   setSeason(season);
+  setTier('street');
 })();
 
 function selectMenu(card) {
@@ -1437,9 +2141,8 @@ function selectMenu(card) {
 
   let html = `<h3>${data.title}</h3>`;
 
-  // Package tiers
-  html += `<div class="section-title">Step 1 — Choose Your Package</div>`;
-  html += `<div class="guide-text">Select one package below. Prices shown are per person for 80+ guests — smaller groups see adjusted pricing at checkout.</div>`;
+  html += `<div class="section-title">Step 1 \u2014 Choose Your Package</div>`;
+  html += `<div class="guide-text">Select one package below. Prices shown are per person for 100+ guests \u2014 smaller groups see adjusted pricing at checkout.</div>`;
   html += `<div class="pkg-grid">`;
   data.packages.forEach((pkg, i) => {
     html += `<div class="pkg-option" data-idx="${i}" onclick="selectPackage(${i})">`;
@@ -1450,9 +2153,8 @@ function selectMenu(card) {
   });
   html += `</div>`;
 
-  // Proteins / mains
-  const proteinLabel = menuKey === 'pizza' ? 'Pizza Types' : menuKey === 'streetfood' ? 'Stations' : menuKey === 'grazing' ? 'Board Items' : menuKey === 'loaded' ? 'Toppings' : 'Proteins &amp; Mains';
-  html += `<div class="section-title">Step 2 — Choose Your ${proteinLabel} <span id="proteinCounter" style="float:right;font-size:0.75rem;font-weight:600;color:var(--accent);">0 / ? selected</span></div>`;
+  const proteinLabel = menuKey === 'pizza' ? 'Pizza Types' : menuKey === 'streetfood' ? 'Stations' : menuKey === 'grazing' ? 'Board Items' : menuKey === 'loaded' ? 'Toppings' : menuKey === 'canapes' ? 'Canap\u00e9s' : 'Proteins &amp; Mains';
+  html += `<div class="section-title">Step 2 \u2014 Choose Your ${proteinLabel} <span id="proteinCounter" style="float:right;font-size:0.75rem;font-weight:600;color:var(--accent);">0 / ? selected</span></div>`;
   html += `<div class="guide-text">Tick the items you'd like. Your package determines how many you can pick. Premium items have a supplement.</div>`;
   html += `<div class="protein-grid">`;
   data.proteins.forEach((p, i) => {
@@ -1460,28 +2162,31 @@ function selectMenu(card) {
     html += `<div class="pcheck"></div><div>`;
     html += `<div class="p-name">${p.name}</div>`;
     html += `<div class="p-desc">${p.desc}</div>`;
-    if (p.upsell) html += `<div class="p-upsell">+&pound;${p.upsell}pp supplement</div>`;
+    if (p.allergens) html += `<div class="p-allergens">${p.allergens.split('/').map(a => '<span class="allergen-tag">'+a+'</span>').join(' ')}</div>`;
+    if (p.upsell) html += `<div class="p-upsell">+\u00a3${p.upsell}pp supplement</div>`;
     html += `</div></div>`;
   });
   html += `</div>`;
 
-  // Sides (selectable like proteins)
-  html += `<div class="section-title">Step 3 — Choose Your Sides <span id="sideCounter" style="float:right;font-size:0.75rem;font-weight:600;color:var(--accent);">0 / ? selected</span></div>`;
-  html += `<div class="guide-text">Tick the sides you'd like. Your package determines how many you can pick.</div>`;
-  html += `<div class="protein-grid">`;
-  data.sides.forEach((s, i) => {
-    html += `<div class="protein-item" data-sidx="${i}" onclick="toggleSide(this, ${i})">`;
-    html += `<div class="pcheck"></div><div>`;
-    html += `<div class="p-name">${s.name}</div>`;
-    html += `<div class="p-desc">${s.desc}</div>`;
-    if (s.upsell) html += `<div class="p-upsell">+£${s.upsell}pp supplement</div>`;
-    html += `</div></div>`;
-  });
-  html += `</div>`;
+  if (data.sides && data.sides.length > 0) {
+    const sideLabel = menuKey === 'canapes' ? 'Bowl Food' : menuKey === 'paella' ? 'Tapas' : 'Sides';
+    html += `<div class="section-title">Step 3 \u2014 Choose Your ${sideLabel} <span id="sideCounter" style="float:right;font-size:0.75rem;font-weight:600;color:var(--accent);">0 / ? selected</span></div>`;
+    html += `<div class="guide-text">Tick the ${sideLabel.toLowerCase()} you'd like. Your package determines how many you can pick.</div>`;
+    html += `<div class="protein-grid">`;
+    data.sides.forEach((s, i) => {
+      html += `<div class="protein-item" data-sidx="${i}" onclick="toggleSide(this, ${i})">`;
+      html += `<div class="pcheck"></div><div>`;
+      html += `<div class="p-name">${s.name}</div>`;
+      html += `<div class="p-desc">${s.desc}</div>`;
+      if (s.allergens) html += `<div class="p-allergens">${s.allergens.split('/').map(a => '<span class="allergen-tag">'+a+'</span>').join(' ')}</div>`;
+      if (s.upsell) html += `<div class="p-upsell">+\u00a3${s.upsell}pp supplement</div>`;
+      html += `</div></div>`;
+    });
+    html += `</div>`;
+  }
 
-  // Menu-specific upsells
   if (data.upsells && data.upsells.length) {
-    html += `<div class="section-title">Step 4 — Upgrade Your Event</div>`;
+    html += `<div class="section-title">Upgrade Your Event</div>`;
     html += `<div class="guide-text">Optional extras to make your event even more special.</div>`;
     data.upsells.forEach((u, i) => {
       html += `<div class="upsell-item" data-idx="${i}" onclick="toggleMenuUpsell(this, ${i})">`;
@@ -1492,15 +2197,15 @@ function selectMenu(card) {
     });
   }
 
-  // Note
   if (data.note) html += `<div class="note">${data.note}</div>`;
 
   detail.innerHTML = html;
   detail.style.display = 'block';
 
-  // Auto-select the tagged (popular) package
   const tagged = data.packages.findIndex(p => p.tag);
   if (tagged >= 0) selectPackage(tagged);
+
+  updateProgress();
 }
 
 function selectPackage(idx) {
@@ -1508,11 +2213,9 @@ function selectPackage(idx) {
   const data = MENU_DETAILS[selectedMenu.key];
   const pkg = data.packages[idx];
   selectedMenu.price = pkg.price;
-  // Clear selections when switching packages (limits may differ)
   selectedProteins.clear();
   selectedSides.clear();
   document.querySelectorAll('#menuDetail .protein-item').forEach(el => el.classList.remove('checked'));
-  // Update counter text
   updateCounters();
   document.querySelectorAll('#menuDetail .pkg-option').forEach((el, i) => {
     el.classList.toggle('active', i === idx);
@@ -1522,9 +2225,7 @@ function selectPackage(idx) {
 function toggleProtein(el, idx) {
   if (selectedPackageIdx < 0) return alert('Please select a package first');
   const pkg = MENU_DETAILS[selectedMenu.key].packages[selectedPackageIdx];
-  if (!selectedProteins.has(idx) && selectedProteins.size >= pkg.maxP) {
-    return; // At limit — can't add more
-  }
+  if (!selectedProteins.has(idx) && selectedProteins.size >= pkg.maxP) return;
   el.classList.toggle('checked');
   selectedProteins.has(idx) ? selectedProteins.delete(idx) : selectedProteins.add(idx);
   updateCounters();
@@ -1533,9 +2234,7 @@ function toggleProtein(el, idx) {
 function toggleSide(el, idx) {
   if (selectedPackageIdx < 0) return alert('Please select a package first');
   const pkg = MENU_DETAILS[selectedMenu.key].packages[selectedPackageIdx];
-  if (!selectedSides.has(idx) && selectedSides.size >= pkg.maxS) {
-    return; // At limit — can't add more
-  }
+  if (!selectedSides.has(idx) && selectedSides.size >= pkg.maxS) return;
   el.classList.toggle('checked');
   selectedSides.has(idx) ? selectedSides.delete(idx) : selectedSides.add(idx);
   updateCounters();
@@ -1566,11 +2265,33 @@ function toggleAddon(el) {
   const key = el.dataset.addon;
   selectedAddons.has(key) ? selectedAddons.delete(key) : selectedAddons.add(key);
   const isOpen = el.classList.contains('selected');
-  // Show/hide sub-menus
-  const subMenus = {staff: 'staffOptions', canapes: 'canapesOptions', premiumdessert: 'dessertOptions'};
+  const subMenus = {staff:'staffOptions', canapes:'canapesOptions', premiumdessert:'dessertOptions', bowlfood:'bowlfoodOptions'};
   if (subMenus[key]) {
     document.getElementById(subMenus[key]).style.display = isOpen ? 'block' : 'none';
   }
+  updateProgress();
+}
+
+function updateProgress() {
+  const steps = ['ps1','ps2','ps3','ps4','ps5','ps6'];
+  const hasMenu = !!selectedMenu;
+  const hasDetails = document.getElementById('guests').value && document.getElementById('eventDate').value;
+  const hasExtras = selectedAddons.size > 0;
+  const hasContact = document.getElementById('name').value && document.getElementById('email').value;
+
+  steps.forEach(s => {
+    document.getElementById(s).className = 'progress-step';
+  });
+  if (!hasMenu) { document.getElementById('ps1').className = 'progress-step active'; return; }
+  document.getElementById('ps1').className = 'progress-step done';
+  document.getElementById('ps2').className = 'progress-step active';
+  if (!hasDetails) return;
+  document.getElementById('ps2').className = 'progress-step done';
+  document.getElementById('ps3').className = 'progress-step' + (hasExtras ? ' done' : ' active');
+  if (hasExtras) { document.getElementById('ps4').className = 'progress-step active'; }
+  if (!hasContact) return;
+  document.getElementById('ps4').className = 'progress-step done';
+  document.getElementById('ps5').className = 'progress-step active';
 }
 
 function calculateQuote() {
@@ -1587,53 +2308,54 @@ function calculateQuote() {
 
   const day = new Date(document.getElementById('eventDate').value).getDay();
   const isWeekend = (day === 0 || day === 5 || day === 6);
-  const minSpend = isWeekend ? 1000 : 600;
+  const minSpend = isWeekend ? 1000 : 750;
   const effectiveGuests = Math.max(guests, 15);
 
-  // Sliding scale — fewer guests = higher per-person price
   const scaledPrice = getScaledPrice(pkg.price, effectiveGuests);
 
   let lines = [];
-  lines.push({ label: `${data.title} — ${pkg.name} Package`, amount: scaledPrice * effectiveGuests, detail: `${effectiveGuests} × £${scaledPrice}pp` });
+  lines.push({ label: `${data.title} \u2014 ${pkg.name} Package`, amount: scaledPrice * effectiveGuests, detail: `${effectiveGuests} \u00d7 \u00a3${scaledPrice}pp` });
 
-  // Protein upsells (also scaled)
   selectedProteins.forEach(idx => {
     const p = data.proteins[idx];
     if (p.upsell) {
       const su = getScaledPrice(p.upsell, effectiveGuests);
-      lines.push({ label: `${p.name} supplement`, amount: su * effectiveGuests, detail: `${effectiveGuests} × £${su}pp` });
+      lines.push({ label: `${p.name} supplement`, amount: su * effectiveGuests, detail: `${effectiveGuests} \u00d7 \u00a3${su}pp` });
     }
   });
 
-  // Side upsells (also scaled)
   selectedSides.forEach(idx => {
     const s = data.sides[idx];
     if (s.upsell) {
       const su = getScaledPrice(s.upsell, effectiveGuests);
-      lines.push({ label: `${s.name} supplement`, amount: su * effectiveGuests, detail: `${effectiveGuests} × £${su}pp` });
+      lines.push({ label: `${s.name} supplement`, amount: su * effectiveGuests, detail: `${effectiveGuests} \u00d7 \u00a3${su}pp` });
     }
   });
 
-  // Menu-specific upsells (also scaled)
   selectedUpsells.forEach(idx => {
     const u = data.upsells[idx];
-    const su = getScaledPrice(u.price, effectiveGuests);
-    lines.push({ label: u.name, amount: su * effectiveGuests, detail: `${effectiveGuests} × £${su}pp` });
+    if (u.price > 0) {
+      const su = getScaledPrice(u.price, effectiveGuests);
+      lines.push({ label: u.name, amount: su * effectiveGuests, detail: `${effectiveGuests} \u00d7 \u00a3${su}pp` });
+    }
   });
 
-  // Global addons (dessert station, canapes, staff etc.)
   document.querySelectorAll('.addon.selected').forEach(el => {
     const key = el.dataset.addon;
-    const n = el.querySelector('.addon-title').textContent.split('—')[0].trim();
+    const n = el.querySelector('.addon-title').textContent.split('\u2014')[0].trim();
     if (key === 'staff') {
       const tier = document.getElementById('staffTier').value;
       if (tier && tier !== '0' && tier !== 'custom') {
-        const cost = parseInt(tier);
-        lines.push({ label: 'Waiting Staff', amount: cost, detail: 'flat rate' });
+        lines.push({ label: 'Waiting Staff', amount: parseInt(tier), detail: 'flat rate' });
       }
+    } else if (key === 'tasting') {
+      lines.push({ label: 'Food Tasting Session', amount: 150, detail: 'deducted from final invoice' });
+    } else if (key === 'mobilebar') {
+      const p = parseInt(el.dataset.price);
+      lines.push({ label: n, amount: p * effectiveGuests, detail: `${effectiveGuests} \u00d7 \u00a3${p}pp` });
     } else {
       const p = parseInt(el.dataset.price);
-      lines.push({ label: n, amount: p * effectiveGuests, detail: `${effectiveGuests} × £${p}` });
+      if (p > 0) lines.push({ label: n, amount: p * effectiveGuests, detail: `${effectiveGuests} \u00d7 \u00a3${p}pp` });
     }
   });
 
@@ -1642,45 +2364,62 @@ function calculateQuote() {
   if (subtotal < minSpend) { mw.style.display = 'block'; document.getElementById('minAmount').textContent = minSpend; subtotal = minSpend; } else { mw.style.display = 'none'; }
 
   let html = '';
-  lines.forEach(l => html += `<div class="line"><span>${l.label} <span style="color:var(--dim)">(${l.detail})</span></span><span>£${l.amount.toLocaleString()}</span></div>`);
-  if (effectiveGuests < 80) html += `<div class="line"><span>Pricing tier <span style="color:var(--dim)">(${getPriceTierLabel(effectiveGuests)})</span></span><span>—</span></div>`;
-  if (guests < 15) html += `<div class="line"><span>Min guest adjustment <span style="color:var(--dim)">(${guests}→15)</span></span><span>—</span></div>`;
-  html += `<div class="line"><span>Estimated Total</span><span>£${subtotal.toLocaleString()}</span></div>`;
+  lines.forEach(l => html += `<div class="line"><span>${l.label} <span style="color:var(--dim)">(${l.detail})</span></span><span>\u00a3${l.amount.toLocaleString()}</span></div>`);
+  if (effectiveGuests < 100) html += `<div class="line"><span>Pricing tier <span style="color:var(--dim)">(${getPriceTierLabel(effectiveGuests)})</span></span><span>\u2014</span></div>`;
+  if (guests < 15) html += `<div class="line"><span>Min guest adjustment <span style="color:var(--dim)">(${guests}\u219215)</span></span><span>\u2014</span></div>`;
+  html += `<div class="line"><span>Estimated Total</span><span>\u00a3${subtotal.toLocaleString()}</span></div>`;
 
   document.getElementById('breakdown').innerHTML = html;
-  document.getElementById('quoteTotal').textContent = `£${subtotal.toLocaleString()}`;
+  document.getElementById('quoteTotal').textContent = `\u00a3${subtotal.toLocaleString()}`;
   const perHead = Math.ceil(subtotal/effectiveGuests);
-  document.getElementById('quotePerHead').textContent = `£${perHead} per person · ${effectiveGuests} guests`;
-  // Show savings hint for small groups
+  document.getElementById('quotePerHead').textContent = `\u00a3${perHead} per person \u00b7 ${effectiveGuests} guests`;
   if (effectiveGuests < 50) {
-    document.getElementById('quotePerHead').textContent += ` · Save with 50+ guests`;
+    document.getElementById('quotePerHead').textContent += ` \u00b7 Save with 50+ guests`;
   }
+
+  const deposit = Math.round(subtotal * 0.2);
+  document.getElementById('depositAmount').textContent = `\u00a3${deposit.toLocaleString()}`;
+  document.getElementById('payAmount').textContent = `\u00a3${deposit.toLocaleString()}`;
+  currentQuoteData = buildBookingData(subtotal, deposit);
 
   const r = document.getElementById('quoteResult');
   r.style.display = 'block';
   r.scrollIntoView({ behavior: 'smooth', block: 'center' });
   document.getElementById('quoteBtn').textContent = 'Update Quote';
+
+  document.getElementById('ps5').className = 'progress-step done';
 }
 
-function submitEnquiry() {
-  const g = document.getElementById('guests').value;
+function buildQuoteText() {
   const data = MENU_DETAILS[selectedMenu.key];
   const pkg = data.packages[selectedPackageIdx];
   const proteins = Array.from(selectedProteins).map(i => data.proteins[i].name).join(', ');
-  const sides = Array.from(selectedSides).map(i => data.sides[i].name).join(', ');
+  const sides = data.sides ? Array.from(selectedSides).map(i => data.sides[i].name).join(', ') : '';
   const menuUpsells = Array.from(selectedUpsells).map(i => data.upsells[i].name).join(', ');
-  const addons = Array.from(document.querySelectorAll('.addon.selected')).map(a => a.querySelector('.addon-title').textContent.split('—')[0].trim()).join(', ');
+  const addons = Array.from(document.querySelectorAll('.addon.selected')).map(a => a.querySelector('.addon-title').textContent.split('\u2014')[0].trim()).join(', ');
   const canapes = Array.from(document.querySelectorAll('#canapesGrid input:checked')).map(i => i.value).join(', ');
   const dessert = (document.querySelector('#dessertGrid input:checked') || {}).value || '';
-  const subject = encodeURIComponent(`Quote Request — ${data.title} ${pkg.name} — ${g} guests`);
-  const body = encodeURIComponent(
-    `BASH EVENTS QUOTE REQUEST\n${'='.repeat(40)}\n\nName: ${document.getElementById('name').value}\nEmail: ${document.getElementById('email').value}\nPhone: ${document.getElementById('phone').value || 'N/A'}\n\nMenu: ${data.title}\nPackage: ${pkg.name} (£${pkg.price}pp)\nSelected Mains: ${proteins || 'Not specified'}\nSelected Sides: ${sides || 'Not specified'}\nGuests: ${g}\nDate: ${document.getElementById('eventDate').value}\nType: ${document.getElementById('eventType').value}\nLocation: ${document.getElementById('location').value}\nMenu Upgrades: ${menuUpsells || 'None'}\nCanapés: ${canapes || 'None'}\nDessert: ${dessert || 'None'}\nExtras: ${addons || 'None'}\n\nTotal: ${document.getElementById('quoteTotal').textContent}\n\nNotes: ${document.getElementById('notes').value || 'None'}\n\n—\nGenerated by Bash Events Quote Tool`
-  );
+  const bowlfood = Array.from(document.querySelectorAll('#bowlfoodGrid input:checked')).map(i => i.value).join(', ');
+
+  return `BASH EVENTS QUOTE REQUEST\n${'='.repeat(40)}\n\nName: ${document.getElementById('name').value}\nEmail: ${document.getElementById('email').value}\nPhone: ${document.getElementById('phone').value || 'N/A'}\n\nMenu: ${data.title}\nPackage: ${pkg.name} (\u00a3${pkg.price}pp)\nSelected Mains: ${proteins || 'Not specified'}\nSelected Sides: ${sides || 'Not specified'}\nGuests: ${document.getElementById('guests').value}\nDate: ${document.getElementById('eventDate').value}\nType: ${document.getElementById('eventType').value}\nLocation: ${document.getElementById('location').value}\nMenu Upgrades: ${menuUpsells || 'None'}\nCanap\u00e9s: ${canapes || 'None'}\nDessert: ${dessert || 'None'}\nBowl Food: ${bowlfood || 'None'}\nExtras: ${addons || 'None'}\n\nTotal: ${document.getElementById('quoteTotal').textContent}\n\nNotes: ${document.getElementById('notes').value || 'None'}\n\n\u2014\nGenerated by Bash Events Quote Tool`;
+}
+
+function submitEnquiry() {
+  const data = MENU_DETAILS[selectedMenu.key];
+  const pkg = data.packages[selectedPackageIdx];
+  const g = document.getElementById('guests').value;
+  const subject = encodeURIComponent(`Quote Request \u2014 ${data.title} ${pkg.name} \u2014 ${g} guests`);
+  const body = encodeURIComponent(buildQuoteText());
   window.location.href = `mailto:info@bashevents.co.uk?subject=${subject}&body=${body}`;
   document.getElementById('quoteResult').style.display = 'none';
   const c = document.getElementById('confirmation');
   c.style.display = 'block';
   c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function sendWhatsApp() {
+  const text = encodeURIComponent(buildQuoteText());
+  window.open(`https://wa.me/447000000000?text=${text}`, '_blank');
 }
 
 function resetForm() {
@@ -1692,40 +2431,27 @@ function resetForm() {
   document.getElementById('menuDetail').style.display = 'none';
   ['guests','eventDate','eventType','location','name','email','phone','notes'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('quoteResult').style.display = 'none';
+  document.getElementById('bookingForm').style.display = 'none';
   document.getElementById('confirmation').style.display = 'none';
+  document.getElementById('quoteBtn').textContent = 'Get My Instant Quote';
+  updateProgress();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 document.getElementById('eventDate').min = new Date().toISOString().split('T')[0];
 
-// ── Booking & Payment Flow ──
-
 let currentQuoteData = null;
-
-// Store quote data when calculated (hook into existing calculateQuote)
-const _origCalcQuote = calculateQuote;
-calculateQuote = function() {
-  _origCalcQuote();
-  // After quote is shown, compute deposit
-  const totalText = document.getElementById('quoteTotal').textContent.replace(/[^0-9]/g, '');
-  const total = parseInt(totalText);
-  if (total > 0) {
-    const deposit = Math.round(total * 0.2);
-    document.getElementById('depositAmount').textContent = `£${deposit.toLocaleString()}`;
-    document.getElementById('payAmount').textContent = `£${deposit.toLocaleString()}`;
-    currentQuoteData = buildBookingData(total, deposit);
-  }
-};
 
 function buildBookingData(total, deposit) {
   const data = MENU_DETAILS[selectedMenu.key];
   const pkg = data.packages[selectedPackageIdx];
   const proteins = Array.from(selectedProteins).map(i => data.proteins[i].name);
-  const sides = Array.from(selectedSides).map(i => data.sides[i].name);
+  const sides = data.sides ? Array.from(selectedSides).map(i => data.sides[i].name) : [];
   const menuUpsellNames = Array.from(selectedUpsells).map(i => data.upsells[i].name);
-  const addonNames = Array.from(document.querySelectorAll('.addon.selected')).map(a => a.querySelector('.addon-title').textContent.split('—')[0].trim());
+  const addonNames = Array.from(document.querySelectorAll('.addon.selected')).map(a => a.querySelector('.addon-title').textContent.split('\u2014')[0].trim());
   const canapes = Array.from(document.querySelectorAll('#canapesGrid input:checked')).map(i => i.value);
   const dessert = (document.querySelector('#dessertGrid input:checked') || {}).value || '';
+  const bowlfood = Array.from(document.querySelectorAll('#bowlfoodGrid input:checked')).map(i => i.value);
   const staffTier = document.getElementById('staffTier').value;
 
   return {
@@ -1746,6 +2472,7 @@ function buildBookingData(total, deposit) {
     addons: addonNames,
     selectedCanapes: canapes,
     selectedDessert: dessert,
+    selectedBowlFood: bowlfood,
     staffOption: staffTier !== '0' ? document.getElementById('staffTier').selectedOptions[0].text : '',
     subtotal: total,
     depositAmount: deposit,
@@ -1757,40 +2484,113 @@ function buildBookingData(total, deposit) {
 function showBookingForm() {
   if (!currentQuoteData) return;
 
-  // Build summary
   let summary = '';
-  summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;"><span style="color:var(--dim)">Menu</span><span>${currentQuoteData.menuTitle} — ${currentQuoteData.packageName}</span></div>`;
+  summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;"><span style="color:var(--dim)">Menu</span><span>${currentQuoteData.menuTitle} \u2014 ${currentQuoteData.packageName}</span></div>`;
   summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;"><span style="color:var(--dim)">Guests</span><span>${currentQuoteData.guestCount}</span></div>`;
   summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;"><span style="color:var(--dim)">Date</span><span>${currentQuoteData.eventDate}</span></div>`;
   summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;"><span style="color:var(--dim)">Mains</span><span style="text-align:right;max-width:60%">${currentQuoteData.selectedProteins.join(', ') || 'None'}</span></div>`;
   summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;"><span style="color:var(--dim)">Sides</span><span style="text-align:right;max-width:60%">${currentQuoteData.selectedSides.join(', ') || 'None'}</span></div>`;
-  if (currentQuoteData.selectedCanapes.length) summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;"><span style="color:var(--dim)">Canap&eacute;s</span><span style="text-align:right;max-width:60%">${currentQuoteData.selectedCanapes.join(', ')}</span></div>`;
+  if (currentQuoteData.selectedCanapes.length) summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;"><span style="color:var(--dim)">Canap\u00e9s</span><span style="text-align:right;max-width:60%">${currentQuoteData.selectedCanapes.join(', ')}</span></div>`;
   if (currentQuoteData.selectedDessert) summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;"><span style="color:var(--dim)">Dessert</span><span>${currentQuoteData.selectedDessert}</span></div>`;
-  summary += `<div style="display:flex;justify-content:space-between;padding:8px 0;font-size:1.1rem;font-weight:700;"><span>Total</span><span>£${currentQuoteData.subtotal.toLocaleString()}</span></div>`;
-  summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;color:var(--green);font-weight:600;"><span>Deposit (20%)</span><span>£${currentQuoteData.depositAmount.toLocaleString()}</span></div>`;
+  if (currentQuoteData.selectedBowlFood && currentQuoteData.selectedBowlFood.length) summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222;"><span style="color:var(--dim)">Bowl Food</span><span style="text-align:right;max-width:60%">${currentQuoteData.selectedBowlFood.join(', ')}</span></div>`;
+  summary += `<div style="display:flex;justify-content:space-between;padding:8px 0;font-size:1.1rem;font-weight:700;"><span>Total</span><span>\u00a3${currentQuoteData.subtotal.toLocaleString()}</span></div>`;
+  summary += `<div style="display:flex;justify-content:space-between;padding:6px 0;color:var(--green);font-weight:600;"><span>Deposit (20%)</span><span>\u00a3${currentQuoteData.depositAmount.toLocaleString()}</span></div>`;
 
   document.getElementById('bookingSummary').innerHTML = summary;
   document.getElementById('bookingAddress').value = currentQuoteData.location || '';
 
   document.getElementById('quoteResult').style.display = 'none';
   document.getElementById('bookingForm').style.display = 'block';
-  document.getElementById('bookingForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  document.getElementById('bookingForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Mark step 5 active in progress bar
+  ['ps1','ps2','ps3','ps4'].forEach(s => document.getElementById(s).className = 'progress-step done');
+  document.getElementById('ps5').className = 'progress-step active';
+  document.getElementById('ps6').className = 'progress-step';
 }
 
 function hideBookingForm() {
   document.getElementById('bookingForm').style.display = 'none';
   document.getElementById('quoteResult').style.display = 'block';
+  // Revert progress bar to quote state
+  ['ps1','ps2','ps3','ps4'].forEach(s => document.getElementById(s).className = 'progress-step done');
+  document.getElementById('ps5').className = 'progress-step active';
+  document.getElementById('ps6').className = 'progress-step';
+}
+
+// Booking form state
+const bookingAnswers = {};
+
+function setYN(btn, field, value, noteId) {
+  bookingAnswers[field] = value;
+  // Clear all sibling buttons
+  const group = btn.closest('.yn-group');
+  group.querySelectorAll('.yn-btn').forEach(b => b.className = 'yn-btn');
+  // Highlight selected
+  if (value === 'yes') btn.classList.add('selected-yes');
+  else if (value === 'no') btn.classList.add('selected-no');
+  else btn.classList.add('selected-unsure');
+  // Show/hide note
+  if (noteId) {
+    const note = document.getElementById(noteId);
+    if (note) note.classList.toggle('show', value === 'yes');
+  }
+}
+
+function toggleAllergenSection(show) {
+  const el = document.getElementById('allergenSection');
+  if (el) el.classList.toggle('show', show);
 }
 
 async function processPayment() {
+  // Validate T&Cs
+  if (!document.getElementById('termsAccepted').checked) {
+    alert('Please accept the terms and conditions before proceeding.');
+    document.getElementById('termsAccepted').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
   const btn = document.getElementById('payBtn');
   const origText = btn.innerHTML;
   btn.innerHTML = 'Processing...';
   btn.disabled = true;
 
-  // Update with booking form data
+  // Collect venue facility answers
   currentQuoteData.location = document.getElementById('bookingAddress').value || currentQuoteData.location;
   currentQuoteData.notes = document.getElementById('bookingNotes').value || currentQuoteData.notes;
+
+  currentQuoteData.venueFacilities = {
+    kitchen: bookingAnswers.venueKitchen || null,
+    oven: bookingAnswers.venueOven || null,
+    prepTables: bookingAnswers.venuePrepTables || null,
+    sink: bookingAnswers.venueSink || null,
+    toilet: bookingAnswers.venueToilet || null,
+    electricity: bookingAnswers.venueElectricity || null,
+    gasElectric: document.getElementById('venueGasElectric').value || null,
+    parking: bookingAnswers.venueParking || null,
+    loadingAccess: bookingAnswers.venueLoading || null,
+    indoorOutdoor: bookingAnswers.venueIndoorOutdoor || null,
+  };
+
+  currentQuoteData.equipment = {
+    cutlery: bookingAnswers.needCutlery || null,
+    plates: bookingAnswers.needPlates || null,
+    tables: bookingAnswers.needTables || null,
+    napkins: bookingAnswers.needNapkins || null,
+  };
+
+  currentQuoteData.allergenInfo = {
+    hasAllergies: bookingAnswers.hasAllergies || null,
+    guestCount: document.getElementById('allergyGuestCount').value || null,
+    allergens: Array.from(document.querySelectorAll('input[name="allergen"]:checked')).map(c => c.value),
+    details: document.getElementById('allergenDetails').value || null,
+  };
+
+  currentQuoteData.termsAccepted = true;
+
+  // Mark confirm step active
+  ['ps1','ps2','ps3','ps4','ps5'].forEach(s => document.getElementById(s).className = 'progress-step done');
+  document.getElementById('ps6').className = 'progress-step active';
 
   try {
     const response = await fetch('/api/create-checkout', {
@@ -1803,7 +2603,6 @@ async function processPayment() {
 
     if (data.error) {
       if (data.error.includes('not configured')) {
-        // Stripe not set up yet — fall back to enquiry
         alert('Online payments coming soon! Sending as enquiry instead.');
         submitEnquiry();
         return;
@@ -1811,7 +2610,6 @@ async function processPayment() {
       throw new Error(data.error);
     }
 
-    // Redirect to Stripe Checkout
     if (data.sessionUrl) {
       window.location.href = data.sessionUrl;
     }
@@ -1822,6 +2620,286 @@ async function processPayment() {
     btn.disabled = false;
   }
 }
+</script>
+
+<!-- CHAT BOT WIDGET -->
+<style>
+  .chat-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF6B2B, #E85A1B);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(255,107,43,0.4);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    animation: fabPulse 3s ease-in-out infinite;
+  }
+  .chat-fab:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(255,107,43,0.5); }
+  @keyframes fabPulse {
+    0%,100% { box-shadow: 0 4px 20px rgba(255,107,43,0.4); }
+    50% { box-shadow: 0 4px 30px rgba(255,107,43,0.6), 0 0 0 8px rgba(255,107,43,0.1); }
+  }
+  .chat-fab svg { width: 28px; height: 28px; fill: #fff; }
+  .chat-fab .close-icon { display: none; }
+  .chat-fab.open .chat-icon { display: none; }
+  .chat-fab.open .close-icon { display: block; }
+
+  .chat-hint {
+    position: fixed;
+    bottom: 92px;
+    right: 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-size: 0.8rem;
+    color: var(--text2);
+    z-index: 9998;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    max-width: 220px;
+    animation: fadeUp 0.5s ease;
+  }
+  .chat-hint strong { color: var(--accent); }
+  .chat-hint-close {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    background: none;
+    border: none;
+    color: var(--dim);
+    cursor: pointer;
+    font-size: 1rem;
+  }
+
+  .chat-window {
+    position: fixed;
+    bottom: 96px;
+    right: 24px;
+    width: 380px;
+    max-height: 520px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    z-index: 9998;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    animation: fadeUp 0.3s ease;
+  }
+  .chat-window.open { display: flex; }
+
+  .chat-header {
+    padding: 16px 18px;
+    background: linear-gradient(135deg, #1A0E06, #140D06);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .chat-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF6B2B, #D4A953);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .chat-header-info .chat-name {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+  .chat-header-info .chat-status {
+    font-size: 0.7rem;
+    color: var(--green);
+  }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 280px;
+    max-height: 340px;
+  }
+  .chat-msg {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    word-wrap: break-word;
+  }
+  .chat-msg.bot {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+  }
+  .chat-msg.user {
+    background: linear-gradient(135deg, #FF6B2B, #E85A1B);
+    color: #fff;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+  }
+  .chat-msg.typing {
+    color: var(--dim);
+    font-style: italic;
+  }
+
+  .chat-input-area {
+    padding: 12px 14px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+    background: var(--surface);
+  }
+  .chat-input {
+    flex: 1;
+    padding: 10px 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.85rem;
+    outline: none;
+  }
+  .chat-input:focus { border-color: var(--accent); }
+  .chat-input::placeholder { color: var(--dim); }
+  .chat-send {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF6B2B, #E85A1B);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  .chat-send:hover { transform: scale(1.1); }
+  .chat-send svg { width: 18px; height: 18px; fill: #fff; }
+
+  @media (max-width: 600px) {
+    .chat-window {
+      width: calc(100vw - 20px);
+      right: 10px;
+      bottom: 90px;
+      max-height: 70vh;
+    }
+    .chat-fab { width: 52px; height: 52px; bottom: 16px; right: 16px; }
+    .chat-hint { right: 16px; bottom: 76px; }
+  }
+</style>
+
+<!-- Chat hint bubble -->
+<div class="chat-hint" id="chatHint">
+  <button class="chat-hint-close" onclick="document.getElementById('chatHint').style.display='none'">&times;</button>
+  <strong>Want a custom quote?</strong><br>Chat with us for personalised pricing
+</div>
+
+<!-- Chat FAB button -->
+<button class="chat-fab" id="chatFab" onclick="toggleChat()">
+  <svg class="chat-icon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+  <svg class="close-icon" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+</button>
+
+<!-- Chat window -->
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header">
+    <div class="chat-avatar">B</div>
+    <div class="chat-header-info">
+      <div class="chat-name">Bash Events</div>
+      <div class="chat-status">Online now</div>
+    </div>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg bot">Hey! I'm the Bash Events quote bot. Tell me about your event and I'll build you a custom quote. What kind of food are you thinking, and how many guests? 🔥</div>
+  </div>
+  <div class="chat-input-area">
+    <input class="chat-input" id="chatInput" type="text" placeholder="Type your message..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chat-send" onclick="sendChat()">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+let chatOpen = false;
+let chatHistory = [];
+
+function toggleChat() {
+  chatOpen = !chatOpen;
+  document.getElementById('chatWindow').classList.toggle('open', chatOpen);
+  document.getElementById('chatFab').classList.toggle('open', chatOpen);
+  document.getElementById('chatHint').style.display = 'none';
+  if (chatOpen) document.getElementById('chatInput').focus();
+}
+
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  input.value = '';
+  addMessage(msg, 'user');
+  chatHistory.push({ role: 'user', content: msg });
+
+  const typing = addMessage('Thinking...', 'bot typing');
+
+  try {
+    const resp = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: chatHistory })
+    });
+    const data = await resp.json();
+    typing.remove();
+    addMessage(data.reply, 'bot');
+    chatHistory.push({ role: 'assistant', content: data.reply });
+  } catch (err) {
+    typing.remove();
+    addMessage('Sorry, I had a hiccup. Try again or use the quote form above!', 'bot');
+  }
+}
+
+function addMessage(text, cls) {
+  const div = document.createElement('div');
+  div.className = `chat-msg ${cls}`;
+  div.textContent = text;
+  const container = document.getElementById('chatMessages');
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return div;
+}
+
+// Show hint after 5 seconds, hide after 15
+setTimeout(() => {
+  if (!chatOpen) document.getElementById('chatHint').style.display = 'block';
+}, 5000);
+setTimeout(() => {
+  document.getElementById('chatHint').style.display = 'none';
+}, 20000);
 </script>
 </body>
 </html>
