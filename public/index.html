@@ -16,12 +16,12 @@
     --card-hover: #1C1C1C;
     --border: #222;
     --border-light: #333;
-    --accent: #FF6B2B;
-    --accent2: #FF8A50;
-    --accent-soft: rgba(255,107,43,0.08);
-    --accent-glow: rgba(255,107,43,0.15);
-    --gold: #D4A953;
-    --gold-soft: rgba(212,169,83,0.1);
+    --accent: #7C3AED;
+    --accent2: #A78BFA;
+    --accent-soft: rgba(124,58,237,0.08);
+    --accent-glow: rgba(124,58,237,0.15);
+    --gold: #CBD5E1;
+    --gold-soft: rgba(203,213,225,0.1);
     --text: #F5F5F5;
     --text2: #CCC;
     --dim: #777;
@@ -49,9 +49,9 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse at 20% 50%, rgba(255,107,43,0.08) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 50%, rgba(212,169,83,0.06) 0%, transparent 60%),
-      linear-gradient(180deg, #0F0A06 0%, var(--bg) 100%);
+      radial-gradient(ellipse at 20% 50%, rgba(124,58,237,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 50%, rgba(203,213,225,0.06) 0%, transparent 60%),
+      linear-gradient(180deg, #0A0612 0%, var(--bg) 100%);
     animation: heroShift 12s ease-in-out infinite alternate;
   }
   @keyframes heroShift {
@@ -64,7 +64,7 @@
     display: inline-block;
     padding: 6px 18px;
     background: var(--accent-soft);
-    border: 1px solid rgba(255,107,43,0.2);
+    border: 1px solid rgba(124,58,237,0.2);
     border-radius: 20px;
     font-size: 0.75rem;
     font-weight: 600;
@@ -83,7 +83,7 @@
     line-height: 1.1;
   }
   .hero h1 span {
-    background: linear-gradient(135deg, #FF6B2B, #FFB347, #D4A953);
+    background: linear-gradient(135deg, #7C3AED, #A78BFA, #CBD5E1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -134,7 +134,7 @@
     background: var(--border-light);
     transition: all 0.3s;
   }
-  .progress-step.active .progress-dot { background: var(--accent); box-shadow: 0 0 8px rgba(255,107,43,0.4); }
+  .progress-step.active .progress-dot { background: var(--accent); box-shadow: 0 0 8px rgba(124,58,237,0.4); }
   .progress-step.done .progress-dot { background: var(--green); }
   .progress-sep { color: var(--border-light); font-size: 0.7rem; margin: 0 4px; }
 
@@ -205,8 +205,8 @@
     aspect-ratio: 4/3;
   }
   .menu-card:hover { transform: translateY(-3px); border-color: #333; }
-  .menu-card.selected { border-color: var(--accent); box-shadow: 0 0 30px rgba(255,107,43,0.2); }
-  .menu-card.premium-card.selected { border-color: var(--gold); box-shadow: 0 0 30px rgba(212,169,83,0.2); }
+  .menu-card.selected { border-color: var(--accent); box-shadow: 0 0 30px rgba(124,58,237,0.2); }
+  .menu-card.premium-card.selected { border-color: var(--gold); box-shadow: 0 0 30px rgba(203,213,225,0.2); }
   .menu-card img {
     width: 100%;
     height: 100%;
@@ -256,7 +256,7 @@
     position: absolute;
     top: 12px;
     left: 12px;
-    background: linear-gradient(135deg, #D4A953, #B8941F);
+    background: linear-gradient(135deg, #CBD5E1, #94A3B8);
     color: #fff;
     font-size: 0.6rem;
     font-weight: 700;
@@ -328,11 +328,11 @@
 
   .menu-detail .upsell-item {
     display: flex; align-items: center; gap: 10px; padding: 10px 12px;
-    background: var(--gold-soft); border: 1px solid rgba(212,169,83,0.2); border-radius: 8px;
+    background: var(--gold-soft); border: 1px solid rgba(203,213,225,0.2); border-radius: 8px;
     cursor: pointer; transition: all 0.2s; margin-top: 6px;
   }
   .menu-detail .upsell-item:hover { border-color: var(--gold); }
-  .menu-detail .upsell-item.checked { border-color: var(--gold); background: rgba(212,169,83,0.15); }
+  .menu-detail .upsell-item.checked { border-color: var(--gold); background: rgba(203,213,225,0.15); }
   .menu-detail .upsell-item .pcheck { border-color: var(--gold); }
   .menu-detail .upsell-item.checked .pcheck { background: var(--gold); border-color: var(--gold); color: #fff; }
   .menu-detail .upsell-item .u-name { font-weight: 600; font-size: 0.85rem; color: var(--text); }
@@ -477,11 +477,11 @@
     letter-spacing: 0.5px;
   }
   .btn-primary {
-    background: linear-gradient(135deg, #FF6B2B, #E85A1B);
+    background: linear-gradient(135deg, #7C3AED, #6D28D9);
     color: #fff;
-    box-shadow: 0 4px 20px rgba(255,107,43,0.2);
+    box-shadow: 0 4px 20px rgba(124,58,237,0.2);
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 35px rgba(255,107,43,0.35); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 35px rgba(124,58,237,0.35); }
   .btn-green {
     background: linear-gradient(135deg, #00D68F, #00B87A);
     color: #fff;
@@ -504,7 +504,7 @@
   /* ── Quote result ── */
   .quote-result {
     background: linear-gradient(135deg, #1A1208, #140D06);
-    border: 1px solid rgba(255,107,43,0.3);
+    border: 1px solid rgba(124,58,237,0.3);
     border-radius: 20px;
     padding: 36px;
     text-align: center;
@@ -517,7 +517,7 @@
     font-family: 'Playfair Display', serif;
     font-size: 3.5rem;
     font-weight: 900;
-    background: linear-gradient(135deg, #FF6B2B, #FFB347, #D4A953);
+    background: linear-gradient(135deg, #7C3AED, #A78BFA, #CBD5E1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin: 12px 0 4px;
@@ -600,7 +600,7 @@
     border-color: var(--accent);
     color: var(--accent);
     background: var(--accent-soft);
-    box-shadow: 0 0 20px rgba(255,107,43,0.15);
+    box-shadow: 0 0 20px rgba(124,58,237,0.15);
   }
 
   /* ── Allergen tag ── */
@@ -653,7 +653,7 @@
 </div>
 
 <div class="hero">
-  <img src="logo.png" alt="Bash Events Logo" style="width:340px;height:340px;object-fit:contain;margin:0 auto 24px;display:block;filter:brightness(1.3) contrast(1.1) saturate(1.2);">
+  <img src="logo.png" alt="Bash Events Logo" style="width:340px;height:340px;object-fit:contain;margin:0 auto 24px;display:block;">
   <div class="hero-badge">London &amp; Essex &middot; Est. 2021</div>
   <h1>Premium Event &amp; Street Food<br><span>Catering</span></h1>
   <div class="hero-divider"></div>
@@ -809,7 +809,7 @@
     <!-- PREMIUM TIER -->
     <div class="menu-card premium-card" data-menu="canapes" data-price="15" data-season="both" data-tier="premium" onclick="selectMenu(this)">
       <img src="https://images.unsplash.com/photo-1541529086526-db283c563270?w=600&q=80" alt="Canapés" loading="lazy">
-      <div class="premium-tag">Chef Lopez</div>
+      <div class="premium-tag">Premium</div>
       <div class="overlay">
         <div class="name">Canap&eacute;s &amp; Bowl Food</div>
         <div class="price">From &pound;15pp</div>
@@ -818,7 +818,7 @@
     </div>
     <div class="menu-card premium-card" data-menu="finedining" data-price="35" data-season="both" data-tier="premium" onclick="selectMenu(this)">
       <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Fine dining plated course" loading="lazy">
-      <div class="premium-tag">Chef Lopez</div>
+      <div class="premium-tag">Premium</div>
       <div class="overlay">
         <div class="name">Fine Dining</div>
         <div class="price">From &pound;35pp</div>
@@ -827,7 +827,7 @@
     </div>
     <div class="menu-card premium-card" data-menu="fusion" data-price="60" data-season="both" data-tier="premium" onclick="selectMenu(this)">
       <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Feasting table" loading="lazy">
-      <div class="premium-tag">Chef Lopez</div>
+      <div class="premium-tag">Premium</div>
       <div class="overlay">
         <div class="name">Feasting Tables</div>
         <div class="price">From &pound;60pp</div>
@@ -836,7 +836,7 @@
     </div>
     <div class="menu-card premium-card" data-menu="asado" data-price="70" data-season="summer" data-tier="premium" onclick="selectMenu(this)">
       <img src="https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80" alt="Live fire BBQ asado" loading="lazy">
-      <div class="premium-tag">Chef Lopez</div>
+      <div class="premium-tag">Premium</div>
       <div class="overlay">
         <div class="name">Live Fire BBQ &amp; Asado</div>
         <div class="price">From &pound;65pp</div>
@@ -845,7 +845,7 @@
     </div>
     <div class="menu-card premium-card" data-menu="weddingbbq" data-price="35" data-season="both" data-tier="premium" onclick="selectMenu(this)">
       <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&q=80" alt="Wedding reception" loading="lazy">
-      <div class="premium-tag">Chef Lopez</div>
+      <div class="premium-tag">Premium</div>
       <div class="overlay">
         <div class="name">Wedding BBQ &amp; Buffet</div>
         <div class="price">From &pound;35pp</div>
@@ -1349,7 +1349,7 @@
 </div>
 
 <div class="footer">
-  &copy; 2026 Bash Events &amp; Chef Lopez Events &middot; Premium Catering<br>
+  &copy; 2026 Bash Events &middot; Premium Catering<br>
   London &amp; Essex &middot; <a href="mailto:info@bashevents.co.uk">info@bashevents.co.uk</a><br>
   <span style="font-size:0.7rem;margin-top:4px;display:inline-block;">Fine Dining Caterer of the Year 2022 &middot; Food Hygiene 5/5 &middot; Togather Nominated 2025</span>
 </div>
@@ -1852,7 +1852,7 @@ const MENU_DETAILS = {
     ]
   },
 
-  /* ═══ PREMIUM / CHEF LOPEZ TIER ═══ */
+  /* ═══ PREMIUM TIER ═══ */
   canapes: {
     title: "Canap\u00e9s & Bowl Food",
     isPremium: true,
@@ -2631,10 +2631,10 @@ async function processPayment() {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #FF6B2B, #E85A1B);
+    background: linear-gradient(135deg, #7C3AED, #6D28D9);
     border: none;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(255,107,43,0.4);
+    box-shadow: 0 4px 20px rgba(124,58,237,0.4);
     z-index: 9999;
     display: flex;
     align-items: center;
@@ -2642,10 +2642,10 @@ async function processPayment() {
     transition: all 0.3s;
     animation: fabPulse 3s ease-in-out infinite;
   }
-  .chat-fab:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(255,107,43,0.5); }
+  .chat-fab:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(124,58,237,0.5); }
   @keyframes fabPulse {
-    0%,100% { box-shadow: 0 4px 20px rgba(255,107,43,0.4); }
-    50% { box-shadow: 0 4px 30px rgba(255,107,43,0.6), 0 0 0 8px rgba(255,107,43,0.1); }
+    0%,100% { box-shadow: 0 4px 20px rgba(124,58,237,0.4); }
+    50% { box-shadow: 0 4px 30px rgba(124,58,237,0.6), 0 0 0 8px rgba(124,58,237,0.1); }
   }
   .chat-fab svg { width: 28px; height: 28px; fill: #fff; }
   .chat-fab .close-icon { display: none; }
@@ -2709,7 +2709,7 @@ async function processPayment() {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #FF6B2B, #D4A953);
+    background: linear-gradient(135deg, #7C3AED, #CBD5E1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2754,7 +2754,7 @@ async function processPayment() {
     border-bottom-left-radius: 4px;
   }
   .chat-msg.user {
-    background: linear-gradient(135deg, #FF6B2B, #E85A1B);
+    background: linear-gradient(135deg, #7C3AED, #6D28D9);
     color: #fff;
     align-self: flex-end;
     border-bottom-right-radius: 4px;
@@ -2788,7 +2788,7 @@ async function processPayment() {
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #FF6B2B, #E85A1B);
+    background: linear-gradient(135deg, #7C3AED, #6D28D9);
     border: none;
     cursor: pointer;
     display: flex;
@@ -2815,7 +2815,7 @@ async function processPayment() {
 <!-- Chat hint bubble -->
 <div class="chat-hint" id="chatHint">
   <button class="chat-hint-close" onclick="document.getElementById('chatHint').style.display='none'">&times;</button>
-  <strong>Want a custom quote?</strong><br>Chat with us for personalised pricing
+  <strong>Hey, I'm Lex!</strong><br>Chat with me for a personalised quote
 </div>
 
 <!-- Chat FAB button -->
@@ -2827,14 +2827,14 @@ async function processPayment() {
 <!-- Chat window -->
 <div class="chat-window" id="chatWindow">
   <div class="chat-header">
-    <div class="chat-avatar">B</div>
+    <div class="chat-avatar">L</div>
     <div class="chat-header-info">
-      <div class="chat-name">Bash Events</div>
+      <div class="chat-name">Lex</div>
       <div class="chat-status">Online now</div>
     </div>
   </div>
   <div class="chat-messages" id="chatMessages">
-    <div class="chat-msg bot">Hey! I'm the Bash Events quote bot. Tell me about your event and I'll build you a custom quote. What kind of food are you thinking, and how many guests? 🔥</div>
+    <div class="chat-msg bot">Hey there! I'm Lex, your personal booking assistant at Bash Events. I'm here to make sure your event is absolutely spot on — whether it's a garden party for 30 or a wedding for 300, I've got you. Tell me what you're planning and I'll put together a proper quote. What's the occasion, and roughly how many guests are we feeding? 🍽️</div>
   </div>
   <div class="chat-input-area">
     <input class="chat-input" id="chatInput" type="text" placeholder="Type your message..." onkeydown="if(event.key==='Enter')sendChat()">

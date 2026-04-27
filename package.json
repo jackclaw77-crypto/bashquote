@@ -8,8 +8,9 @@
     "deploy": "vercel --prod"
   },
   "dependencies": {
+    "dotenv": "^17.4.2",
+    "nodemailer": "^6.9.0",
     "pdfkit": "^0.13.0",
-    "stripe": "^14.0.0",
-    "nodemailer": "^6.9.0"
+    "stripe": "^14.25.0"
   }
 }
